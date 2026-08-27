@@ -26,11 +26,13 @@ jobs:
       - name: Set up Python
         run: uv python install 3.12
 
-      - name: Install Dependencies
-        run: uv pip install --system -r requirements.txt
+      - name: Setup Virtual Environment & Install Dependencies
+        run: |
+          uv venv
+          uv pip install -r requirements.txt
 
       - name: Build Static Payload
-        run: reflex export --no-zip
+        run: uv run reflex export --no-zip
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
