@@ -3,12 +3,22 @@ import reflex as rx
 def index() -> rx.Component:
     return rx.box(
         rx.vstack(
-            rx.heading("CHROMA.CC", size="9", weight="bold", color="white"),
-            rx.text("Geometric & Photonic Compute", size="5", color="gray.400"),
+            rx.heading("CHROMALABS", size="9", weight="bold", color="white", letter_spacing="-0.05em"),
+            rx.text(
+                "Geometric & Photonic Compute Architecture.", 
+                size="6", 
+                color="slate.11", 
+                weight="medium"
+            ),
+            rx.box(
+                rx.text("NSF I-Corps Backed", size="2", weight="bold", color="#D4AF37", letter_spacing="0.1em"),
+                padding_y="2",
+            ),
             rx.hstack(
-                rx.link(rx.button("TECHNOLOGY", variant="outline", color="white"), href="/technology"),
-                rx.link(rx.button("MISSION", variant="outline", color="white"), href="/mission"),
-                spacing="4"
+                rx.link(rx.button("TECHNOLOGY", variant="solid", color_scheme="blue", radius="none"), href="/technology"),
+                rx.link(rx.button("MISSION", variant="outline", color_scheme="slate", radius="none"), href="/mission"),
+                spacing="4",
+                padding_top="4"
             ),
             align="center",
             justify="center",
