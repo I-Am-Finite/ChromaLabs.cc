@@ -3,6 +3,7 @@ import reflex as rx
 def index() -> rx.Component:
     return rx.box(
         rx.vstack(
+            rx.image(src="/logo.svg", width="150px", height="150px", margin_bottom="-4"),
             rx.heading("CHROMALABS", size="9", weight="bold", color="white", letter_spacing="-0.05em"),
             rx.text(
                 "Geometric & Photonic Compute Architecture.", 
