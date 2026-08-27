@@ -47,7 +47,7 @@ def technology() -> rx.Component:
             ),
 
             rx.link(
-                rx.button("RETURN", variant="outline", color_scheme="slate", radius="none", margin_top="8"), 
+                rx.button("RETURN", variant="outline", color_scheme="gray", radius="none", margin_top="8"), 
                 href="/"
             ),
             align="center",

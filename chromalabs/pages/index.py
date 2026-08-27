@@ -20,7 +20,7 @@ def index() -> rx.Component:
             ),
             rx.hstack(
                 rx.link(rx.button("TECHNOLOGY", variant="solid", color_scheme="blue", radius="none"), href="/technology"),
-                rx.link(rx.button("MISSION", variant="outline", color_scheme="slate", radius="none"), href="/mission"),
+                rx.link(rx.button("MISSION", variant="outline", color_scheme="gray", radius="none"), href="/mission"),
                 spacing="4",
                 padding_top="4"
             ),
