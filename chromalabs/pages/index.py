@@ -6,10 +6,13 @@ def index() -> rx.Component:
             rx.image(src="/logo.svg", width="150px", height="150px", margin_bottom="-4"),
             rx.heading("CHROMALABS", size="9", weight="bold", color="white", letter_spacing="-0.05em"),
             rx.text(
-                "Geometric & Photonic Compute Architecture.", 
-                size="6", 
+                "Pioneering geometric compute architectures by mapping high-dimensional logic directly to consumer photonic hardware. We eliminate the traditional bottlenecks for AI data and the defense industries.", 
+                size="5", 
                 color="slate.11", 
-                weight="medium"
+                weight="medium",
+                max_width="700px",
+                text_align="center",
+                margin_bottom="4"
             ),
             rx.box(
                 rx.text("NSF I-Corps Backed", size="2", weight="bold", color="#D4AF37", letter_spacing="0.1em"),
