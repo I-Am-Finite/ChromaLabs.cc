@@ -1,28 +1,44 @@
-# ChromaLabs.cc
+﻿# CHROMA DEFENSE AI LAB
 
-**Geometric & Photonic Compute Architecture**
+**Thermodynamic Supremacy & Volumetric Intelligence**
 
-ChromaLabs is a research-backed defense and software compute startup prioritizing next-generation neural architectures and geometric processing. Supported by the National Science Foundation (NSF) I-Corps program, we focus on producing low Size, Weight, and Power (SWaP) footprint solutions for extreme edge-compute scenarios.
+Chroma Labs engineers post-von Neumann hardware architectures and geometric computing matrices. Supported by the National Science Foundation (NSF) I-Corps program, we synthesize low Size, Weight, and Power (SWaP) edge intelligence for sovereign, contested environments. 
 
-## Development
+By mapping complex algebraic routing into direct spatial geometry, we bypass the physical scaling limits of traditional silicon architectures, enabling massive compute density with extreme thermodynamic efficiency.
 
-This platform is generated statically via pure Python using the Reflex framework. 
+## Core Capabilities
+- **Tactical Edge Autonomy:** Zero-trust, hardware-level compartmentalized situational awareness.
+- **Volumetric Logic:** Native multi-dimensional data processing architectures.
+- **HPC Scaling:** Decarbonization and thermal efficiency at exascale through structural interconnects.
 
-### Prerequisites
+---
+
+## Technical Stack & Build Instructions
+
+This landing architecture is statically compiled via the [Reflex](https://reflex.dev/) framework, written entirely in Python, and utilizes bespoke Canvas/WebGL rendering for the ambient spatial grid.
+
+### Dependencies
 - Python 3.10+
-- `uv` (Fast Python Package Installer & Resolver)
+- uv (Fast Python Package Installer & Resolver)
 
-### Setup & Run
-1. Install dependencies:
-   ```bash
-   uv pip install -r requirements.txt
-   ```
-2. Initialize local server:
-   ```bash
-   reflex run
-   ```
+### Initialization
+To run the development server locally:
+\\\ash
+# 1. Install required packages
+uv pip install -r requirements.txt
 
-## Architecture Notes
-- **Hosting:** Static payload compiled via `reflex export --no-zip`.
-- **Deployment:** Automated strictly through GitHub Actions to the `gh-pages` branch.
-- **Styling constraints:** Dark-mode driven; emphasis on stark geometry and high-contrast vector motifs.
+# 2. Spin up the Reflex dev server
+uv run reflex run
+\\\
+
+### Production Export
+The pipeline statically compiles the architecture and pushes the payload directly to the edge.
+\\\ash
+uv run reflex export --no-zip
+\\\
+*(Automated strictly via GitHub Actions upon merge to \main\)*
+
+## Brand Architecture
+The visual identity (The Apex Tetrahedron) and all associated lockups are strictly managed mathematical vectors located in \/assets/brand_package\. 
+
+© 2026 Chroma Labs, Inc.™
