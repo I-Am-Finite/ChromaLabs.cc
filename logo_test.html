@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chroma Logo Refinement</title>
+    <style>
+        body {
+            background-color: #0A0A0A;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .horizontal-lockup {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Crucial: spacing between glyph and text */
+        }
+        
+        .glyph {
+            height: 80px;
+            width: auto;
+            filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.5));
+        }
+        
+        .typography-stack {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px; /* Spacing between main word and subtext */
+        }
+        
+        .wordmark {
+            font-weight: 900;
+            font-size: 2.8rem;
+            letter-spacing: 0.05em; /* Tighter tracking like the guide */
+            line-height: 1;
+            color: #E2C775; /* A softer, metallic gold rather than pure white */
+            margin: 0;
+            text-transform: uppercase;
+        }
+        
+        .subtext {
+            font-family: 'Inter', sans-serif; /* Guide uses sans, not monospace */
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 0.25em;
+            color: #A08B48; /* Darker gold */
+            line-height: 1;
+            margin: 0;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="horizontal-lockup">
+        <img src="logo_glyph.png" class="glyph" alt="Chroma Glyph">
+        <div class="typography-stack">
+            <h1 class="wordmark">CHROMA</h1>
+            <p class="subtext">DEFENSE AI LAB</p>
+        </div>
+    </div>
+
+</body>
+</html>
