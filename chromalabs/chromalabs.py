@@ -2,9 +2,7 @@ import reflex as rx
 
 from chromalabs.pages.index import index
 from chromalabs.pages.capabilities.capabilities import capabilities
-from chromalabs.pages.products.wearables import wearables
-from chromalabs.pages.solutions.defense import defense
-from chromalabs.pages.solutions.hyperscale import hyperscale
+from chromalabs.pages.research.research import research
 from chromalabs.pages.company.mission import mission
 from chromalabs.pages.company.careers import careers
 from chromalabs.pages.company.contact import contact
@@ -24,12 +22,11 @@ app = rx.App(
     ],
 )
 
-app.add_page(index, route="/", title="Higher Dimensional Compute | Chroma Labs", image="/logo.svg")
+app.add_page(index, route="/", title="Higher Dimensional HPC | Chroma Labs", image="/logo.svg")
 app.add_page(capabilities, route="/capabilities", title="Capabilities | Chroma Labs", image="/logo.svg")
-app.add_page(wearables, route="/products/wearables", title="Wearables & Tech Armor | Chroma Labs", image="/logo.svg")
-app.add_page(defense, route="/solutions/defense", title="Defense Solutions | Chroma Labs", image="/logo.svg")
-app.add_page(hyperscale, route="/solutions/hyperscale", title="Hyperscale AI | Chroma Labs", image="/logo.svg")
+app.add_page(research, route="/research", title="Research & Architecture | Chroma Labs", image="/logo.svg")
 app.add_page(mission, route="/company/mission", title="Mission | Chroma Labs", image="/logo.svg")
 app.add_page(careers, route="/company/careers", title="Careers | Chroma Labs", image="/logo.svg")
 app.add_page(contact, route="/contact", title="Contact | Chroma Labs", image="/logo.svg")
 app.add_page(developer, route="/developer", title="Developer | Chroma Labs", image="/logo.svg")
+

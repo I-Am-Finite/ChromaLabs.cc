@@ -13,8 +13,8 @@ def index() -> rx.Component:
 
             rx.vstack(
                 rx.text(
-                    "Beyond Binary.", 
-                    font_size=["3.5rem", "4.5rem", "6rem", "7.5rem"], weight="bold", letter_spacing="-0.03em", line_height="1.1",
+                    "Higher Dimensional HPC & Defense Research Lab", 
+                    font_size=["2.5rem", "3.5rem", "5rem", "6.5rem"], weight="bold", letter_spacing="-0.03em", line_height="1.1",
                     color="white", text_align="center", class_name="animate-fade-up", margin_top="12",
                     font_family="'EB Garamond', 'Playfair Display', serif",
                 ),

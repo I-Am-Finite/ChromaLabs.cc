@@ -61,38 +61,24 @@ def navbar() -> rx.Component:
         rx.spacer(),
         rx.hstack(
             navbar_dropdown("CAPABILITIES", [
-                ("Algorithms", "/capabilities"),
-                ("Research", "/capabilities"),
+                ("Optical Routing", "/capabilities"),
+                ("Geometric Inferencing", "/capabilities"),
             ]),
-            navbar_dropdown("PRODUCTS", [
-                ("Wearables", "/products/wearables"),
-                ("Tech Armor", "/products/wearables"),
-            ]),
-            navbar_dropdown("SOLUTIONS", [
-                ("Air & Autonomy", "/solutions/defense"),
-                ("Land & Tactical", "/solutions/defense"),
-                ("Hyperscale AI", "/solutions/hyperscale"),
+            navbar_dropdown("RESEARCH", [
+                ("Beyond Binary", "/research"),
+                ("Volumetric Logic", "/research"),
             ]),
             navbar_dropdown("COMPANY", [
                 ("Mission", "/company/mission"),
                 ("Careers", "/company/careers"),
             ]),
+            navbar_dropdown("DEVELOPER PORTAL", [
+                ("API Documentation", "/developer"),
+                ("SDK Access", "/developer"),
+            ]),
             spacing="9",
             align_items="center",
             display=["none", "none", "none", "flex"],
-        ),
-        rx.spacer(),
-        rx.hstack(
-            rx.link(
-                rx.button(
-                    "Developer Portal", 
-                    bg="white", color="black", border="none", 
-                    font_size="0.9rem", font_weight="600", padding="10px 20px", border_radius="6px", 
-                    cursor="pointer", transition="all 0.2s ease",
-                    _hover={"bg": "#e0e0e0"}
-                ),
-                href="/developer", _hover={"text_decoration": "none"}
-            ),
         ),
         width="100%",
         padding_x="12",
