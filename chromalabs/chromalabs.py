@@ -15,6 +15,14 @@ app = rx.App(
     ],
     style={
         "font_family": "Inter, sans-serif",
+        "@keyframes traceX": {
+            "0%": {"transform": "translateX(-100%)"},
+            "100%": {"transform": "translateX(100vw)"},
+        },
+        "@keyframes traceY": {
+            "0%": {"transform": "translateY(-100%)"},
+            "100%": {"transform": "translateY(100vh)"},
+        },
     },
     head_components=[
         rx.el.link(rel="icon", href="/logo.svg", type_="image/svg+xml"),
