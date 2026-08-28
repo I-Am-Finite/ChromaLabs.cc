@@ -1,6 +1,44 @@
+# Python
 *.py[cod]
 __pycache__/
-.states
-assets/external/
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+.venv
+venv/
+ENV/
+
+# Reflex
 .web
+.reflex
+reflex.lock/
+.states
 *.db
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn.lock
+package-lock.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Other
+assets/external/
