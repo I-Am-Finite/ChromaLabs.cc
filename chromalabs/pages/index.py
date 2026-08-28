@@ -31,7 +31,7 @@ def index() -> rx.Component:
             ),
 
             # Split Hero
-            rx.flex(
+            rx.box(
                 # LEFT 45% - COPY
                 rx.vstack(
                     telemetry_badge("SYS: SECURE | RUNTIME: 0.4ms"),
@@ -120,7 +120,8 @@ def index() -> rx.Component:
                     margin_top=["3rem", "3rem", "3rem", "0"],
                     class_name="animate-fade-up delay-300",
                 ),
-                direction=["column", "column", "column", "row"],
+                display="flex",
+                flex_direction=["column", "column", "column", "row"],
                 width="100%",
                 align_items="center",
                 max_width="1400px",
