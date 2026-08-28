@@ -22,8 +22,8 @@ def base_layout(content: rx.Component) -> rx.Component:
         navbar(),
         rx.box(
             content,
-            min_height="100vh",
-            padding_top="80px", # Offset for fixed navbar
+            min_height="calc(100vh - 250px)",
+            padding_top="100px",
         ),
         footer(),
         rx.script(src="/fractal.js"),

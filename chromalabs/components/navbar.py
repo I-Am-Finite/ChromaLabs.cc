@@ -52,9 +52,9 @@ def navbar() -> rx.Component:
                 ("Capabilities", "/products/capabilities"),
             ]),
             navbar_dropdown("SOLUTIONS", [
-                ("Sea & Undersea", "/solutions/defense"),
-                ("Land & Tactical", "/solutions/defense"),
+                ("Wearables & Tech Armor", "/solutions/defense"),
                 ("Air & Autonomy", "/solutions/defense"),
+                ("Land & Tactical", "/solutions/defense"),
                 ("Hyperscale AI", "/solutions/hyperscale"),
             ]),
             navbar_dropdown("COMPANY", [
