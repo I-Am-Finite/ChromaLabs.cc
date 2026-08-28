@@ -5,8 +5,8 @@ canvas.style.top = '0';
 canvas.style.left = '0';
 canvas.style.width = '100vw';
 canvas.style.height = '100vh';
-canvas.style.zIndex = '0'; // We'll rely on higher z-index in Reflex components
-canvas.style.opacity = '0.4';
+canvas.style.zIndex = '0';
+canvas.style.opacity = '0.35';
 canvas.style.pointerEvents = 'none';
 document.body.appendChild(canvas);
 
@@ -20,106 +20,165 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
-// Isometric projection helper
-function iso(x, y, z) {
-    const isoX = (x - y) * Math.cos(Math.PI / 6);
-    const isoY = (x + y) * Math.sin(Math.PI / 6) - z;
-    return { x: isoX, y: isoY };
+// Lambda Calculus AST Node Simulation
+class ASTNode {
+    constructor(x, y, depth, type) {
+        this.x = x;
+        this.y = y;
+        this.baseX = x;
+        this.baseY = y;
+        this.depth = depth;
+        this.type = type; // 0 = App, 1 = Lambda, 2 = Var
+        this.children = [];
+        this.radius = 4 + (5 - depth) * 1.5;
+        this.reductionState = 0; // 0: stable, 1: reducing, 2: expanding
+        this.reductionTimer = 0;
+    }
 }
 
-function drawIsometricBox(cx, cy, size, zOffset, depth, time) {
-    if (depth === 0) return;
+let root;
+const MAX_DEPTH = 6;
 
-    // Beta-reduction simulation: sizes compress based on time and depth
-    // Using sine waves to simulate "crushing" absorption
-    const compression = (Math.sin(time * 0.002 + depth) + 1) * 0.5; // 0 to 1
-    const actualSize = size * (1 - compression * 0.2); 
-    const half = actualSize / 2;
-
-    const points = [
-        iso(-half, -half, zOffset),
-        iso(half, -half, zOffset),
-        iso(half, half, zOffset),
-        iso(-half, half, zOffset),
-        iso(-half, -half, zOffset - actualSize),
-        iso(half, -half, zOffset - actualSize),
-        iso(half, half, zOffset - actualSize),
-        iso(-half, half, zOffset - actualSize)
-    ];
-
-    ctx.save();
-    ctx.translate(cx, cy);
-
-    // Styling: Gold for outer bounds (Lambda), Cyan for inner (Variables)
-    if (depth % 2 === 0) {
-        ctx.strokeStyle = `rgba(212, 175, 55, ${0.15 + (depth * 0.05)})`; // Gold
-    } else {
-        ctx.strokeStyle = `rgba(0, 240, 255, ${0.15 + (depth * 0.05)})`; // Cyan
-    }
+function buildTree(node, x, y, depth, angle, spread) {
+    if (depth >= MAX_DEPTH) return;
     
-    // Add glow during heavy compression (beta-reduction event)
-    if (compression > 0.8) {
-        ctx.shadowColor = depth % 2 === 0 ? '#D4AF37' : '#00F0FF';
-        ctx.shadowBlur = 15;
-        ctx.strokeStyle = `rgba(255, 255, 255, 0.8)`; // Flash white
-    } else {
-        ctx.shadowBlur = 0;
+    // Generate left (function) and right (argument) subtrees
+    const leftAngle = angle - spread;
+    const rightAngle = angle + spread;
+    
+    const length = 80 + (MAX_DEPTH - depth) * 15;
+    
+    const lx = x + Math.cos(leftAngle) * length;
+    const ly = y + Math.sin(leftAngle) * length;
+    const leftNode = new ASTNode(lx, ly, depth + 1, Math.random() > 0.5 ? 0 : 1);
+    
+    const rx = x + Math.cos(rightAngle) * length;
+    const ry = y + Math.sin(rightAngle) * length;
+    const rightNode = new ASTNode(rx, ry, depth + 1, 2);
+    
+    node.children.push(leftNode);
+    node.children.push(rightNode);
+    
+    buildTree(leftNode, lx, ly, depth + 1, leftAngle, spread * 0.7);
+    buildTree(rightNode, rx, ry, depth + 1, rightAngle, spread * 0.7);
+}
+
+function initTree() {
+    root = new ASTNode(width / 2, -50, 0, 0); // Start slightly above screen
+    buildTree(root, width / 2, 100, 0, Math.PI / 2, Math.PI / 4.5);
+}
+
+// Traverse and animate reductions
+function updateAndDraw(node, time) {
+    // Subtle breathing animation for all nodes
+    node.x = node.baseX + Math.sin(time * 0.001 + node.depth) * 10;
+    node.y = node.baseY + Math.cos(time * 0.0015 + node.depth) * 10;
+
+    // Simulate Beta-Reduction visually
+    // If a node is an Application (0) and left child is Lambda (1), they can reduce.
+    // Visually, right subtree gets pulled into left subtree.
+    if (Math.random() < 0.001 && node.children.length === 2 && node.reductionState === 0) {
+        node.reductionState = 1;
+        node.reductionTimer = 60; // frames
     }
 
-    ctx.lineWidth = 1;
+    if (node.reductionState === 1) {
+        node.reductionTimer--;
+        const rightChild = node.children[1];
+        const leftChild = node.children[0];
+        
+        // Right child gets gravitationally pulled to left child (substitution)
+        rightChild.x += (leftChild.x - rightChild.x) * 0.1;
+        rightChild.y += (leftChild.y - rightChild.y) * 0.1;
 
-    // Draw bottom face
-    ctx.beginPath();
-    ctx.moveTo(points[0].x, points[0].y);
-    ctx.lineTo(points[1].x, points[1].y);
-    ctx.lineTo(points[2].x, points[2].y);
-    ctx.lineTo(points[3].x, points[3].y);
-    ctx.closePath();
-    ctx.stroke();
+        if (node.reductionTimer <= 0) {
+            node.reductionState = 2; // Snap back/re-expand
+            node.reductionTimer = 30;
+        }
+    } else if (node.reductionState === 2) {
+        node.reductionTimer--;
+        const rightChild = node.children[1];
+        
+        // Push back to base positions
+        rightChild.x += (rightChild.baseX - rightChild.x) * 0.1;
+        rightChild.y += (rightChild.baseY - rightChild.y) * 0.1;
 
-    // Draw top face
-    ctx.beginPath();
-    ctx.moveTo(points[4].x, points[4].y);
-    ctx.lineTo(points[5].x, points[5].y);
-    ctx.lineTo(points[6].x, points[6].y);
-    ctx.lineTo(points[7].x, points[7].y);
-    ctx.closePath();
-    ctx.stroke();
+        if (node.reductionTimer <= 0) {
+            node.reductionState = 0;
+            rightChild.x = rightChild.baseX;
+            rightChild.y = rightChild.baseY;
+        }
+    }
 
-    // Draw connecting edges
-    for (let i = 0; i < 4; i++) {
+    // Draw Edges
+    for (const child of node.children) {
         ctx.beginPath();
-        ctx.moveTo(points[i].x, points[i].y);
-        ctx.lineTo(points[i+4].x, points[i+4].y);
+        ctx.moveTo(node.x, node.y);
+        ctx.lineTo(child.x, child.y);
+        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 + (0.05 * (MAX_DEPTH - child.depth))})`;
+        ctx.lineWidth = 1;
         ctx.stroke();
+        
+        // Data pulses moving down the tree
+        const pulse = (time * 0.05 + child.depth * 20) % 100;
+        if (pulse < 20) {
+            const px = node.x + (child.x - node.x) * (pulse / 20);
+            const py = node.y + (child.y - node.y) * (pulse / 20);
+            ctx.beginPath();
+            ctx.arc(px, py, 2, 0, Math.PI * 2);
+            ctx.fillStyle = child.type === 2 ? '#00F0FF' : '#D4AF37';
+            ctx.fill();
+        }
+        
+        updateAndDraw(child, time);
     }
 
-    ctx.restore();
-
-    // Recursive branches for inner variables (AST)
-    const newSize = size * 0.6;
-    const newZ = zOffset - size * 1.5;
+    // Draw Node Geometry (Hexagon or Diamond)
+    ctx.save();
+    ctx.translate(node.x, node.y);
+    ctx.rotate(time * 0.0005 * (node.depth % 2 === 0 ? 1 : -1));
+    ctx.beginPath();
+    const sides = node.type === 0 ? 6 : 4; // Hexagon for App, Diamond for Lambda/Var
+    for (let i = 0; i < sides; i++) {
+        const angle = (i * Math.PI * 2) / sides;
+        const hx = Math.cos(angle) * node.radius;
+        const hy = Math.sin(angle) * node.radius;
+        if (i === 0) ctx.moveTo(hx, hy);
+        else ctx.lineTo(hx, hy);
+    }
+    ctx.closePath();
     
-    // Left branch
-    drawIsometricBox(cx - actualSize, cy + actualSize*0.5, newSize, newZ, depth - 1, time + 200);
-    // Right branch
-    drawIsometricBox(cx + actualSize, cy - actualSize*0.5, newSize, newZ, depth - 1, time + 400);
+    if (node.type === 1) {
+        ctx.strokeStyle = 'rgba(212, 175, 55, 0.8)'; // Gold Lambda
+        ctx.fillStyle = 'rgba(212, 175, 55, 0.1)';
+    } else if (node.type === 2) {
+        ctx.strokeStyle = 'rgba(0, 240, 255, 0.8)'; // Cyan Variable
+        ctx.fillStyle = 'rgba(0, 240, 255, 0.1)';
+    } else {
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)'; // White Application
+        ctx.fillStyle = 'transparent';
+    }
+    
+    if (node.reductionState === 1) {
+        ctx.shadowColor = '#00F0FF';
+        ctx.shadowBlur = 10;
+        ctx.fillStyle = 'rgba(0, 240, 255, 0.5)';
+    }
+    
+    ctx.fill();
+    ctx.stroke();
+    ctx.restore();
 }
 
 let time = 0;
 function animate() {
     ctx.clearRect(0, 0, width, height);
-    
-    const maxDepth = 5;
-    const baseSize = Math.min(width, height) * 0.25;
-    
-    // Slowly orbit the entire structure
-    const cx = width / 2;
-    const cy = height / 2 + 100;
-    
-    drawIsometricBox(cx, cy, baseSize, 0, maxDepth, time);
-
-    time += 16;
+    if (!root || width === 0) {
+        if (width > 0) initTree();
+    } else {
+        updateAndDraw(root, time);
+    }
+    time += 1;
     requestAnimationFrame(animate);
 }
 animate();
