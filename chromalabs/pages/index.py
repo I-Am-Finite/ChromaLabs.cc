@@ -47,7 +47,7 @@ def index() -> rx.Component:
             transform="translateX(-50%)",
         ),
 
-        # Hero Section
+        # Hero Section with 3D Placeholder
         rx.vstack(
             rx.box(
                 rx.text("NSF I-CORPS BACKED", size="1", weight="bold", color="#D4AF37", letter_spacing="0.2em"),
@@ -103,11 +103,56 @@ def index() -> rx.Component:
                 ),
                 spacing="4",
             ),
+            # WebGL / 3D Canvas Placeholder (To match Anduril/Celestial AI interactive hardware)
+            rx.box(
+                rx.html('<script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.94/build/spline-viewer.js"></script><spline-viewer url="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"></spline-viewer>'),
+                width="100%",
+                height="500px",
+                margin_top="10",
+                opacity="0.8",
+                border="1px solid rgba(255,255,255,0.05)",
+                background="rgba(0,0,0,0.5)",
+            ),
             width="100%",
             min_height="100vh",
             align_items="center",
             justify_content="center",
             padding_x="4",
+            padding_top="32",
+        ),
+        
+        # Capability Matrix Section
+        rx.vstack(
+            rx.heading("CAPABILITIES", size="4", color="#D4AF37", letter_spacing="0.1em", margin_bottom="8"),
+            rx.grid(
+                rx.box(
+                    rx.heading("01 / TENSOR ROUTING", size="3", color="white", margin_bottom="2"),
+                    rx.text("Spatial routing algorithms that bypass standard memory walls via direct optical paths.", color="slate.11", size="2"),
+                    border_top="1px solid rgba(255,255,255,0.1)",
+                    padding_top="4"
+                ),
+                rx.box(
+                    rx.heading("02 / LOW SWaP EDGE", size="3", color="white", margin_bottom="2"),
+                    rx.text("Operating under 5W for kinetic field deployments and autonomous UAV systems.", color="slate.11", size="2"),
+                    border_top="1px solid rgba(255,255,255,0.1)",
+                    padding_top="4"
+                ),
+                rx.box(
+                    rx.heading("03 / HYPERSCALE SYNC", size="3", color="white", margin_bottom="2"),
+                    rx.text("Coherent multi-rack scaling utilizing off-the-shelf telecom fiber infrastructure.", color="slate.11", size="2"),
+                    border_top="1px solid rgba(255,255,255,0.1)",
+                    padding_top="4"
+                ),
+                columns="3",
+                spacing="8",
+                width="100%",
+                max_width="1200px",
+                padding_x="6",
+            ),
+            width="100%",
+            padding_y="20",
+            background="#050505",
+            align_items="center",
         ),
         bg="transparent",
         position="relative",
