@@ -25,6 +25,9 @@
 .rt-ToastViewport,
 #connection-error, 
 #reflex-connection-error,
+[data-sonner-toaster],
+svg[class*="lucide-wifi-off"],
+div[title*="Connection Error"],
 #reflex-logo,
 a[href*="reflex.dev"] {
   display: none !important;
