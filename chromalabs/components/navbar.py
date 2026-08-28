@@ -52,23 +52,9 @@ def navbar_dropdown(title: str, items: list[tuple[str, str]]) -> rx.Component:
 
 def navbar() -> rx.Component:
     return rx.hstack(
-        # Perfect Identity Guide Lockup
+        # Perfect Unified SVG Lockup
         rx.link(
-            rx.hstack(
-                rx.image(
-                    src="/logo_glyph.png", 
-                    height="65px", width="auto", 
-                    style={"filter": "drop-shadow(0px 8px 10px rgba(0,0,0,0.6))"}
-                ),
-                rx.vstack(
-                    rx.text("CHROMA", font_family="Inter, sans-serif", font_weight="900", font_size="2.2rem", letter_spacing="0.03em", color="#DFBC61", line_height="0.9"),
-                    rx.text("DEFENSE AI LAB", font_family="Inter, sans-serif", font_weight="700", font_size="0.65rem", letter_spacing="0.2em", color="#AA8529", line_height="1"),
-                    spacing="1",
-                    align_items="flex-start",
-                ),
-                spacing="3", # Extremely tight gap to match the guide
-                align_items="center",
-            ),
+            rx.image(src="/logo.svg?v=3", height="50px", width="auto"),
             href="/", 
             _hover={"text_decoration": "none"}
         ),
