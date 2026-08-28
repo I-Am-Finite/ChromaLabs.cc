@@ -42,3 +42,7 @@ Thumbs.db
 
 # Other
 assets/external/
+
+# Local Media
+/*.png
+/*.jpg
