@@ -1,4 +1,4 @@
-
+﻿
 import reflex as rx
 from chromalabs.components.layout import base_layout
 
@@ -6,6 +6,7 @@ def index() -> rx.Component:
     return base_layout(
         rx.box(
             rx.vstack(
+                                rx.image(src="/logo_glyph.svg?v=1", height="100px", width="auto", margin_bottom="30px", style={"filter": "drop-shadow(0px 10px 15px rgba(0,0,0,0.8))"}),
                 rx.text(
                     "Higher Dimensional HPC & Defense Research Lab", 
                     font_size=["2.5rem", "3.5rem", "4.5rem", "5.5rem"], weight="bold", letter_spacing="-0.02em", line_height="1.1",
