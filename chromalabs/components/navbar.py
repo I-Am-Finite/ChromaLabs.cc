@@ -1,5 +1,4 @@
-﻿
-import reflex as rx
+﻿import reflex as rx
 
 def menu_item(text: str, url: str) -> rx.Component:
     return rx.box(
@@ -53,16 +52,25 @@ def navbar_dropdown(title: str, items: list[tuple[str, str]]) -> rx.Component:
 
 def navbar() -> rx.Component:
     return rx.hstack(
+        # Formal Horizontal Lockup
         rx.link(
             rx.hstack(
-                rx.icon(tag="hexagon", size=32, color="#D4AF37", transition="transform 0.3s ease", _hover={"transform": "rotate(90deg)"}),
-                rx.text("Chroma Labs", font_weight="800", font_size="1.5rem", letter_spacing="0.02em", color="white"),
-                spacing="4",
+                rx.image(src="/logo.svg", width="44px", height="44px", transition="transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)", _hover={"transform": "rotate(180deg) scale(1.1)"}),
+                rx.vstack(
+                    rx.text("CHROMA", font_weight="900", font_size="1.6rem", letter_spacing="0.1em", color="white", line_height="1"),
+                    rx.text("DEFENSE AI LAB", font_family="JetBrains Mono, monospace", font_weight="700", font_size="0.6rem", letter_spacing="0.15em", color="#D4AF37", line_height="1"),
+                    spacing="1",
+                    align_items="flex-start",
+                ),
+                spacing="5",
                 align_items="center",
             ),
             href="/", 
             _hover={"text_decoration": "none"}
         ),
+        
+        rx.spacer(),
+
         navbar_dropdown("CAPABILITIES", [
             ("AI", "/capabilities/ai"),
             ("HPC", "/capabilities/hpc"),
@@ -86,7 +94,6 @@ def navbar() -> rx.Component:
         padding_x="12",
         height="100px",
         align_items="center",
-        justify_content="space-evenly",
         position="fixed",
         top="0",
         border_bottom="1px solid rgba(255, 255, 255, 0.05)",
@@ -94,4 +101,3 @@ def navbar() -> rx.Component:
         backdrop_filter="blur(24px)",
         z_index="50",
     )
-
