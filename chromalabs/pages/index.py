@@ -14,100 +14,188 @@ setTimeout(() => {
     window.addEventListener("resize", resize);
     resize();
 
-    let progress = 0.0;
-    const SPEED = 0.003;
-
-    function drawTrompNode(x, y, width, height, depth) {
-        if (depth === 0) return;
+    let time = 0;
+    const SPEED = 0.005; // Slightly slower to appreciate the complex structural morph
+    
+    // We animate a single structural beta-reduction cycle that loops perfectly.
+    // The cycle has 4 phases (0 to 1 progress):
+    // 0.0 - 0.2: Highlight the redex (the application bridge)
+    // 0.2 - 0.4: Dissolve the left abstraction
+    // 0.4 - 0.8: Duplicate right structure and slide it into the variable slots
+    // 0.8 - 1.0: Camera zoom out to accommodate the doubled structure, snapping back to start
+    
+    function drawSubTree(x, y, w, h, opacity) {
+        ctx.save();
+        ctx.globalAlpha = opacity;
         
         ctx.beginPath();
-        // Horizontal abstraction line
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + width, y);
+        // Abstraction (horizontal)
+        ctx.moveTo(x - w/2, y);
+        ctx.lineTo(x + w/2, y);
         
-        // Vertical variable lines
-        const leftDrop = x + width * 0.2;
-        const rightDrop = x + width * 0.8;
+        // Variable drops
+        ctx.moveTo(x - w/4, y);
+        ctx.lineTo(x - w/4, y + h); // left var
         
-        ctx.moveTo(leftDrop, y);
-        ctx.lineTo(leftDrop, y + height);
+        ctx.moveTo(x + w/4, y);
+        ctx.lineTo(x + w/4, y + h); // right var
         
-        ctx.moveTo(rightDrop, y);
-        ctx.lineTo(rightDrop, y + height);
+        // Internal application bridge (x applied to x)
+        ctx.moveTo(x - w/4, y + h);
+        ctx.lineTo(x + w/4, y + h);
         
-        // Horizontal application line connecting
-        ctx.moveTo(leftDrop, y + height);
-        ctx.lineTo(leftDrop + width * 0.4, y + height);
         ctx.stroke();
-        
-        // Recursive children (Beta-reduction scaling logic)
-        // Left child
-        drawTrompNode(leftDrop, y + height, width * 0.5, height * 0.8, depth - 1);
-        // Right child (shifted)
-        drawTrompNode(rightDrop, y + height * 0.6, width * 0.5, height * 0.8, depth - 1);
+        ctx.restore();
     }
-
+    
     function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#0A0A0C";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+        let cycle = time % 1.0;
         
         ctx.save();
         ctx.translate(canvas.width / 2, canvas.height / 2);
         
-        // The mathematical self-similarity ratio is exactly 2.0 (since width child is 0.5)
-        // We interpolate scale logarithmically to make the fractal zoom seamless
-        const scale = Math.pow(2.0, progress);
-        ctx.scale(scale, scale);
+        // Phase 4: Camera zoom out (from 1x down to 0.5x over the cycle)
+        let zoom = 1.0;
+        if (cycle > 0.8) {
+            let t = (cycle - 0.8) / 0.2; // 0 to 1
+            zoom = 1.0 - (0.5 * Math.pow(t, 2)); 
+        }
+        ctx.scale(zoom, zoom);
         
-        ctx.rotate(-0.12); // Tilt for dynamic aesthetic
+        ctx.lineWidth = 2 / zoom;
         
-        ctx.lineWidth = 1.5 / scale; // Keep stroke width constant
+        // Render base geometry. Massively scaled so it fills the screen perfectly.
+        const W = 800;
+        const H = 400;
         
-        // Draw the massive seed structure centered
-        drawTrompNode(-400, -200, 800, 250, 9);
+        // Global variables for the two structures
+        const leftX = -W/2;
+        const rightX = W/2;
+        const yTop = -H/2;
         
-        // Draw adjacent identical structures to fill the screen as it zooms out
-        drawTrompNode(-400 - 800, -200, 800, 250, 9);
-        drawTrompNode(-400 + 800, -200, 800, 250, 9);
+        // Phase 1: Highlight bridge
+        let bridgeColor = "rgba(212, 175, 55, 0.4)";
+        if (cycle < 0.2) {
+            let flash = Math.sin(cycle * Math.PI / 0.2);
+            bridgeColor = `rgba(255, ${100 + 155 * flash}, 55, ${0.4 + 0.6 * flash})`;
+        }
+        
+        // Draw the overarching application bridge (from left root to right root)
+        if (cycle < 0.4) {
+            ctx.beginPath();
+            ctx.strokeStyle = bridgeColor;
+            ctx.moveTo(leftX, yTop - 40);
+            ctx.lineTo(rightX, yTop - 40);
+            ctx.stroke();
+            
+            // Connecting vertical lines to the abstraction roots
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+            ctx.moveTo(leftX, yTop - 40);
+            ctx.lineTo(leftX, yTop);
+            ctx.moveTo(rightX, yTop - 40);
+            ctx.lineTo(rightX, yTop);
+            ctx.stroke();
+        }
+        
+        // Phase 2: Dissolve left abstraction
+        let leftOpacity = 1.0;
+        if (cycle >= 0.2 && cycle < 0.4) {
+            leftOpacity = 1.0 - ((cycle - 0.2) / 0.2);
+        } else if (cycle >= 0.4) {
+            leftOpacity = 0.0;
+        }
+        
+        // Left Structure (Dissolving abstraction, leaving variables)
+        if (leftOpacity > 0) {
+            ctx.save();
+            ctx.globalAlpha = leftOpacity;
+            ctx.beginPath();
+            ctx.moveTo(leftX - W/2, yTop);
+            ctx.lineTo(leftX + W/2, yTop);
+            ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+            ctx.stroke();
+            ctx.restore();
+        }
+        
+        // The left variables drop down. In a real reduction, these grab the right structure.
+        ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+        ctx.beginPath();
+        // Left var
+        ctx.moveTo(leftX - W/4, yTop);
+        ctx.lineTo(leftX - W/4, yTop + H);
+        // Right var
+        ctx.moveTo(leftX + W/4, yTop);
+        ctx.lineTo(leftX + W/4, yTop + H);
+        // Internal application of left structure
+        ctx.moveTo(leftX - W/4, yTop + H);
+        ctx.lineTo(leftX + W/4, yTop + H);
+        ctx.stroke();
+        
+        // Phase 3: Duplication of Right Structure
+        let dupProgress = 0;
+        if (cycle >= 0.4 && cycle < 0.8) {
+            let t = (cycle - 0.4) / 0.4;
+            dupProgress = t * t * (3 - 2 * t); // Smoothstep
+        } else if (cycle >= 0.8) {
+            dupProgress = 1.0;
+        }
+        
+        // Target positions for the duplicated structures
+        const target1X = leftX - W/4;
+        const target1Y = yTop + H;
+        
+        const target2X = leftX + W/4;
+        const target2Y = yTop + H;
+        
+        // Current positions based on interpolation
+        const curr1X = rightX + (target1X - rightX) * dupProgress;
+        const curr1Y = yTop + (target1Y - yTop) * dupProgress;
+        
+        const curr2X = rightX + (target2X - rightX) * dupProgress;
+        const curr2Y = yTop + (target2Y - yTop) * dupProgress;
+        
+        const currentScale = 1.0 - (0.5 * dupProgress);
+        
+        if (cycle < 0.4) {
+            // Single right structure before duplication
+            drawSubTree(rightX, yTop, W, H, 1.0);
+        } else {
+            // Two duplicating structures animating into the variable slots
+            ctx.save();
+            ctx.translate(curr1X, curr1Y);
+            ctx.scale(currentScale, currentScale);
+            drawSubTree(0, 0, W, H, 1.0);
+            ctx.restore();
+            
+            ctx.save();
+            ctx.translate(curr2X, curr2Y);
+            ctx.scale(currentScale, currentScale);
+            drawSubTree(0, 0, W, H, 1.0);
+            ctx.restore();
+        }
         
         ctx.restore();
         
-        progress += SPEED;
-        if (progress >= 1.0) {
-            progress = 0.0; // Snap perfectly back to 1.0 scale
-        }
-        
+        time += SPEED;
         requestAnimationFrame(animate);
     }
     animate();
-}, 500); // Small delay to ensure canvas is mounted
+}, 500);
 """
-
-def lambda_node() -> rx.Component:
-    return rx.box(
-        rx.text("L-TREE FUSION", font_size="9px", color="rgba(212, 175, 55, 0.8)", letter_spacing="2px", margin_bottom="10px", text_align="center"),
-        # Floating empty glass box to act as a UI element above the fractal
-        padding="16px", background="rgba(10, 10, 12, 0.7)", border="1px solid rgba(212, 175, 55, 0.3)",
-        border_radius="4px", backdrop_filter="blur(12px)", box_shadow="0 0 40px rgba(0,0,0,0.8)",
-        transition="all 0.3s ease", _hover={"border_color": "#FF0000"}, width="140px", height="80px"
-    )
 
 def index() -> rx.Component:
     return base_layout(
         rx.box(
-            # Infinite Tromp Diagram Fractal Zoom Background
+            # Full Screen Active Beta-Reduction Canvas
             rx.el.canvas(
                 id="lambdaBackground", 
                 style={"position": "absolute", "top": "0", "left": "0", "width": "100vw", "height": "100vh", "z_index": "-2", "pointer_events": "none"}
             ),
             rx.script(TROMP_FRACTAL_JS),
-            
-            # Attached Lambda Nodes tracking the fractal depth illusion
-            rx.box(lambda_node(), position="absolute", top="15%", left="20%", z_index="-1", class_name="animate-fade-up"),
-            rx.box(lambda_node(), position="absolute", top="45%", left="60%", z_index="-1", class_name="animate-fade-up delay-100"),
-            rx.box(lambda_node(), position="absolute", top="70%", left="80%", z_index="-1", class_name="animate-fade-up delay-200"),
-            rx.box(lambda_node(), position="absolute", top="80%", left="10%", z_index="-1", class_name="animate-fade-up delay-300"),
             
             # Ambient Void Glows
             rx.box(
