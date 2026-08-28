@@ -215,7 +215,7 @@ def index() -> rx.Component:
                         href="/developer", _hover={"text_decoration": "none"}
                     ),
                     rx.link(
-                        rx.button("Explore Capabilities", bg="transparent", border="1px solid rgba(212, 175, 55, 0.4)", color="white", border_radius="4px", font_size="1rem", font_weight="600", padding="24px 36px", cursor="pointer", transition="all 0.2s ease", _hover={"bg": "rgba(212, 175, 55, 0.1)"}),
+                        rx.button("Explore Capabilities", bg="#D4AF37", border="none", color="black", border_radius="4px", font_size="1rem", font_weight="600", padding="24px 36px", cursor="pointer", transition="all 0.2s ease", _hover={"bg": "#e6c455"}),
                         href="/capabilities", _hover={"text_decoration": "none"}
                     ),
                     spacing="6", class_name="animate-fade-up delay-200", flex_wrap="wrap", justify_content="center", margin_top="16"
