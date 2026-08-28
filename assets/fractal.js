@@ -5,8 +5,8 @@ canvas.style.top = '0';
 canvas.style.left = '0';
 canvas.style.width = '100vw';
 canvas.style.height = '100vh';
-canvas.style.zIndex = '-2'; // Behind everything
-canvas.style.opacity = '0.3';
+canvas.style.zIndex = '0'; // We'll rely on higher z-index in Reflex components
+canvas.style.opacity = '0.4';
 canvas.style.pointerEvents = 'none';
 document.body.appendChild(canvas);
 
@@ -20,49 +20,104 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
-// Fractal animation parameters
-let time = 0;
-
-function drawBox(x, y, size, depth) {
-    if (depth === 0) return;
-    
-    // Abstract Lambda math / bounding box styling
-    ctx.strokeStyle = `rgba(212, 175, 55, ${0.1 * depth})`; // Gold lines
-    if (depth % 2 === 0) {
-        ctx.strokeStyle = `rgba(0, 240, 255, ${0.1 * depth})`; // Cyan lines
-    }
-    
-    ctx.lineWidth = 1;
-    ctx.strokeRect(x - size/2, y - size/2, size, size);
-    
-    // Connective lines simulating lambda calculus combinations
-    ctx.beginPath();
-    ctx.moveTo(x, y - size/2);
-    ctx.lineTo(x, y - size/2 - size * 0.2);
-    ctx.stroke();
-
-    const newSize = size * 0.48;
-    const offset = size * 0.5 * Math.sin(time * 0.001 * depth);
-    const yOffset = size * 0.5 * Math.cos(time * 0.0012 * depth);
-
-    // Recursion
-    drawBox(x - offset, y + yOffset, newSize, depth - 1);
-    drawBox(x + offset, y - yOffset, newSize, depth - 1);
+// Isometric projection helper
+function iso(x, y, z) {
+    const isoX = (x - y) * Math.cos(Math.PI / 6);
+    const isoY = (x + y) * Math.sin(Math.PI / 6) - z;
+    return { x: isoX, y: isoY };
 }
 
+function drawIsometricBox(cx, cy, size, zOffset, depth, time) {
+    if (depth === 0) return;
+
+    // Beta-reduction simulation: sizes compress based on time and depth
+    // Using sine waves to simulate "crushing" absorption
+    const compression = (Math.sin(time * 0.002 + depth) + 1) * 0.5; // 0 to 1
+    const actualSize = size * (1 - compression * 0.2); 
+    const half = actualSize / 2;
+
+    const points = [
+        iso(-half, -half, zOffset),
+        iso(half, -half, zOffset),
+        iso(half, half, zOffset),
+        iso(-half, half, zOffset),
+        iso(-half, -half, zOffset - actualSize),
+        iso(half, -half, zOffset - actualSize),
+        iso(half, half, zOffset - actualSize),
+        iso(-half, half, zOffset - actualSize)
+    ];
+
+    ctx.save();
+    ctx.translate(cx, cy);
+
+    // Styling: Gold for outer bounds (Lambda), Cyan for inner (Variables)
+    if (depth % 2 === 0) {
+        ctx.strokeStyle = `rgba(212, 175, 55, ${0.15 + (depth * 0.05)})`; // Gold
+    } else {
+        ctx.strokeStyle = `rgba(0, 240, 255, ${0.15 + (depth * 0.05)})`; // Cyan
+    }
+    
+    // Add glow during heavy compression (beta-reduction event)
+    if (compression > 0.8) {
+        ctx.shadowColor = depth % 2 === 0 ? '#D4AF37' : '#00F0FF';
+        ctx.shadowBlur = 15;
+        ctx.strokeStyle = `rgba(255, 255, 255, 0.8)`; // Flash white
+    } else {
+        ctx.shadowBlur = 0;
+    }
+
+    ctx.lineWidth = 1;
+
+    // Draw bottom face
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    ctx.lineTo(points[1].x, points[1].y);
+    ctx.lineTo(points[2].x, points[2].y);
+    ctx.lineTo(points[3].x, points[3].y);
+    ctx.closePath();
+    ctx.stroke();
+
+    // Draw top face
+    ctx.beginPath();
+    ctx.moveTo(points[4].x, points[4].y);
+    ctx.lineTo(points[5].x, points[5].y);
+    ctx.lineTo(points[6].x, points[6].y);
+    ctx.lineTo(points[7].x, points[7].y);
+    ctx.closePath();
+    ctx.stroke();
+
+    // Draw connecting edges
+    for (let i = 0; i < 4; i++) {
+        ctx.beginPath();
+        ctx.moveTo(points[i].x, points[i].y);
+        ctx.lineTo(points[i+4].x, points[i+4].y);
+        ctx.stroke();
+    }
+
+    ctx.restore();
+
+    // Recursive branches for inner variables (AST)
+    const newSize = size * 0.6;
+    const newZ = zOffset - size * 1.5;
+    
+    // Left branch
+    drawIsometricBox(cx - actualSize, cy + actualSize*0.5, newSize, newZ, depth - 1, time + 200);
+    // Right branch
+    drawIsometricBox(cx + actualSize, cy - actualSize*0.5, newSize, newZ, depth - 1, time + 400);
+}
+
+let time = 0;
 function animate() {
     ctx.clearRect(0, 0, width, height);
     
-    // Draw central node
-    const maxDepth = 6;
-    const baseSize = Math.min(width, height) * 0.5;
+    const maxDepth = 5;
+    const baseSize = Math.min(width, height) * 0.25;
     
-    // Subtle rotation and pulsing
-    ctx.save();
-    ctx.translate(width / 2, height / 2);
-    ctx.rotate(time * 0.0002);
-    drawBox(0, 0, baseSize + Math.sin(time*0.001)*50, maxDepth);
-    ctx.restore();
+    // Slowly orbit the entire structure
+    const cx = width / 2;
+    const cy = height / 2 + 100;
+    
+    drawIsometricBox(cx, cy, baseSize, 0, maxDepth, time);
 
     time += 16;
     requestAnimationFrame(animate);

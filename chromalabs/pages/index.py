@@ -67,20 +67,20 @@ def index() -> rx.Component:
             rx.box(
                 rx.flex(
                     rx.vstack(
-                        rx.text("CORE ARCHITECTURE: GEOMETRIC", color="#00F0FF", size="1", font_family="JetBrains Mono, monospace", letter_spacing="0.1em"),
+                        rx.text("CORE ARCHITECTURE", color="#00F0FF", size="1", font_family="JetBrains Mono, monospace", letter_spacing="0.1em"),
                         rx.text("Photonic tensors mapped to consumer hardware.", color="white", size="4", weight="bold"),
-                        rx.text("Eliminating traditional memory walls by directly routing data through geometric spatial pipelines instead of sequential memory buses.", color="slate.11", size="2", max_width="400px"),
+                        rx.text("Eliminating traditional memory walls by directly routing data through spatial pipelines.", color="slate.11", size="2", max_width="400px"),
                         align_items="flex-start"
                     ),
                     rx.vstack(
                         rx.text("SWaP EFFICIENCY", color="#00F0FF", size="1", font_family="JetBrains Mono, monospace", letter_spacing="0.1em"),
-                        rx.text("< 5W", color="white", size="4", weight="bold"),
-                        rx.text("Designed for wearables and tactical edge.", color="slate.11", size="2"),
+                        rx.text("[ REDACTED ]", color="white", size="4", weight="bold"),
+                        rx.text("Designed for kinetic wearables and tactical edge.", color="slate.11", size="2"),
                         align_items="flex-start"
                     ),
                     rx.vstack(
                         rx.text("DATA THROUGHOUT", color="#00F0FF", size="1", font_family="JetBrains Mono, monospace", letter_spacing="0.1em"),
-                        rx.text("3.2 Tbps", color="white", size="4", weight="bold"),
+                        rx.text("HIGH-BANDWIDTH", color="white", size="4", weight="bold"),
                         rx.text("Direct optical node-to-node links.", color="slate.11", size="2"),
                         align_items="flex-start"
                     ),

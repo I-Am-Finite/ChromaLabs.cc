@@ -24,6 +24,8 @@ def base_layout(content: rx.Component) -> rx.Component:
             content,
             min_height="calc(100vh - 250px)",
             padding_top="100px",
+            position="relative",
+            z_index="10",
         ),
         footer(),
         rx.script(src="/fractal.js"),

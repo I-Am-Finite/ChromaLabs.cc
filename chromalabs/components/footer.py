@@ -29,5 +29,7 @@ def footer() -> rx.Component:
             margin="0 auto",
         ),
         background="#030303",
-        width="100%"
+        width="100%",
+        position="relative",
+        z_index="10",
     )

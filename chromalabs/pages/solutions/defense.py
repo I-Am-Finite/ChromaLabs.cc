@@ -18,17 +18,17 @@ def defense() -> rx.Component:
                     rx.text("[ DEPLOYMENT: KINETIC TACTICAL EDGE ]", color="#D4AF37", size="1", font_family="JetBrains Mono, monospace", letter_spacing="0.2em"),
                     rx.heading("DEFENSE & AEROSPACE", size="8", weight="bold", color="white", letter_spacing="-0.03em"),
                     rx.text(
-                        "Bringing proprietary geometric compute technology directly to the tactical edge. "
-                        "Our architecture enables real-time, autonomous neural network targeting and low SWaP augmented reality processing.",
+                        "Bringing proprietary computing architecture directly to the tactical edge. "
+                        "Our systems enable real-time, autonomous neural network targeting and low SWaP augmented reality processing.",
                         size="4", color="slate.11", max_width="800px", margin_top="2"
                     ),
                     align_items="flex-start",
                     width="60%"
                 ),
                 rx.hstack(
-                    defense_kpi("MAX DRAW", "< 5 WATTS"),
-                    defense_kpi("LATENCY", "0.4 ms"),
-                    defense_kpi("ARCHITECTURE", "GEOMETRIC"),
+                    defense_kpi("MAX DRAW", "CLASSIFIED"),
+                    defense_kpi("LATENCY", "SUB-MS"),
+                    defense_kpi("ARCHITECTURE", "PROPRIETARY"),
                     spacing="8",
                     width="40%",
                     justify="end",
@@ -72,11 +72,11 @@ def defense() -> rx.Component:
                     rx.box(
                         rx.text("02", color="rgba(255,255,255,0.05)", size="9", weight="bold", position="absolute", top="-2", right="2"),
                         rx.heading("AIR & AUTONOMY", size="5", color="white", margin_bottom="3", letter_spacing="0.05em"),
-                        rx.text("Autonomous targeting pipelines driven by novel neural network models running on our geometric cores.", color="slate.11", size="3"),
+                        rx.text("Autonomous targeting pipelines driven by novel neural network models running on proprietary cores.", color="slate.11", size="3"),
                         rx.divider(border_color="rgba(255,255,255,0.1)", margin_y="4"),
                         rx.vstack(
                             rx.hstack(rx.icon(tag="target", color="#00F0FF", size=16), rx.text("Kinetic autonomous targeting", color="slate.9", size="2")),
-                            rx.hstack(rx.icon(tag="cpu", color="#00F0FF", size=16), rx.text("On-board geometric inferencing", color="slate.9", size="2")),
+                            rx.hstack(rx.icon(tag="cpu", color="#00F0FF", size=16), rx.text("On-board spatial inferencing", color="slate.9", size="2")),
                             rx.hstack(rx.icon(tag="zap", color="#00F0FF", size=16), rx.text("GPS-denied pathfinding", color="slate.9", size="2")),
                             align_items="start"
                         ),
@@ -103,7 +103,7 @@ def defense() -> rx.Component:
                     margin_bottom="4"
                 ),
                 rx.box(
-                    rx.text("> Loading proprietary geometric model architecture...", color="slate.9", size="2", font_family="JetBrains Mono, monospace"),
+                    rx.text("> Loading proprietary model architecture...", color="slate.9", size="2", font_family="JetBrains Mono, monospace"),
                     rx.text("> NODE_01: NOMINAL", color="slate.11", size="2", font_family="JetBrains Mono, monospace"),
                     rx.text("> TARGETING_PIPELINE: ACTIVE", color="#00F0FF", size="2", font_family="JetBrains Mono, monospace"),
                     padding="6",

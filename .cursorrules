@@ -1,0 +1,13 @@
+# OPERATIONAL SECURITY (OPSEC) DIRECTIVE
+
+**CRITICAL MANDATE:** 
+Chroma Labs operates in the defense and hyperscale intelligence sector. Under NO CIRCUMSTANCES should specific internal hardware metrics, proprietary methodologies, or exact performance numbers be leaked to the public-facing codebase (`chromalabs.cc`).
+
+## Prohibited Disclosures (Redacted Material):
+1. **Exact Wattage Metrics:** (e.g., `< 5W max draw`). Replace with "Ultra-Low SWaP" or "[REDACTED]".
+2. **Exact Latency Speeds:** (e.g., `0.4ms`). Replace with "Sub-millisecond" or "Real-time".
+3. **Exact Bandwidth/Throughput:** (e.g., `3.2 Tbps`). Replace with "High-Bandwidth" or "Classified Optical Links".
+4. **Proprietary Architectural Names:** The exact mechanical term "Geometric Spatial Pipelines" or "Geometric Cores" must be obfuscated. Use "Proprietary Cores", "Spatial Pipelines", or "Novel Architecture".
+
+**Enforcement:**
+Any agent, subagent, or process editing `chromalabs.cc` must audit text for these exact metric leaks and sanitize them to tier-1 defense contractor abstraction levels.
