@@ -59,8 +59,9 @@ def navbar() -> rx.Component:
             align_items="center",
         ),
         navbar_dropdown("CAPABILITIES", [
-            ("Optical Routing", "/capabilities"),
-            ("Geometric Inferencing", "/capabilities"),
+            ("AI", "/capabilities/ai"),
+            ("HPC", "/capabilities/hpc"),
+            ("Government", "/capabilities/government"),
         ]),
         navbar_dropdown("RESEARCH", [
             ("Beyond Binary", "/research"),

@@ -55,8 +55,15 @@ app = rx.App(
     ],
 )
 
+from chromalabs.pages.capabilities.ai import ai
+from chromalabs.pages.capabilities.hpc import hpc
+from chromalabs.pages.capabilities.government import government
+
 app.add_page(index, route="/", title="Higher Dimensional HPC | Chroma Labs", image="/logo.svg")
 app.add_page(capabilities, route="/capabilities", title="Capabilities | Chroma Labs", image="/logo.svg")
+app.add_page(ai, route="/capabilities/ai", title="Exascale AI | Chroma Labs", image="/logo.svg")
+app.add_page(hpc, route="/capabilities/hpc", title="HPC | Chroma Labs", image="/logo.svg")
+app.add_page(government, route="/capabilities/government", title="Defense & Gov | Chroma Labs", image="/logo.svg")
 app.add_page(research, route="/research", title="Research & Architecture | Chroma Labs", image="/logo.svg")
 app.add_page(mission, route="/company/mission", title="Mission | Chroma Labs", image="/logo.svg")
 app.add_page(careers, route="/company/careers", title="Careers | Chroma Labs", image="/logo.svg")
