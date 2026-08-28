@@ -12,7 +12,7 @@ from chromalabs.pages.developer.developer import developer
 
 app = rx.App(
     stylesheets=[
-        "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap",
+        "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=EB+Garamond:wght@400;600;800&display=swap",
         "/style.css",
     ],
     style={
