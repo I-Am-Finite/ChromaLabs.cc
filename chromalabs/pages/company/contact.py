@@ -46,6 +46,6 @@ def contact() -> rx.Component:
                 ),
                 width="100%", padding_x="6", padding_top="16", padding_bottom="32", align_items="center",
             ),
-            width="100%", position="relative", overflow="hidden",
+            width="100%", position="relative", flex_grow="1",
         )
     )

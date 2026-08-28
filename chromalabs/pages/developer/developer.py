@@ -40,7 +40,7 @@ def developer() -> rx.Component:
                 ),
                 width="100%", height="calc(100vh - 200px)", align_items="center", justify_content="center",
             ),
-            width="100%", height="100%", position="relative", overflow="hidden",
+            width="100%", height="100%", position="relative", flex_grow="1",
         )
     )
 

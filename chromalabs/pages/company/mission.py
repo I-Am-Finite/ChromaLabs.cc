@@ -29,7 +29,7 @@ def mission() -> rx.Component:
                 ),
                 width="100%", padding_x="6", padding_top="16", padding_bottom="32", align_items="center",
             ),
-            width="100%", position="relative", overflow="hidden", min_height="100vh",
+            width="100%", position="relative", flex_grow="1",
             padding_top="120px",
         )
     )
