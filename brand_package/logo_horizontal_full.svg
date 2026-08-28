@@ -1,18 +1,10 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 80" fill="none">
-  <!-- Glyph: Apex Tetrahedron -->
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 80" fill="none">
   <g transform="translate(10, 10) scale(0.85)">
-    <!-- Right Outer Face -->
     <polygon points="35,0 70,70 35,70" fill="#D4AF37" />
-    <!-- Left Outer Face -->
     <polygon points="35,0 35,70 0,70" fill="#AA8529" />
-    <!-- Center Dark Void -->
     <polygon points="35,25 55,60 15,60" fill="#000000" />
-    <!-- Inner Core Prism -->
     <polygon points="35,40 50,70 20,70" fill="#F4D03F" />
     <polygon points="35,40 35,70 20,70" fill="#C59B27" />
   </g>
-
-  <!-- Typography Lockup -->
-  <text x="85" y="48" font-family="Inter, sans-serif" font-weight="900" font-size="34" fill="#FFFFFF" letter-spacing="4">CHROMA</text>
-  <text x="88" y="66" font-family="JetBrains Mono, monospace" font-weight="700" font-size="12" fill="#D4AF37" letter-spacing="2">DEFENSE AI LAB</text>
+  <text x="85" y="52" font-family="Inter, sans-serif" font-weight="900" font-size="32" fill="#FFFFFF" letter-spacing="3">CHROMA LABS</text>
 </svg>

@@ -1,4 +1,4 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" fill="none">
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150" fill="none">
   <g transform="translate(65, 10) scale(1)">
     <polygon points="35,0 70,70 35,70" fill="#D4AF37" />
     <polygon points="35,0 35,70 0,70" fill="#AA8529" />
@@ -6,6 +6,5 @@
     <polygon points="35,40 50,70 20,70" fill="#F4D03F" />
     <polygon points="35,40 35,70 20,70" fill="#C59B27" />
   </g>
-  <text x="100" y="115" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="34" fill="#FFFFFF" letter-spacing="4">CHROMA</text>
-  <text x="100" y="140" text-anchor="middle" font-family="JetBrains Mono, monospace" font-weight="700" font-size="12" fill="#D4AF37" letter-spacing="2">DEFENSE AI LAB</text>
+  <text x="100" y="125" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="28" fill="#FFFFFF" letter-spacing="2">CHROMA LABS</text>
 </svg>
