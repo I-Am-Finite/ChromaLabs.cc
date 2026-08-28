@@ -54,7 +54,7 @@ def navbar() -> rx.Component:
     return rx.hstack(
         # Perfect Unified SVG Lockup
         rx.link(
-            rx.image(src="/logo.svg?v=4", height="60px", width="auto"),
+            rx.image(src="/logo.svg?v=5", height="60px", width="auto"),
             href="/", 
             _hover={"text_decoration": "none"}
         ),
