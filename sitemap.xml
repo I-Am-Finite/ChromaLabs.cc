@@ -7,6 +7,15 @@
     <loc>http://localhost:3000/capabilities</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/capabilities/ai</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/capabilities/hpc</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/capabilities/government</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/research</loc>
   </url>
   <url>
