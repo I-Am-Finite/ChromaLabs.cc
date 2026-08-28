@@ -32,13 +32,17 @@ def mission() -> rx.Component:
                     class_name="animate-fade-up delay-200",
                 ),
                 rx.box(
-                    rx.text("[ SYS: ROSTER_PENDING ]", font_family="JetBrains Mono, monospace", color="#D4AF37", size="4"),
-                    rx.text("Awaiting clearance and declassification protocols.", color="slate.11", size="2", margin_top="2"),
+                    rx.vstack(
+                        rx.hstack(rx.text("DR. ELIAS VANE", weight="bold", color="white", width="180px"), rx.text("DIRECTOR OF OPTICAL ROUTING", color="#D4AF37", font_size="0.8rem", letter_spacing="0.1em")),
+                        rx.hstack(rx.text("M. THORNE", weight="bold", color="white", width="180px"), rx.text("LEAD HARDWARE ARCHITECTURE", color="#D4AF37", font_size="0.8rem", letter_spacing="0.1em")),
+                        rx.hstack(rx.text("[REDACTED]", weight="bold", color="slate.9", width="180px"), rx.text("KINETIC DEPLOYMENT STRATEGY", color="slate.9", font_size="0.8rem", letter_spacing="0.1em")),
+                        rx.hstack(rx.text("DR. S. R. VANCE", weight="bold", color="white", width="180px"), rx.text("GEOMETRIC INFERENCING", color="#D4AF37", font_size="0.8rem", letter_spacing="0.1em")),
+                        spacing="4", align_items="flex-start", width="100%"
+                    ),
                     border="1px solid rgba(212, 175, 55, 0.3)",
                     background="rgba(212, 175, 55, 0.05)",
                     padding="32px",
                     border_radius="8px",
-                    text_align="center",
                     width="100%", max_width="600px",
                     class_name="animate-fade-up delay-300",
                 ),
