@@ -44,7 +44,7 @@ def wearables() -> rx.Component:
                         rx.text("Ultra-low SWaP (Size, Weight, and Power) footprint enabling continuous edge inferencing during active kinetic operations.", color="slate.10", font_size="1rem", line_height="1.6"),
                         padding="40px", background="rgba(255, 255, 255, 0.02)", border="1px solid rgba(255, 255, 255, 0.05)", border_radius="12px", transition="all 0.3s ease", _hover={"background": "rgba(255, 255, 255, 0.04)", "transform": "translateY(-4px)", "border_color": "rgba(0, 240, 255, 0.3)", "box_shadow": "0 10px 40px rgba(0, 240, 255, 0.05)"}
                     ),
-                    columns=["1", "1", "2"], spacing="8", width="100%", max_width="1000px",
+                    columns="2", spacing="8", width="100%", max_width="1000px",
                     class_name="animate-fade-up delay-300",
                 ),
                 width="100%", padding_x="6", padding_top="16", padding_bottom="32", align_items="center",
