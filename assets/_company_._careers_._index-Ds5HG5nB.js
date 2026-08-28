@@ -1,16 +1,17 @@
-import{r as e}from"./rolldown-runtime-QTnfLwEv.js";import{A as t,j as n,n as r}from"./chunk-62JRHF6Z-Dq1aAwXd.js";import{T as i,a,c as o,d as s,f as c,h as l,i as u,l as d,m as f,o as p,s as m,u as h}from"./esm-DKnnraaJ.js";import{n as g}from"./emotion-react.browser.esm-D66BJTCW.js";import{t as _}from"./createLucideIcon-CJFePS_t.js";import{t as v}from"./Helmet-CeZPI1C2.js";var y=e(n(),1),b=_(`map-pin`,[[`path`,{d:`M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0`,key:`1r0f0z`}],[`circle`,{cx:`12`,cy:`10`,r:`3`,key:`ilqhr7`}]]),x=t(function(){let e=(0,y.useRef)(null);return i.ref_lambdaBackground=e,g(y.Fragment,{},g(c,{css:{background:`transparent`,color:`white`,fontFamily:`Inter, sans-serif`,"--default-font-family":`Inter, sans-serif`,position:`relative`}},g(c,{css:{position:`fixed`,top:`0`,left:`0`,width:`100vw`,height:`100vh`,zIndex:`-1`,background:`#0A0A0C`}}),g(c,{css:{position:`fixed`,top:`15%`,left:`50%`,transform:`translateX(-50%)`,width:`60vw`,height:`60vw`,background:`radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%)`,zIndex:`1`,filter:`blur(80px)`,borderRadius:`50%`,pointerEvents:`none`}}),g(c,{css:{position:`fixed`,top:`40%`,left:`-10%`,width:`50vw`,height:`50vw`,background:`radial-gradient(circle, rgba(138, 3, 3, 0.12) 0%, transparent 70%)`,zIndex:`1`,filter:`blur(100px)`,borderRadius:`50%`,pointerEvents:`none`}}),g(c,{css:{position:`fixed`,bottom:`-10%`,right:`-10%`,width:`60vw`,height:`60vw`,background:`radial-gradient(circle, rgba(255, 69, 0, 0.08) 0%, transparent 70%)`,zIndex:`1`,filter:`blur(100px)`,borderRadius:`50%`,pointerEvents:`none`}}),g(`canvas`,{css:{position:`fixed`,top:`0`,left:`0`,width:`100vw`,height:`100vh`,zIndex:`2`,pointerEvents:`none`},id:`lambdaBackground`,ref:e}),g(v,{},g(`script`,{},`
+import{r as e}from"./rolldown-runtime-QTnfLwEv.js";import{A as t,j as n,n as r}from"./chunk-62JRHF6Z-Dq1aAwXd.js";import{T as i,a,c as o,d as s,f as c,h as l,i as u,l as d,m as f,o as p,s as m,u as h}from"./esm-BxKl14pZ.js";import{n as g}from"./emotion-react.browser.esm-D66BJTCW.js";import{t as _}from"./createLucideIcon-CJFePS_t.js";import{t as v}from"./Helmet-CeZPI1C2.js";var y=e(n(),1),b=_(`map-pin`,[[`path`,{d:`M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0`,key:`1r0f0z`}],[`circle`,{cx:`12`,cy:`10`,r:`3`,key:`ilqhr7`}]]),x=t(function(){let e=(0,y.useRef)(null);return i.ref_lambdaBackground=e,g(y.Fragment,{},g(c,{css:{background:`transparent`,color:`white`,fontFamily:`Inter, sans-serif`,"--default-font-family":`Inter, sans-serif`,position:`relative`}},g(c,{css:{position:`fixed`,top:`0`,left:`0`,width:`100vw`,height:`100vh`,zIndex:`-1`,background:`#0A0A0C`}}),g(c,{css:{position:`fixed`,top:`15%`,left:`50%`,transform:`translateX(-50%)`,width:`60vw`,height:`60vw`,background:`radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%)`,zIndex:`1`,filter:`blur(80px)`,borderRadius:`50%`,pointerEvents:`none`}}),g(c,{css:{position:`fixed`,top:`40%`,left:`-10%`,width:`50vw`,height:`50vw`,background:`radial-gradient(circle, rgba(138, 3, 3, 0.12) 0%, transparent 70%)`,zIndex:`1`,filter:`blur(100px)`,borderRadius:`50%`,pointerEvents:`none`}}),g(c,{css:{position:`fixed`,bottom:`-10%`,right:`-10%`,width:`60vw`,height:`60vw`,background:`radial-gradient(circle, rgba(255, 69, 0, 0.08) 0%, transparent 70%)`,zIndex:`1`,filter:`blur(100px)`,borderRadius:`50%`,pointerEvents:`none`}}),g(`canvas`,{css:{position:`fixed`,top:`0`,left:`0`,width:`100vw`,height:`100vh`,zIndex:`2`,pointerEvents:`none`},id:`lambdaBackground`,ref:e}),g(v,{},g(`script`,{},`
 if (!window.__chromaCanvasInitialized) {
     window.__chromaCanvasInitialized = true;
     
     function initCanvas() {
-        const canvas = document.getElementById("lambdaBackground");
+        let canvas = document.getElementById("lambdaBackground");
         if (!canvas) {
             requestAnimationFrame(initCanvas);
             return;
         }
-        const ctx = canvas.getContext("2d");
+        let ctx = canvas.getContext("2d");
 
         function resize() {
+            if (!canvas) return;
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
@@ -63,19 +64,21 @@ if (!window.__chromaCanvasInitialized) {
         }
 
         function animate() {
-            // Re-fetch canvas in case React unmounted and remounted it
+            // Re-fetch canvas in case React unmounted and remounted it during SPA navigation
             const currentCanvas = document.getElementById("lambdaBackground");
             if (!currentCanvas) {
                 requestAnimationFrame(animate);
                 return;
             }
             
-            // Re-bind ctx if canvas changed
+            // Re-bind ctx if canvas DOM element was replaced by router
             if (currentCanvas !== canvas) {
-                // To keep it simple, we just assume the canvas stays alive since it is in base_layout
+                canvas = currentCanvas;
+                ctx = canvas.getContext("2d");
+                resize();
             }
 
-            ctx.clearRect(0, 0, currentCanvas.width, currentCanvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             drawGrid();
             
