@@ -57,8 +57,7 @@ def navbar() -> rx.Component:
             rx.hstack(
                 rx.image(
                     src="/logo_glyph.png", 
-                    height="50px", 
-                    width="auto", 
+                    height="80px", width="auto", margin_left="-15px", margin_right="-10px", 
                     style={"filter": "drop-shadow(0px 8px 10px rgba(0,0,0,0.6))"}
                 ),
                 rx.vstack(
