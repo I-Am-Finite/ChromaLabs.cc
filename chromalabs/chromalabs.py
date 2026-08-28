@@ -23,6 +23,31 @@ app = rx.App(
             "0%": {"transform": "translateY(-100%)"},
             "100%": {"transform": "translateY(100vh)"},
         },
+        "@keyframes fuseLeft": {
+            "0%, 20%": {"transform": "translate(0, 0)", "opacity": "1"},
+            "40%, 60%": {"transform": "translate(20px, -30px)", "opacity": "0"},
+            "100%": {"transform": "translate(0, 0)", "opacity": "1"},
+        },
+        "@keyframes fuseRight": {
+            "0%, 20%": {"transform": "translate(0, 0)", "opacity": "1"},
+            "40%, 60%": {"transform": "translate(-20px, -30px)", "opacity": "0"},
+            "100%": {"transform": "translate(0, 0)", "opacity": "1"},
+        },
+        "@keyframes pulseCore": {
+            "0%, 35%": {"box_shadow": "0 0 5px #D4AF37", "background": "rgba(212, 175, 55, 0.4)"},
+            "45%, 55%": {"box_shadow": "0 0 25px #FF0000", "background": "#FF0000"},
+            "100%": {"box_shadow": "0 0 5px #D4AF37", "background": "rgba(212, 175, 55, 0.4)"},
+        },
+        "@keyframes shrinkLineLeft": {
+            "0%, 20%": {"transform": "scaleY(1)", "opacity": "0.5"},
+            "40%, 60%": {"transform": "scaleY(0)", "opacity": "0"},
+            "100%": {"transform": "scaleY(1)", "opacity": "0.5"},
+        },
+        "@keyframes shrinkLineRight": {
+            "0%, 20%": {"transform": "scaleY(1)", "opacity": "0.5"},
+            "40%, 60%": {"transform": "scaleY(0)", "opacity": "0"},
+            "100%": {"transform": "scaleY(1)", "opacity": "0.5"},
+        }
     },
     head_components=[
         rx.el.link(rel="icon", href="/logo.svg", type_="image/svg+xml"),

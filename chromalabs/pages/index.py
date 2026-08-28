@@ -43,11 +43,33 @@ SVG_BACKGROUND = """<svg width="100%" height="100%" style="position: absolute; t
 </path>
 </svg>"""
 
+def lambda_node() -> rx.Component:
+    return rx.box(
+        rx.text("L-TREE FUSION", font_size="10px", color="rgba(212, 175, 55, 0.8)", letter_spacing="2px", margin_bottom="10px", text_align="center"),
+        rx.box(
+            rx.box(position="absolute", top="10px", left="50%", transform="translateX(-50%)", width="12px", height="12px", border_radius="50%", animation="pulseCore 4s infinite"),
+            rx.box(position="absolute", top="16px", left="30%", width="1px", height="30px", background="#D4AF37", transform_origin="top center", transform="rotate(-30deg)", animation="shrinkLineLeft 4s infinite"),
+            rx.box(position="absolute", top="16px", right="30%", width="1px", height="30px", background="#D4AF37", transform_origin="top center", transform="rotate(30deg)", animation="shrinkLineRight 4s infinite"),
+            rx.box(position="absolute", top="40px", left="20px", width="10px", height="10px", border_radius="50%", background="rgba(212, 175, 55, 0.4)", border="1px solid #D4AF37", animation="fuseLeft 4s infinite"),
+            rx.box(position="absolute", top="40px", right="20px", width="10px", height="10px", border_radius="50%", background="rgba(212, 175, 55, 0.4)", border="1px solid #D4AF37", animation="fuseRight 4s infinite"),
+            position="relative", width="100px", height="60px", margin="0 auto"
+        ),
+        padding="16px", background="rgba(10, 10, 12, 0.9)", border="1px solid rgba(212, 175, 55, 0.3)",
+        border_radius="8px", backdrop_filter="blur(12px)", box_shadow="0 0 30px rgba(0,0,0,0.8)",
+        transition="all 0.3s ease", _hover={"border_color": "#FF0000"}
+    )
+
 def index() -> rx.Component:
     return base_layout(
         rx.box(
             # The fully snaking, grid-locked golden SVG traces
             rx.html(SVG_BACKGROUND),
+            
+            # Attached Lambda Nodes at precise grid intersections
+            rx.box(lambda_node(), position="absolute", top="123px", left="353px", z_index="-1", class_name="animate-fade-up"),
+            rx.box(lambda_node(), position="absolute", top="423px", left="953px", z_index="-1", class_name="animate-fade-up delay-100"),
+            rx.box(lambda_node(), position="absolute", top="663px", left="1433px", z_index="-1", class_name="animate-fade-up delay-200"),
+            rx.box(lambda_node(), position="absolute", top="123px", left="1853px", z_index="-1", class_name="animate-fade-up delay-300"),
             
             # Ambient Void Glows
             rx.box(
@@ -81,7 +103,11 @@ def index() -> rx.Component:
                 width="100%",
                 padding_x=["4", "8", "12"],
                 height="calc(100vh - 200px)",
+                pointer_events="none", # Let users interact with the boxes underneath if needed
             ),
+            # Make sure buttons are clickable by overriding pointer events
+            sx={"& a": {"pointer_events": "auto"}},
+            
             width="100%",
             height="100%",
             position="relative",
