@@ -2,84 +2,71 @@
 import reflex as rx
 from chromalabs.components.layout import base_layout
 
-def problem_section() -> rx.Component:
+def stat_card(label: str, value: str, trend: str) -> rx.Component:
     return rx.box(
-        rx.vstack(
-            rx.text("THE VULNERABILITY", color="#D4AF37", font_weight="bold", letter_spacing="0.1em", font_size="0.9rem"),
-            rx.text("The Cloud Dependency", font_size=["2rem", "2.5rem"], weight="bold", color="white", margin_bottom="4"),
-            rx.text(
-                "Modern defense applications demand massive AI inferencing, but rely on vulnerable cloud uplinks and massive data center footprints. In austere, contested tactical environments, this dependency is a critical operational liability.",
-                color="slate.11", font_size="1.1rem", line_height="1.7", max_width="800px"
-            ),
-            padding_y="32",
-            align_items="flex_start",
-        ),
-        width="100%", max_width="1200px", margin="0 auto", padding_x="6"
-    )
-
-def architecture_section() -> rx.Component:
-    return rx.box(
-        rx.vstack(
-            rx.text("OUR APPROACH", color="#D4AF37", font_weight="bold", letter_spacing="0.1em", font_size="0.9rem"),
-            rx.text("Sovereign Edge Operations", font_size=["2rem", "2.5rem"], weight="bold", color="white", margin_bottom="4"),
-            rx.text(
-                "Chroma Labs compresses data center class computational power into disconnected, tactical hardware footprints. By engineering logic at the dimensional level, we guarantee mathematical isolation and absolute integrity across execution spaces.",
-                color="slate.11", font_size="1.1rem", line_height="1.7", max_width="800px", margin_bottom="12"
-            ),
-            rx.grid(
-                rx.box(
-                    rx.icon(tag="shield-check", color="white", size=24, margin_bottom="4"),
-                    rx.text("Hardware-Level OpSec", font_size="1.2rem", weight="bold", color="white", margin_bottom="2"),
-                    rx.text("Eliminating software-layer side-channel attacks by strictly compartmentalizing data as physical dimensions.", color="slate.10", font_size="0.95rem", line_height="1.5"),
-                    padding="30px", background="rgba(255, 255, 255, 0.02)", border="1px solid rgba(255, 255, 255, 0.05)", border_radius="8px"
-                ),
-                rx.box(
-                    rx.icon(tag="radio", color="white", size=24, margin_bottom="4"),
-                    rx.text("Disconnected Lethality", font_size="1.2rem", weight="bold", color="white", margin_bottom="2"),
-                    rx.text("Empowering drones and forward operating bases with continuous, zero-latency autonomous inferencing independent of uplinks.", color="slate.10", font_size="0.95rem", line_height="1.5"),
-                    padding="30px", background="rgba(255, 255, 255, 0.02)", border="1px solid rgba(255, 255, 255, 0.05)", border_radius="8px"
-                ),
-                grid_template_columns=["1fr", "repeat(2, 1fr)"], spacing="6", width="100%",
-            ),
-            padding_y="32",
-            align_items="flex_start",
-        ),
-        width="100%", max_width="1200px", margin="0 auto", padding_x="6"
+        rx.text(label, font_family="JetBrains Mono, monospace", font_size="0.75rem", color="slate.9", text_transform="uppercase", letter_spacing="0.1em"),
+        rx.text(value, font_size="2.5rem", font_weight="bold", color="white", font_family="JetBrains Mono, monospace", margin_y="2"),
+        rx.text(trend, color="#D4AF37", font_size="0.85rem", font_family="JetBrains Mono, monospace"),
+        padding="24px", border="1px solid rgba(255,255,255,0.05)", bg="rgba(0,0,0,0.4)", width="100%"
     )
 
 def government() -> rx.Component:
     return base_layout(
         rx.box(
-            # Hero Section
             rx.box(
-                rx.box(
-                    position="absolute", top="10%", left="50%", transform="translateX(-50%)",
-                    width="60vw", height="60vw", max_width="800px", max_height="800px",
-                    background="radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%)",
-                    z_index="-1", filter="blur(60px)", border_radius="50%", pointer_events="none",
+                position="absolute", top="0", left="0", width="100%", height="100%", z_index="-1",
+                background_image="linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+                background_size="40px 40px", pointer_events="none",
+                mask_image="linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 80%)"
+            ),
+            rx.grid(
+                rx.vstack(
+                    rx.box(
+                        rx.text("SYS.REQ // CHROMA_GOV_03", font_family="JetBrains Mono, monospace", font_size="0.8rem", color="#D4AF37", margin_bottom="4"),
+                        border_bottom="1px solid rgba(255,255,255,0.1)", width="100%", padding_bottom="4"
+                    ),
+                    rx.text("SOVEREIGN TACTICAL EDGE", font_size=["3rem", "4rem", "4.5rem"], font_weight="800", line_height="1", color="white", letter_spacing="-0.03em", margin_top="8"),
+                    rx.text("Cloud-dependent architectures are a critical liability in contested environments. We engineer logic at the dimensional level, compressing data-center class computational power into disconnected hardware footprints. Absolute operational security, guaranteed by mathematics.", color="slate.11", font_size="1.1rem", line_height="1.6", max_width="600px", margin_top="6"),
+                    rx.hstack(
+                        rx.button("REQUEST CLEARANCE", bg="white", color="black", border_radius="0", font_family="JetBrains Mono, monospace", font_size="0.8rem", font_weight="bold", padding="20px 32px", margin_top="8", _hover={"bg": "#e0e0e0"}),
+                        rx.button("VIEW WHITEPAPER", bg="transparent", color="white", border="1px solid rgba(255,255,255,0.2)", border_radius="0", font_family="JetBrains Mono, monospace", font_size="0.8rem", font_weight="bold", padding="20px 32px", margin_top="8", _hover={"bg": "rgba(255,255,255,0.05)"}),
+                        spacing="4"
+                    ),
+                    align_items="flex_start",
+                    justify_content="center",
+                    padding_right=["0", "0", "12"],
+                    height="100%", width="100%"
                 ),
                 rx.vstack(
-                    rx.text(
-                        "Defense & Government", 
-                        font_size=["3rem", "4rem", "5rem"], weight="bold", letter_spacing="-0.04em", line_height="1.1",
-                        text_align="center", margin_bottom="6",
-                        color="white",
-                        font_family="'EB Garamond', 'Playfair Display', serif",
+                    rx.grid(
+                        stat_card("Uplink Dependency", "NONE", "Fully Autonomous"),
+                        stat_card("Data Leakage", "IMPOSSIBLE", "Physical Compartmentalization"),
+                        stat_card("Form Factor", "MAN-PORTABLE", "Drone/UAV Integratable"),
+                        stat_card("Network Status", "AIR-GAPPED", "Secure Sovereign Deployment"),
+                        grid_template_columns=["1fr", "repeat(2, 1fr)"], gap="1px", bg="rgba(255,255,255,0.1)", border="1px solid rgba(255,255,255,0.1)", width="100%"
                     ),
-                    rx.text(
-                        "Deploying sovereign computing assets and immutable logic systems in contested tactical environments.",
-                        font_size="1.25rem", color="slate.11", max_width="700px", text_align="center", margin_bottom="12", line_height="1.6",
+                    rx.box(
+                        rx.text("> STREAMING TELEMETRY (SIMULATED)", font_family="JetBrains Mono, monospace", color="slate.9", font_size="0.7rem", margin_bottom="4"),
+                        rx.code_block(
+                            "0x0000000000000000: SECURING HARDWARE ENCLAVE...\n0x0000000000000010: SEVERING EXTERNAL UPLINKS...\n0x0000000000000020: LOCAL INFERENCING INITIALIZED\n0x0000000000000030: THREAT DETECTION: ACTIVE\n0x0000000000000040: OPSEC INTEGRITY: 100%",
+                            language="bash",
+                            
+                            custom_style={"padding": "20px", "background": "rgba(0,0,0,0.6)", "border": "1px solid rgba(255,255,255,0.05)"},
+                            width="100%"
+                        ),
+                        width="100%", margin_top="8"
                     ),
-                    width="100%", padding_x="6", padding_top="160px", padding_bottom="80px", align_items="center",
+                    justify_content="center",
+                    height="100%", width="100%"
                 ),
-                width="100%", position="relative",
+                grid_template_columns=["1fr", "1fr", "1.2fr 1fr"],
+                width="100%",
+                max_width="1400px",
+                margin="0 auto",
+                padding_x=["6", "8", "12"],
+                padding_y=["12", "24", "32"],
+                min_height="80vh", gap="8"
             ),
-            
-            rx.divider(border_color="rgba(255, 255, 255, 0.05)"),
-            problem_section(),
-            rx.divider(border_color="rgba(255, 255, 255, 0.05)"),
-            architecture_section(),
-            
             width="100%", position="relative", flex_grow="1"
         )
     )
