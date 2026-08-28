@@ -8,7 +8,7 @@ def ai() -> rx.Component:
             # Grid background
             rx.box(
                 position="absolute", top="0", left="0", width="100%", height="100%", z_index="-1",
-                background_image="linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+                
                 background_size="40px 40px", pointer_events="none",
                 mask_image="linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 80%)"
             ),
@@ -34,10 +34,9 @@ def ai() -> rx.Component:
                     ),
                     grid_template_columns=["1fr", "repeat(2, 1fr)"], gap="8", width="100%", max_width="1000px"
                 ),
-                rx.hstack(
-                    rx.button("VIEW RESEARCH", bg="white", color="black", border_radius="0", font_family="JetBrains Mono, monospace", font_size="0.8rem", font_weight="bold", padding="20px 32px", margin_top="16", _hover={"bg": "#e0e0e0"}),
-                    rx.button("CONTACT ENGINEERING", bg="transparent", color="white", border="1px solid rgba(255,255,255,0.2)", border_radius="0", font_family="JetBrains Mono, monospace", font_size="0.8rem", font_weight="bold", padding="20px 32px", margin_top="16", _hover={"bg": "rgba(255,255,255,0.05)"}),
-                    spacing="4"
+                rx.link(
+                    rx.button("CONTACT US", bg="white", color="black", border_radius="0", font_family="JetBrains Mono, monospace", font_size="0.8rem", font_weight="bold", padding="20px 32px", margin_top="16", cursor="pointer", _hover={"bg": "#e0e0e0"}),
+                    href="/contact", _hover={"text_decoration": "none"}
                 ),
                 align_items="center",
                 justify_content="center",
