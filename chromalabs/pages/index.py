@@ -13,122 +13,254 @@ setTimeout(() => {
     }
     window.addEventListener("resize", resize);
     resize();
-    
-    // Mathematically Accurate John Tromp Diagram Geometry
-    // Simulates a massive, recursive Beta-Reduction and its inverse (Beta-Expansion)
-    function drawTrompReduction(x, y, w, h, depth, cycle) {
-        if (depth === 0) return;
-        
-        // cycle goes from 0.0 (Unreduced App(Abs(B), R)) to 1.0 (Reduced B[R/x])
-        
-        // Geometry Constants
-        const leftX = x;
-        const rightX = x + w/2;
-        const bridgeY = y + h - 10;
-        const absY = y + 10;
-        
-        // 1. Overarching Application Bridge
-        // In John Tromp's standard, applications are horizontal links connecting the leftmost variables.
-        const bridgeOpacity = 1.0 - cycle;
-        if (bridgeOpacity > 0.01) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(212, 175, 55, ${bridgeOpacity * 0.4})`;
-            ctx.moveTo(leftX, bridgeY);
-            ctx.lineTo(rightX, bridgeY);
-            
-            // Vertical tail drops to the bridge
-            ctx.moveTo(leftX, bridgeY - 15);
-            ctx.lineTo(leftX, bridgeY);
-            ctx.moveTo(rightX, bridgeY - 15);
-            ctx.lineTo(rightX, bridgeY);
-            ctx.stroke();
-            
-            // Flashing Redex (Application Node)
-            ctx.beginPath();
-            ctx.arc(leftX, bridgeY, 3, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 55, 55, ${bridgeOpacity * 0.8})`;
-            ctx.fill();
-        }
-        
-        // 2. Left Abstraction (Dissolves upon reduction)
-        // In John Tromp's standard, abstractions are horizontal lines.
-        if (bridgeOpacity > 0.01) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(212, 175, 55, ${bridgeOpacity * 0.4})`;
-            // Tromp abstraction line spans across the body
-            ctx.moveTo(leftX, absY);
-            ctx.lineTo(rightX, absY);
-            ctx.stroke();
-        }
-        
-        // 3. The Body of the Left Abstraction (B)
-        // Contains two variable drops that will receive the duplicated R
-        // In John Tromp's standard, variables are vertical lines emanating DOWN from their binding lambda.
-        const var1X = leftX + (w/2) * 0.2;
-        const var2X = leftX + (w/2) * 0.8;
-        const varY = absY; // Drops start at the abstraction line
-        const varH = h * 0.5; // Variables drop down
-        
-        ctx.beginPath();
-        ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
-        // Var 1 Drop
-        ctx.moveTo(var1X, varY);
-        ctx.lineTo(var1X, varY + varH);
-        // Var 2 Drop
-        ctx.moveTo(var2X, varY);
-        ctx.lineTo(var2X, varY + varH);
-        
-        // Internal application connecting the two variables (so B is an App(x, x))
-        ctx.moveTo(var1X, varY + varH);
-        ctx.lineTo(var2X, varY + varH);
-        ctx.stroke();
-        
-        // 4. The Right Argument (R) - Duplicates and slides to the variable endpoints!
-        // Target position 1: var1X, varY + varH
-        // Target position 2: var2X, varY + varH
-        
-        const curr1X = rightX + (var1X - rightX) * cycle;
-        const curr1Y = absY + (varY + varH - absY) * cycle;
-        
-        const curr2X = rightX + (var2X - rightX) * cycle;
-        const curr2Y = absY + (varY + varH - absY) * cycle;
-        
-        // Scale halves as it snaps in
-        const scale = 1.0 - (0.5 * cycle);
-        const subW = (w/2) * scale;
-        const subH = (h * 0.8) * scale;
-        
-        // The Right Subtree (Recursive grid geometry)
-        if (cycle < 0.05) {
-            // Just draw it once before duplication is visually separable
-            drawTrompReduction(rightX, absY, w/2, h * 0.8, depth - 1, cycle);
+
+    // --- Turing-Complete Lambda Calculus Evaluator ---
+    let next_id = 0;
+    function Var(idx) { return { id: next_id++, t: 0, idx: idx }; }
+    function Abs(body) { return { id: next_id++, t: 1, body: body }; }
+    function App(left, right) { return { id: next_id++, t: 2, left: left, right: right }; }
+
+    function copyTerm(term, origin_x, origin_y, origin_min, origin_max) {
+        let t;
+        if (term.t === 0) t = Var(term.idx);
+        else if (term.t === 1) t = Abs(copyTerm(term.body, origin_x, origin_y, origin_min, origin_max));
+        else t = App(copyTerm(term.left, origin_x, origin_y, origin_min, origin_max), copyTerm(term.right, origin_x, origin_y, origin_min, origin_max));
+        t.origin_x = origin_x; t.origin_y = origin_y;
+        t.origin_min = origin_min; t.origin_max = origin_max;
+        return t;
+    }
+
+    function shift(term, inc, depth) {
+        if (term.t === 0) {
+            let t = term.idx >= depth ? Var(term.idx + inc) : Var(term.idx);
+            t.origin_x = term.draw_x; t.origin_y = term.draw_y;
+            t.origin_min = term.draw_min; t.origin_max = term.draw_max;
+            return t;
+        } else if (term.t === 1) {
+            let t = Abs(shift(term.body, inc, depth + 1));
+            t.origin_x = term.draw_x; t.origin_y = term.draw_y;
+            t.origin_min = term.draw_min; t.origin_max = term.draw_max;
+            return t;
         } else {
-            // Draw duplicate 1 snapping to Variable 1
-            drawTrompReduction(curr1X, curr1Y, subW, subH, depth - 1, cycle);
-            // Draw duplicate 2 snapping to Variable 2
-            drawTrompReduction(curr2X, curr2Y, subW, subH, depth - 1, cycle);
+            let t = App(shift(term.left, inc, depth), shift(term.right, inc, depth));
+            t.origin_x = term.draw_x; t.origin_y = term.draw_y;
+            t.origin_min = term.draw_min; t.origin_max = term.draw_max;
+            return t;
         }
     }
+
+    function substitute(term, arg, depth) {
+        if (term.t === 0) {
+            if (term.idx === depth) {
+                // Duplicate arg! Its physical origin is arg's current physical location!
+                // It will gracefully slide from the right side of the bridge into this variable slot.
+                let t = copyTerm(arg, arg.draw_x, arg.draw_y, arg.draw_min, arg.draw_max);
+                // Also shift it for De Bruijn correctness
+                return shift(t, depth, 0);
+            }
+            if (term.idx > depth) {
+                let t = Var(term.idx - 1);
+                t.origin_x = term.draw_x; t.origin_y = term.draw_y;
+                t.origin_min = term.draw_min; t.origin_max = term.draw_max;
+                return t;
+            }
+            let t = Var(term.idx);
+            t.origin_x = term.draw_x; t.origin_y = term.draw_y;
+            t.origin_min = term.draw_min; t.origin_max = term.draw_max;
+            return t;
+        } else if (term.t === 1) {
+            let t = Abs(substitute(term.body, arg, depth + 1));
+            t.origin_x = term.draw_x; t.origin_y = term.draw_y;
+            t.origin_min = term.draw_min; t.origin_max = term.draw_max;
+            return t;
+        } else {
+            let t = App(substitute(term.left, arg, depth), substitute(term.right, arg, depth));
+            t.origin_x = term.draw_x; t.origin_y = term.draw_y;
+            t.origin_min = term.draw_min; t.origin_max = term.draw_max;
+            return t;
+        }
+    }
+
+    function reduce(term) {
+        if (term.t === 2) {
+            if (term.left.t === 1) {
+                return { changed: true, term: substitute(term.left.body, term.right, 0) };
+            }
+            let l_res = reduce(term.left);
+            if (l_res.changed) {
+                let t = App(l_res.term, term.right);
+                t.origin_x = term.draw_x; t.origin_y = term.draw_y;
+                t.origin_min = term.draw_min; t.origin_max = term.draw_max;
+                return { changed: true, term: t };
+            }
+            let r_res = reduce(term.right);
+            if (r_res.changed) {
+                let t = App(term.left, r_res.term);
+                t.origin_x = term.draw_x; t.origin_y = term.draw_y;
+                t.origin_min = term.draw_min; t.origin_max = term.draw_max;
+                return { changed: true, term: t };
+            }
+        } else if (term.t === 1) {
+            let b_res = reduce(term.body);
+            if (b_res.changed) {
+                let t = Abs(b_res.term);
+                t.origin_x = term.draw_x; t.origin_y = term.draw_y;
+                t.origin_min = term.draw_min; t.origin_max = term.draw_max;
+                return { changed: true, term: t };
+            }
+        }
+        return { changed: false, term: term };
+    }
+
+    function countNodes(term) {
+        if (term.t === 0) return 1;
+        if (term.t === 1) return 1 + countNodes(term.body);
+        return 1 + countNodes(term.left) + countNodes(term.right);
+    }
+
+    // --- Dynamic Physics & Layout Engine (Tromp Geometry) ---
+    let current_x = 0;
+    let max_y = 0;
+    
+    function calculateLayout(term, depth) {
+        term.target_y = depth * 40;
+        if (term.target_y > max_y) max_y = term.target_y;
+        
+        if (term.t === 0) {
+            term.target_x = current_x;
+            current_x += 40;
+            term.target_min = term.target_x;
+            term.target_max = term.target_x;
+        } else if (term.t === 1) {
+            calculateLayout(term.body, depth + 1);
+            // Tromp abstraction lines span precisely the width of their body
+            term.target_min = term.body.target_min;
+            term.target_max = term.body.target_max;
+            term.target_x = (term.target_min + term.target_max) / 2;
+        } else if (term.t === 2) {
+            calculateLayout(term.left, depth + 1);
+            calculateLayout(term.right, depth + 1);
+            term.target_min = term.left.target_min;
+            term.target_max = term.right.target_max;
+            term.target_x = (term.left.target_x + term.right.target_x) / 2;
+        }
+        
+        // Initialize draw bounds to origin if new, else target
+        if (term.draw_x === undefined) {
+            term.draw_x = term.origin_x !== undefined ? term.origin_x : term.target_x;
+            term.draw_y = term.origin_y !== undefined ? term.origin_y : term.target_y;
+            term.draw_min = term.origin_min !== undefined ? term.origin_min : term.target_min;
+            term.draw_max = term.origin_max !== undefined ? term.origin_max : term.target_max;
+        }
+    }
+
+    function updatePhysics(term) {
+        // Smooth exponential interpolation (lerp)
+        const LERP_SPEED = 0.05;
+        term.draw_x += (term.target_x - term.draw_x) * LERP_SPEED;
+        term.draw_y += (term.target_y - term.draw_y) * LERP_SPEED;
+        term.draw_min += (term.target_min - term.draw_min) * LERP_SPEED;
+        term.draw_max += (term.target_max - term.draw_max) * LERP_SPEED;
+        
+        if (term.t === 1) updatePhysics(term.body);
+        if (term.t === 2) { updatePhysics(term.left); updatePhysics(term.right); }
+    }
+
+    function drawTerm(term, binders) {
+        ctx.strokeStyle = "rgba(212, 175, 55, 0.6)";
+        ctx.lineWidth = 2;
+        
+        if (term.t === 0) {
+            // Var: Vertical line emanating DOWN from binding lambda
+            let binder = binders[binders.length - 1 - term.idx];
+            if (binder) {
+                ctx.beginPath();
+                ctx.moveTo(term.draw_x, term.draw_y);
+                ctx.lineTo(term.draw_x, binder.draw_y);
+                ctx.stroke();
+            }
+        } else if (term.t === 1) {
+            // Abs: Horizontal line spanning body
+            ctx.beginPath();
+            ctx.moveTo(term.draw_min, term.draw_y);
+            ctx.lineTo(term.draw_max, term.draw_y);
+            ctx.stroke();
+            
+            let new_binders = [...binders, term];
+            drawTerm(term.body, new_binders);
+        } else if (term.t === 2) {
+            // App: Horizontal bridge connecting the two branches
+            ctx.beginPath();
+            ctx.moveTo(term.left.draw_x, term.draw_y);
+            ctx.lineTo(term.right.draw_x, term.draw_y);
+            ctx.strokeStyle = "rgba(255, 100, 55, 0.4)"; // Flashing redex pulse could be added here
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(212, 175, 55, 0.6)";
+            // Drops down to the children
+            ctx.moveTo(term.left.draw_x, term.draw_y);
+            ctx.lineTo(term.left.draw_x, term.left.draw_y);
+            ctx.moveTo(term.right.draw_x, term.draw_y);
+            ctx.lineTo(term.right.draw_x, term.right.draw_y);
+            ctx.stroke();
+            
+            drawTerm(term.left, binders);
+            drawTerm(term.right, binders);
+        }
+    }
+
+    // Initialize with the 'Grow' combinator
+    function getSeed() {
+        let M = Abs(App(App(Var(0), Var(0)), Var(0)));
+        return App(M, M);
+    }
+    
+    let current_term = getSeed();
+    
+    // Evaluate once every 2 seconds to allow the physics to gracefully animate the reduction
+    setInterval(() => {
+        let nodes = countNodes(current_term);
+        if (nodes > 400) {
+            current_term = getSeed(); 
+        } else {
+            let res = reduce(current_term);
+            if (res.changed) current_term = res.term;
+            else current_term = getSeed();
+        }
+    }, 2000);
+
+    let displayScale = 1.0;
     
     function animate() {
         ctx.fillStyle = "#0A0A0C";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        const time = Date.now() / 3000;
-        // 0 to 1 smooth oscillation (Reduction -> Inverse Expansion -> Loop)
-        const cycle = (Math.sin(time) + 1) / 2; 
+        current_x = 0;
+        max_y = 0;
+        calculateLayout(current_term, 0);
+        updatePhysics(current_term);
+        
+        // Dynamically adjust camera
+        const term_width = current_term.target_max - current_term.target_min;
+        const term_height = max_y;
+        const padding = 150;
+        const targetScaleX = (canvas.width - padding) / Math.max(term_width, 1);
+        const targetScaleY = (canvas.height - padding) / Math.max(term_height, 1);
+        const targetScale = Math.min(targetScaleX, targetScaleY, 2.0); 
+        
+        displayScale += (targetScale - displayScale) * 0.05;
         
         ctx.save();
+        ctx.translate(canvas.width / 2, canvas.height / 2);
         
-        // Camera Zoom to keep the expanding fractal on screen
-        const zoom = 1.0 - (0.2 * cycle);
-        ctx.translate(canvas.width / 2, canvas.height / 3);
-        ctx.scale(zoom, zoom);
+        ctx.scale(displayScale, displayScale);
         
-        ctx.lineWidth = 1.5 / zoom;
+        const cx = (current_term.draw_min + current_term.draw_max) / 2;
+        const cy = max_y / 2;
+        ctx.translate(-cx, -cy);
         
-        // Draw the massive, screen-filling AST seed (Depth 6)
-        drawTrompReduction(-canvas.width * 0.7, 0, canvas.width * 1.4, 400, 6, cycle);
+        drawTerm(current_term, []);
         
         ctx.restore();
         
@@ -142,7 +274,7 @@ setTimeout(() => {
 def index() -> rx.Component:
     return base_layout(
         rx.box(
-            # Full Screen Active Tromp Diagram Morph
+            # Full Screen Physics-Driven Beta-Reduction Engine
             rx.el.canvas(
                 id="lambdaBackground", 
                 style={"position": "absolute", "top": "0", "left": "0", "width": "100vw", "height": "100vh", "z_index": "-2", "pointer_events": "none"}
