@@ -15,11 +15,11 @@ setTimeout(() => {
     resize();
     
     const GRID_SIZE = 60;
-    const SPEED = 3;
+    const SPEED = 2.5; // Smooth pacing
     let threads = [];
     
     function drawGrid() {
-        ctx.strokeStyle = "rgba(212, 175, 55, 0.07)";
+        ctx.strokeStyle = "rgba(212, 175, 55, 0.08)";
         ctx.lineWidth = 1;
         
         const offsetX = (canvas.width / 2) % GRID_SIZE;
@@ -33,7 +33,7 @@ setTimeout(() => {
         }
         
         // Crosses at intersections
-        ctx.strokeStyle = "rgba(212, 175, 55, 0.3)";
+        ctx.strokeStyle = "rgba(212, 175, 55, 0.2)";
         for (let x = offsetX; x <= canvas.width; x += GRID_SIZE) {
             for (let y = offsetY; y <= canvas.height; y += GRID_SIZE) {
                 ctx.beginPath();
@@ -45,7 +45,7 @@ setTimeout(() => {
     }
     
     function spawnThread(x, y, isBranch = false) {
-        if (threads.length > 60) return;
+        if (threads.length > 50) return;
         
         let startX = x !== undefined ? x : Math.floor(canvas.width / 2 / GRID_SIZE) * GRID_SIZE + ((canvas.width / 2) % GRID_SIZE);
         let startY = y !== undefined ? y : Math.floor(canvas.height / 2 / GRID_SIZE) * GRID_SIZE + ((canvas.height / 2) % GRID_SIZE);
@@ -53,21 +53,21 @@ setTimeout(() => {
         threads.push({
             x: startX, y: startY,
             path: [{x: startX, y: startY}],
-            maxLength: 15 + Math.random() * 25,
+            maxLength: 3 + Math.random() * 6, // Tron length: significantly shorter
             life: 0,
-            maxLife: 200 + Math.random() * 300,
+            maxLife: 200 + Math.random() * 200,
             moving: false
         });
     }
 
     function animate() {
-        ctx.fillStyle = "#0A0A0C";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        // Clear canvas completely so CSS ambient glows shine through!
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         drawGrid();
         
         // Spawn from center occasionally
-        if (Math.random() < 0.05 && threads.length < 15) {
+        if (Math.random() < 0.05 && threads.length < 10) {
             spawnThread();
         }
         
@@ -109,7 +109,7 @@ setTimeout(() => {
                 t.lastDir = dirs.indexOf(selected);
                 
                 // Branching
-                if (Math.random() < 0.15) {
+                if (Math.random() < 0.1) {
                     spawnThread(t.x, t.y, true);
                 }
             }
@@ -124,30 +124,39 @@ setTimeout(() => {
                 }
             }
             
-            // Draw
+            // Draw Tron-style fading segments
             if (t.path.length > 0) {
-                ctx.beginPath();
-                ctx.moveTo(t.path[0].x, t.path[0].y);
-                for (let j = 1; j < t.path.length; j++) {
-                    ctx.lineTo(t.path[j].x, t.path[j].y);
+                let points = [...t.path, {x: t.x, y: t.y}];
+                const lifeOpacity = t.life > t.maxLife ? Math.max(0, t.path.length / t.maxLength) : 1.0;
+                
+                ctx.lineCap = "round";
+                ctx.lineJoin = "round";
+                
+                for (let j = 1; j < points.length; j++) {
+                    const p1 = points[j - 1];
+                    const p2 = points[j];
+                    
+                    // Opacity goes from 0 at the tail to 0.4 at the head (dimmer overall so text is readable)
+                    const segmentOpacity = Math.pow(j / points.length, 2) * lifeOpacity * 0.35; 
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    
+                    ctx.strokeStyle = `rgba(212, 175, 55, ${segmentOpacity})`;
+                    ctx.lineWidth = 2.0;
+                    ctx.stroke();
                 }
-                ctx.lineTo(t.x, t.y);
                 
-                // Fade out at end of life
-                const opacity = t.life > t.maxLife ? Math.max(0, t.path.length / t.maxLength) : 1.0;
-                
-                ctx.strokeStyle = `rgba(212, 175, 55, ${opacity * 0.9})`;
-                ctx.lineWidth = 2.5;
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = `rgba(212, 175, 55, ${opacity})`;
-                ctx.stroke();
-                ctx.shadowBlur = 0;
-                
-                // Bright head
+                // Modest glowing head
+                const headOpacity = lifeOpacity * 0.6;
                 ctx.beginPath();
-                ctx.arc(t.x, t.y, 3, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                ctx.arc(t.x, t.y, 2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${headOpacity})`;
+                ctx.shadowBlur = 6;
+                ctx.shadowColor = `rgba(212, 175, 55, ${headOpacity})`;
                 ctx.fill();
+                ctx.shadowBlur = 0;
             }
         }
         
@@ -160,26 +169,44 @@ setTimeout(() => {
 
 def index() -> rx.Component:
     return base_layout(
+        # The true background wrapper
         rx.box(
+            
+            # --- CSS Ambient Glows (Behind Canvas) ---
+            # Center void glow (Gold)
+            rx.box(
+                position="absolute", top="15%", left="50%", transform="translateX(-50%)", width="60vw", height="60vw",
+                background="radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%)",
+                z_index="1", filter="blur(80px)", border_radius="50%", pointer_events="none",
+            ),
+            # Blood Red atmospheric side glow
+            rx.box(
+                position="absolute", top="40%", left="-10%", width="50vw", height="50vw",
+                background="radial-gradient(circle, rgba(138, 3, 3, 0.12) 0%, transparent 70%)",
+                z_index="1", filter="blur(100px)", border_radius="50%", pointer_events="none",
+            ),
+            # High-vis Orange atmospheric side glow
+            rx.box(
+                position="absolute", bottom="-10%", right="-10%", width="60vw", height="60vw",
+                background="radial-gradient(circle, rgba(255, 69, 0, 0.08) 0%, transparent 70%)",
+                z_index="1", filter="blur(100px)", border_radius="50%", pointer_events="none",
+            ),
+
+            # Transparent Canvas Overlay (Grid & Tron Rays)
             rx.el.canvas(
                 id="lambdaBackground", 
-                style={"position": "absolute", "top": "0", "left": "0", "width": "100vw", "height": "100vh", "z_index": "-2", "pointer_events": "none"}
+                style={"position": "absolute", "top": "0", "left": "0", "width": "100vw", "height": "100vh", "z_index": "2", "pointer_events": "none"}
             ),
             rx.script(GRID_ANIMATION_JS),
             
-            rx.box(
-                position="absolute", top="20%", left="50%", transform="translateX(-50%)", width="50vw", height="50vw",
-                background="radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%)",
-                z_index="-3", filter="blur(100px)", border_radius="50%",
-            ),
-
+            # Foreground Content
             rx.vstack(
                 rx.text(
                     "Higher Dimensional HPC & Defense Research Lab", 
                     font_size=["2.5rem", "3.5rem", "4.5rem", "5.5rem"], weight="bold", letter_spacing="-0.02em", line_height="1.1",
                     color="white", text_align="center", class_name="animate-fade-up", margin_top="12",
                     font_family="'EB Garamond', 'Playfair Display', serif",
-                    text_shadow="0 4px 12px rgba(0, 0, 0, 0.5)",
+                    text_shadow="0 8px 24px rgba(0, 0, 0, 0.8)", # Stronger shadow to pop against the rays
                 ),
 
                 rx.hstack(
@@ -199,6 +226,7 @@ def index() -> rx.Component:
                 padding_x=["4", "8", "12"],
                 height="calc(100vh - 200px)",
                 pointer_events="none", 
+                z_index="5", # Ensure text is above everything
             ),
             sx={"& a": {"pointer_events": "auto"}},
             
@@ -206,5 +234,6 @@ def index() -> rx.Component:
             height="100%",
             position="relative",
             overflow="hidden",
+            bg="#0A0A0C", # The actual base background color
         )
     )
