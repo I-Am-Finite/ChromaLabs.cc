@@ -9,83 +9,119 @@ function resize() {
 window.addEventListener("resize", resize);
 resize();
 
-let time = 0;
-const SPEED = 0.01;
-
-// Draws a massive, screen-filling Tromp structure that oscillates 
-// between a combined state and a reduced (split) state.
-function drawOscillatingNet(x, y, width, height, depth, progress) {
+// Draws a procedural AST that mimics a Tromp diagram of a massive beta-reduction
+function drawTrompReduction(x, y, w, h, depth, cycle) {
     if (depth === 0) return;
     
-    // progress is 0.0 (combined) to 1.0 (fully split/reduced)
+    // cycle goes from 0.0 (Unreduced App(Abs(B), R)) to 1.0 (Reduced B[R/x])
+    
+    // Geometry Constants
+    const leftX = x;
+    const rightX = x + w/2;
+    const bridgeY = y + h - 10;
+    const absY = y + 10;
+    
+    // 1. Overarching Application Bridge
+    // Connects left root (leftX) to right root (rightX)
+    const bridgeOpacity = 1.0 - cycle;
+    if (bridgeOpacity > 0.01) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(212, 175, 55, ${bridgeOpacity * 0.5})`;
+        ctx.moveTo(leftX, bridgeY);
+        ctx.lineTo(rightX, bridgeY);
+        // Drops to the bridge
+        ctx.moveTo(leftX, bridgeY - 10);
+        ctx.lineTo(leftX, bridgeY);
+        ctx.moveTo(rightX, bridgeY - 10);
+        ctx.lineTo(rightX, bridgeY);
+        ctx.stroke();
+    }
+    
+    // 2. Left Abstraction (Dissolves)
+    if (bridgeOpacity > 0.01) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(212, 175, 55, ${bridgeOpacity * 0.5})`;
+        // Tromp abstraction line spans from leftX to leftX + w/2
+        ctx.moveTo(leftX, absY);
+        ctx.lineTo(rightX, absY);
+        ctx.stroke();
+    }
+    
+    // 3. The Body of the Left Abstraction (B)
+    // Contains two variable drops that will receive the duplicated R
+    const var1X = leftX + (w/2) * 0.2;
+    const var2X = leftX + (w/2) * 0.8;
+    const varY = absY; // Drops start at the abstraction line
+    const varH = h * 0.5; // Variables drop halfway down
     
     ctx.beginPath();
+    ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+    // Var 1 Drop
+    ctx.moveTo(var1X, varY);
+    ctx.lineTo(var1X, varY + varH);
+    // Var 2 Drop
+    ctx.moveTo(var2X, varY);
+    ctx.lineTo(var2X, varY + varH);
     
-    // The abstraction line splits into two overlapping lines as it reduces
-    // Left side
-    const leftW = width * (0.5 - 0.1 * progress);
-    ctx.moveTo(x - width/2, y);
-    ctx.lineTo(x - width/2 + leftW, y);
-    
-    // Right side
-    const rightW = width * (0.5 - 0.1 * progress);
-    ctx.moveTo(x + width/2, y);
-    ctx.lineTo(x + width/2 - rightW, y);
-    
-    // Variable drops
-    // In combined state, they drop straight down.
-    // In split state, they shift outward.
-    const varOffset = (width / 4) + (width / 8) * progress;
-    
-    // Left variable
-    ctx.moveTo(x - varOffset, y);
-    ctx.lineTo(x - varOffset, y + height);
-    
-    // Right variable
-    ctx.moveTo(x + varOffset, y);
-    ctx.lineTo(x + varOffset, y + height);
-    
-    // Application bridge
-    // Dissolves (fades out) as progress approaches 1.0, but to keep it simple,
-    // we just break it apart.
-    const gap = width * 0.2 * progress;
-    ctx.moveTo(x - varOffset, y + height);
-    ctx.lineTo(x - gap/2, y + height);
-    
-    ctx.moveTo(x + gap/2, y + height);
-    ctx.lineTo(x + varOffset, y + height);
-    
+    // Internal application connecting the two variables (so B is an App(x, x))
+    // Tromp App bridge connects leftmost variables
+    ctx.moveTo(var1X, varY + varH);
+    ctx.lineTo(var2X, varY + varH);
     ctx.stroke();
     
-    // Recursive application
-    // The children also split and move apart based on progress
-    const childY = y + height;
-    const childH = height * 0.8;
+    // 4. The Right Argument (R) - Duplicates and slides!
+    // Start position: rightX, absY
+    // Target position 1: var1X, varY + varH
+    // Target position 2: var2X, varY + varH
     
-    drawOscillatingNet(x - varOffset, childY, leftW, childH, depth - 1, progress);
-    drawOscillatingNet(x + varOffset, childY, rightW, childH, depth - 1, progress);
+    const curr1X = rightX + (var1X - rightX) * cycle;
+    const curr1Y = absY + (varY + varH - absY) * cycle;
+    
+    const curr2X = rightX + (var2X - rightX) * cycle;
+    const curr2Y = absY + (varY + varH - absY) * cycle;
+    
+    // Scale halves as it snaps in
+    const scale = 1.0 - (0.5 * cycle);
+    const subW = (w/2) * scale;
+    const subH = (h * 0.8) * scale;
+    
+    ctx.save();
+    if (cycle < 0.05) {
+        // Just draw it once before duplication
+        drawTrompReduction(rightX, absY, w/2, h * 0.8, depth - 1, cycle);
+    } else {
+        // Draw duplicate 1
+        drawTrompReduction(curr1X, curr1Y, subW, subH, depth - 1, cycle);
+        // Draw duplicate 2
+        drawTrompReduction(curr2X, curr2Y, subW, subH, depth - 1, cycle);
+    }
+    ctx.restore();
 }
 
 function animate() {
     ctx.fillStyle = "#0A0A0C";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    // Oscillate between 0 and 1 using sine wave
-    const progress = (Math.sin(time) + 1) / 2; // 0 to 1
-    
-    ctx.strokeStyle = "rgba(212, 175, 55, 0.5)";
-    ctx.lineWidth = 1.5;
+    const time = Date.now() / 2500;
+    const cycle = (Math.sin(time) + 1) / 2; // 0 to 1
     
     ctx.save();
-    ctx.translate(canvas.width / 2, canvas.height / 3); // Start near top
     
-    // Draw a massive grid filling the screen
-    drawOscillatingNet(0, 0, canvas.width * 0.8, 150, 8, progress);
+    // Center logic
+    const zoom = 1.0 - (0.2 * cycle);
+    ctx.translate(canvas.width / 2, canvas.height / 3);
+    ctx.scale(zoom, zoom);
+    
+    ctx.lineWidth = 2 / zoom;
+    
+    // Draw the massive seed
+    // We want the entire screen filled. So width is huge.
+    drawTrompReduction(-canvas.width * 0.6, 0, canvas.width * 1.2, 300, 6, cycle);
     
     ctx.restore();
     
-    time += SPEED;
     requestAnimationFrame(animate);
 }
+
 animate();
 
