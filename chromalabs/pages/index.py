@@ -1,134 +1,139 @@
 import reflex as rx
 from chromalabs.components.layout import base_layout
 
+def telemetry_badge(text: str, color: str = "#00F0FF") -> rx.Component:
+    return rx.hstack(
+        rx.box(width="6px", height="6px", border_radius="50%", bg=color, box_shadow=f"0 0 8px {color}"),
+        rx.text(text, font_family="JetBrains Mono, monospace", font_size="0.75rem", weight="bold", color=color, letter_spacing="0.1em"),
+        align_items="center",
+        spacing="2",
+        padding="6px 12px",
+        background="rgba(255, 255, 255, 0.03)",
+        border="1px solid rgba(255, 255, 255, 0.08)",
+        border_radius="4px",
+    )
+
 def index() -> rx.Component:
     return base_layout(
         rx.box(
-            # Background Ambient Orb
+            # Grid overlay
             rx.box(
-                position="absolute",
-                top="10%",
-                left="50%",
-                transform="translateX(-50%)",
-                width="80vw",
-                height="80vw",
-                max_width="800px",
-                max_height="800px",
-                background="radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, rgba(212, 175, 55, 0.03) 40%, transparent 70%)",
-                z_index="-1",
-                filter="blur(60px)",
-                border_radius="50%",
+                position="absolute", top="0", left="0", right="0", bottom="0", z_index="-2",
+                background_image="linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+                background_size="40px 40px",
+                opacity="0.3",
             ),
-            
-            rx.vstack(
-                # Badge
+            # Ambient Glow
+            rx.box(
+                position="absolute", top="0%", right="-10%", width="60vw", height="60vw",
+                background="radial-gradient(circle, rgba(0, 240, 255, 0.06) 0%, transparent 60%)",
+                z_index="-1", filter="blur(80px)", border_radius="50%",
+            ),
+
+            # Split Hero
+            rx.flex(
+                # LEFT 45% - COPY
+                rx.vstack(
+                    telemetry_badge("SYS: SECURE | RUNTIME: 0.4ms"),
+                    rx.text(
+                        "Higher Dimensional", 
+                        font_size=["3rem", "4rem", "4.5rem", "5.5rem"], weight="bold", letter_spacing="-0.04em", line_height="1.0",
+                        color="white", class_name="animate-fade-up", margin_top="6",
+                    ),
+                    rx.text(
+                        "Compute Architecture.", 
+                        font_size=["3rem", "4rem", "4.5rem", "5.5rem"], weight="bold", letter_spacing="-0.04em", line_height="1.0",
+                        background_image="linear-gradient(180deg, #FFFFFF 0%, #606060 100%)",
+                        background_clip="text", style={"-webkit-text-fill-color": "transparent"},
+                        class_name="animate-fade-up delay-100", margin_bottom="6",
+                    ),
+                    rx.text(
+                        "We map volumetric logic structures directly to physical geometry. "
+                        "Pioneering the intersection of photonic research, autonomous defense, "
+                        "and hyperscale artificial intelligence.",
+                        font_size="1.15rem", color="slate.11", weight="regular", max_width="500px",
+                        line_height="1.6", class_name="animate-fade-up delay-200", margin_bottom="10",
+                    ),
+                    rx.hstack(
+                        rx.link(
+                            rx.button("Explore Capabilities", bg="white", color="black", border_radius="4px", font_size="0.95rem", font_weight="600", padding="22px 28px", cursor="pointer", transition="all 0.15s ease", _hover={"bg": "#e0e0e0"}),
+                            href="/capabilities", _hover={"text_decoration": "none"}
+                        ),
+                        rx.link(
+                            rx.button("View Schematics", bg="transparent", border="1px solid rgba(255,255,255,0.15)", color="white", border_radius="4px", font_size="0.95rem", font_weight="600", padding="22px 28px", cursor="pointer", transition="all 0.15s ease", _hover={"bg": "rgba(255,255,255,0.05)"}),
+                            href="/solutions/defense", _hover={"text_decoration": "none"}
+                        ),
+                        spacing="4", class_name="animate-fade-up delay-300",
+                    ),
+                    align_items="flex-start",
+                    width=["100%", "100%", "100%", "45%"],
+                    padding_right=["0", "0", "0", "4rem"],
+                ),
+
+                # RIGHT 55% - SCHEMATIC / TERMINAL
                 rx.box(
-                    rx.text("NSF I-CORPS BACKED", font_size="0.75rem", weight="bold", color="#00F0FF", letter_spacing="0.15em"),
-                    padding="6px 16px", border="1px solid rgba(0, 240, 255, 0.2)", border_radius="4px",
-                    background="rgba(0, 240, 255, 0.05)", margin_bottom="12", box_shadow="0 0 20px rgba(0, 240, 255, 0.1)",
-                    class_name="animate-fade-up",
-                ),
-                
-                # Hero Typography
-                rx.text(
-                    "Higher Dimensional", 
-                    font_size=["3rem", "4rem", "5rem", "6rem"], weight="bold", letter_spacing="-0.04em", line_height="0.9",
-                    text_align="center", background_image="linear-gradient(180deg, #FFFFFF 0%, #A0A0A0 100%)",
-                    background_clip="text", style={"-webkit-text-fill-color": "transparent"},
-                    class_name="animate-fade-up delay-100",
-                ),
-                rx.text(
-                    "Compute Architecture.", 
-                    font_size=["3rem", "4rem", "5rem", "6rem"], weight="bold", letter_spacing="-0.04em", line_height="0.9",
-                    text_align="center", margin_bottom="8", background_image="linear-gradient(180deg, #FFFFFF 0%, #707070 100%)",
-                    background_clip="text", style={"-webkit-text-fill-color": "transparent"},
-                    class_name="animate-fade-up delay-100",
-                ),
-                
-                # Subtitle
-                rx.text(
-                    "A next-generation HPC and Defense Research Lab. "
-                    "We map volumetric logic structures directly to physical hardware.",
-                    font_size="1.25rem", color="slate.11", weight="regular", max_width="650px",
-                    text_align="center", margin_bottom="12", line_height="1.6",
-                    class_name="animate-fade-up delay-200",
-                ),
-                
-                # CTA Buttons
-                rx.hstack(
-                    rx.link(
-                        rx.button("Explore Capabilities", bg="white", color="black", border_radius="4px", font_size="1rem", font_weight="600", padding="24px 32px", cursor="pointer", transition="all 0.2s", _hover={"bg": "#e0e0e0", "transform": "translateY(-1px)"}),
-                        href="/capabilities", _hover={"text_decoration": "none"}
+                    rx.box(
+                        rx.hstack(
+                            rx.box(width="8px", height="8px", border_radius="50%", bg="slate.8"),
+                            rx.box(width="8px", height="8px", border_radius="50%", bg="slate.8"),
+                            rx.box(width="8px", height="8px", border_radius="50%", bg="slate.8"),
+                            spacing="2", padding="12px 16px", border_bottom="1px solid rgba(255, 255, 255, 0.05)",
+                        ),
+                        rx.box(
+                            rx.text(">> INITIATING OPTICAL ROUTING PROTOCOL...", color="#00F0FF", font_family="JetBrains Mono, monospace", font_size="0.85rem", margin_bottom="4"),
+                            rx.text("[OK] Volumetric core aligned.", color="slate.11", font_family="JetBrains Mono, monospace", font_size="0.85rem", margin_bottom="2"),
+                            rx.text("[OK] Bypass electrical switching constraint.", color="slate.11", font_family="JetBrains Mono, monospace", font_size="0.85rem", margin_bottom="2"),
+                            rx.text(">> COMPUTING GEOMETRIC MAPPING", color="#00F0FF", font_family="JetBrains Mono, monospace", font_size="0.85rem", margin_top="6", margin_bottom="4"),
+                            # Schematic UI
+                            rx.box(
+                                rx.hstack(
+                                    rx.box(width="40%", height="2px", bg="rgba(0, 240, 255, 0.3)", position="relative"),
+                                    rx.box(width="8px", height="8px", bg="#00F0FF", box_shadow="0 0 10px #00F0FF"),
+                                    rx.box(width="60%", height="2px", bg="rgba(255, 255, 255, 0.1)"),
+                                    align_items="center", spacing="0", width="100%", margin_bottom="4"
+                                ),
+                                rx.hstack(
+                                    rx.box(width="20%", height="2px", bg="rgba(0, 240, 255, 0.3)", position="relative"),
+                                    rx.box(width="8px", height="8px", bg="#00F0FF", box_shadow="0 0 10px #00F0FF"),
+                                    rx.box(width="80%", height="2px", bg="rgba(255, 255, 255, 0.1)"),
+                                    align_items="center", spacing="0", width="100%", margin_bottom="4"
+                                ),
+                                rx.hstack(
+                                    rx.box(width="70%", height="2px", bg="rgba(0, 240, 255, 0.3)", position="relative"),
+                                    rx.box(width="8px", height="8px", bg="#00F0FF", box_shadow="0 0 10px #00F0FF"),
+                                    rx.box(width="30%", height="2px", bg="rgba(255, 255, 255, 0.1)"),
+                                    align_items="center", spacing="0", width="100%", margin_bottom="4"
+                                ),
+                                padding="24px", background="rgba(0, 0, 0, 0.4)", border="1px solid rgba(255, 255, 255, 0.05)", border_radius="4px",
+                            ),
+                            padding="32px",
+                        ),
+                        width="100%",
+                        height="100%",
+                        background="rgba(10, 12, 16, 0.6)",
+                        backdrop_filter="blur(20px)",
+                        border="1px solid rgba(255, 255, 255, 0.08)",
+                        border_radius="8px",
+                        box_shadow="0 20px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
                     ),
-                    rx.link(
-                        rx.button("Defense Solutions", bg="rgba(255,255,255,0.03)", border="1px solid rgba(255,255,255,0.1)", color="white", border_radius="4px", font_size="1rem", font_weight="600", padding="24px 32px", backdrop_filter="blur(10px)", cursor="pointer", transition="all 0.2s", _hover={"bg": "rgba(255,255,255,0.08)", "transform": "translateY(-1px)"}),
-                        href="/solutions/defense", _hover={"text_decoration": "none"}
-                    ),
-                    spacing="6",
+                    width=["100%", "100%", "100%", "55%"],
+                    margin_top=["3rem", "3rem", "3rem", "0"],
                     class_name="animate-fade-up delay-300",
                 ),
-                
+                direction=["column", "column", "column", "row"],
                 width="100%",
-                min_height="70vh",
                 align_items="center",
-                justify_content="center",
-                padding_x="4",
-                padding_bottom="16",
-                position="relative",
-                z_index="2",
+                max_width="1400px",
+                margin="0 auto",
             ),
             
-            # Clean Features Grid with Cards
-            rx.box(
-                rx.grid(
-                    rx.box(
-                        rx.icon(tag="box", color="#00F0FF", size=24, margin_bottom="4"),
-                        rx.text("Spatial Pipelines", font_size="1.25rem", weight="bold", color="white", margin_bottom="2"),
-                        rx.text("Eliminating traditional memory walls by directly routing data through physical geometry.", color="slate.11", font_size="0.9rem", line_height="1.5"),
-                        padding="32px",
-                        background="rgba(255, 255, 255, 0.02)",
-                        border="1px solid rgba(255, 255, 255, 0.05)",
-                        border_radius="8px",
-                        transition="all 0.2s ease",
-                        _hover={"background": "rgba(255, 255, 255, 0.04)", "border": "1px solid rgba(255, 255, 255, 0.1)", "transform": "translateY(-2px)"}
-                    ),
-                    rx.box(
-                        rx.icon(tag="shield", color="#00F0FF", size=24, margin_bottom="4"),
-                        rx.text("Kinetic Edge", font_size="1.25rem", weight="bold", color="white", margin_bottom="2"),
-                        rx.text("Designed specifically for ultra-low SWaP wearables and autonomous tactical deployments.", color="slate.11", font_size="0.9rem", line_height="1.5"),
-                        padding="32px",
-                        background="rgba(255, 255, 255, 0.02)",
-                        border="1px solid rgba(255, 255, 255, 0.05)",
-                        border_radius="8px",
-                        transition="all 0.2s ease",
-                        _hover={"background": "rgba(255, 255, 255, 0.04)", "border": "1px solid rgba(255, 255, 255, 0.1)", "transform": "translateY(-2px)"}
-                    ),
-                    rx.box(
-                        rx.icon(tag="zap", color="#D4AF37", size=24, margin_bottom="4"),
-                        rx.text("Optical Links", font_size="1.25rem", weight="bold", color="white", margin_bottom="2"),
-                        rx.text("Unprecedented bandwidth scaling via direct node-to-node light propagation.", color="slate.11", font_size="0.9rem", line_height="1.5"),
-                        padding="32px",
-                        background="rgba(255, 255, 255, 0.02)",
-                        border="1px solid rgba(255, 255, 255, 0.05)",
-                        border_radius="8px",
-                        transition="all 0.2s ease",
-                        _hover={"background": "rgba(255, 255, 255, 0.04)", "border": "1px solid rgba(255, 255, 255, 0.1)", "transform": "translateY(-2px)"}
-                    ),
-                    columns="3",
-                    spacing="6",
-                    width="100%",
-                    max_width="1200px",
-                ),
-                width="100%",
-                display="flex",
-                justify_content="center",
-                padding_x="6",
-                padding_bottom="32",
-                position="relative",
-                z_index="2",
-            ),
             width="100%",
+            min_height="80vh",
+            padding_x=["6", "8", "12", "16"],
+            padding_top="150px",
+            padding_bottom="120px",
             position="relative",
             overflow="hidden",
         )
     )
+

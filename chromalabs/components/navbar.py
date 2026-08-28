@@ -1,7 +1,7 @@
 import reflex as rx
 
 def menu_item(text: str, url: str) -> rx.Component:
-    return rx.menu.item(
+    return rx.box(
         rx.link(
             rx.text(text, color="slate.11", font_size="1.1rem", transition="color 0.2s ease", _hover={"color": "white"}),
             href=url,
@@ -15,11 +15,12 @@ def menu_item(text: str, url: str) -> rx.Component:
         padding_x="20px",
         cursor="pointer",
         transition="background 0.2s ease",
+        border_radius="4px",
     )
 
 def navbar_dropdown(title: str, items: list[tuple[str, str]]) -> rx.Component:
-    return rx.menu.root(
-        rx.menu.trigger(
+    return rx.hover_card.root(
+        rx.hover_card.trigger(
             rx.button(
                 rx.text(title, color="slate.9", font_size="1.0rem", font_weight="600", letter_spacing="0.1em", transition="color 0.2s ease", _hover={"color": "white"}),
                 bg="transparent",
@@ -29,7 +30,7 @@ def navbar_dropdown(title: str, items: list[tuple[str, str]]) -> rx.Component:
                 height="auto",
             )
         ),
-        rx.menu.content(
+        rx.hover_card.content(
             *[menu_item(label, url) for label, url in items],
             bg="rgba(5, 5, 5, 0.95)",
             border="1px solid rgba(255, 255, 255, 0.08)",
@@ -38,7 +39,6 @@ def navbar_dropdown(title: str, items: list[tuple[str, str]]) -> rx.Component:
             border_radius="8px",
             box_shadow="0 10px 40px rgba(0,0,0,0.5)",
             min_width="220px",
-            margin_top="24px",
         )
     )
 
