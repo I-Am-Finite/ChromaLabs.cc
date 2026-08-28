@@ -7,9 +7,15 @@
     <loc>http://localhost:3000/products/hardware</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/products/capabilities</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/solutions/defense</loc>
   </url>
   <url>
     <loc>http://localhost:3000/company/mission</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/developer</loc>
   </url>
 </urlset>
