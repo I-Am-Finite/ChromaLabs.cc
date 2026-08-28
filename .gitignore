@@ -46,3 +46,10 @@ assets/external/
 # Local Media
 /*.png
 /*.jpg
+
+# Internal Dev Configs
+/.agents/
+/.gemini/
+/.github/
+/AGENTS.md
+/CLAUDE.md
