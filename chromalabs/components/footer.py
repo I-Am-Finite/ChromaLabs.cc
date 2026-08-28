@@ -25,7 +25,7 @@ def footer() -> rx.Component:
             align_items="center",
         ),
         rx.box(
-            rx.text("© 2026 Chroma Labs. All rights reserved. Operating under strict defense export controls.", color="slate.9", font_size="0.8rem", text_align="center", letter_spacing="0.05em"),
+            rx.text("© 2026 ChromaLabs Incorporated. All rights reserved. Trademarked and Copyrighted. Operating under strict defense export controls.", color="slate.9", font_size="0.85rem", text_align="center", letter_spacing="0.05em"),
             padding_bottom="12"
         ),
         background="rgba(5, 5, 5, 1)",

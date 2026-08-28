@@ -6,40 +6,50 @@ def wearables() -> rx.Component:
         rx.box(
             # Background Ambient Orb
             rx.box(
-                position="absolute", top="10%", left="50%", transform="translateX(-50%)",
+                position="absolute", top="15%", left="50%", transform="translateX(-50%)",
                 width="80vw", height="80vw", max_width="800px", max_height="800px",
-                background="radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 60%)",
+                background="radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 60%)",
                 z_index="-1", filter="blur(60px)", border_radius="50%",
             ),
             rx.vstack(
+                rx.box(
+                    rx.text("HARDWARE PRODUCTS", font_size="0.8rem", weight="bold", color="#D4AF37", letter_spacing="0.15em"),
+                    padding="6px 16px", border="1px solid rgba(212, 175, 55, 0.2)", border_radius="4px",
+                    background="rgba(212, 175, 55, 0.05)", margin_bottom="8", box_shadow="0 0 20px rgba(212, 175, 55, 0.1)",
+                    class_name="animate-fade-up",
+                ),
                 rx.text(
                     "Wearables & Tech Armor", 
-                    font_size=["2.5rem", "3.5rem", "4.5rem"], weight="bold", letter_spacing="-0.04em", line_height="1.0",
+                    font_size=["3rem", "4rem", "5rem"], weight="bold", letter_spacing="-0.04em", line_height="1.0",
                     text_align="center", margin_bottom="6",
                     background_image="linear-gradient(180deg, #FFFFFF 0%, #A0A0A0 100%)", background_clip="text",
                     style={"-webkit-text-fill-color": "transparent"},
+                    class_name="animate-fade-up delay-100",
                 ),
                 rx.text(
-                    "Augmented Reality and localized on-man processing for tactical dominance.",
+                    "Augmented Reality and localized on-man processing for total tactical dominance in austere environments.",
                     font_size="1.25rem", color="slate.11", max_width="700px", text_align="center", margin_bottom="16", line_height="1.6",
+                    class_name="animate-fade-up delay-200",
                 ),
                 rx.grid(
                     rx.box(
-                        rx.icon(tag="eye", color="#D4AF37", size=24, margin_bottom="4"),
-                        rx.text("AR Vision Systems", font_size="1.25rem", weight="bold", color="white", margin_bottom="2"),
-                        rx.text("Heads-up visual data streams processed locally without cloud offloading.", color="slate.11", font_size="0.95rem", line_height="1.5"),
-                        padding="32px", background="rgba(255, 255, 255, 0.02)", border="1px solid rgba(255, 255, 255, 0.05)", border_radius="8px", transition="all 0.2s ease", _hover={"background": "rgba(255, 255, 255, 0.04)", "transform": "translateY(-2px)"}
+                        rx.icon(tag="eye", color="#D4AF37", size=28, margin_bottom="6"),
+                        rx.text("AR Vision Systems", font_size="1.4rem", weight="bold", color="white", margin_bottom="3"),
+                        rx.text("Heads-up visual data streams processed locally. Uncompromising multi-spectral fusion without cloud offloading.", color="slate.10", font_size="1rem", line_height="1.6"),
+                        padding="40px", background="rgba(255, 255, 255, 0.02)", border="1px solid rgba(255, 255, 255, 0.05)", border_radius="12px", transition="all 0.3s ease", _hover={"background": "rgba(255, 255, 255, 0.04)", "transform": "translateY(-4px)", "border_color": "rgba(212, 175, 55, 0.3)", "box_shadow": "0 10px 40px rgba(212, 175, 55, 0.05)"}
                     ),
                     rx.box(
-                        rx.icon(tag="shield", color="#00F0FF", size=24, margin_bottom="4"),
-                        rx.text("Kinetic Processing", font_size="1.25rem", weight="bold", color="white", margin_bottom="2"),
-                        rx.text("Ultra-low SWaP footprint enabling continuous operation in austere environments.", color="slate.11", font_size="0.95rem", line_height="1.5"),
-                        padding="32px", background="rgba(255, 255, 255, 0.02)", border="1px solid rgba(255, 255, 255, 0.05)", border_radius="8px", transition="all 0.2s ease", _hover={"background": "rgba(255, 255, 255, 0.04)", "transform": "translateY(-2px)"}
+                        rx.icon(tag="shield", color="#00F0FF", size=28, margin_bottom="6"),
+                        rx.text("Kinetic Edge Architecture", font_size="1.4rem", weight="bold", color="white", margin_bottom="3"),
+                        rx.text("Ultra-low SWaP (Size, Weight, and Power) footprint enabling continuous edge inferencing during active kinetic operations.", color="slate.10", font_size="1rem", line_height="1.6"),
+                        padding="40px", background="rgba(255, 255, 255, 0.02)", border="1px solid rgba(255, 255, 255, 0.05)", border_radius="12px", transition="all 0.3s ease", _hover={"background": "rgba(255, 255, 255, 0.04)", "transform": "translateY(-4px)", "border_color": "rgba(0, 240, 255, 0.3)", "box_shadow": "0 10px 40px rgba(0, 240, 255, 0.05)"}
                     ),
-                    columns="2", spacing="6", width="100%", max_width="900px",
+                    columns=["1", "1", "2"], spacing="8", width="100%", max_width="1000px",
+                    class_name="animate-fade-up delay-300",
                 ),
                 width="100%", padding_x="6", padding_top="16", padding_bottom="32", align_items="center",
             ),
-            width="100%", position="relative", overflow="hidden",
+            width="100%", position="relative", overflow="hidden", min_height="100vh",
+            padding_top="120px", # Account for massive navbar
         )
     )
