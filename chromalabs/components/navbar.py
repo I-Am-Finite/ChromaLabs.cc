@@ -1,4 +1,4 @@
-
+﻿
 import reflex as rx
 
 def menu_item(text: str, url: str) -> rx.Component:
@@ -56,7 +56,7 @@ def navbar() -> rx.Component:
         rx.link(
             rx.hstack(
                 rx.icon(tag="hexagon", size=32, color="#D4AF37", transition="transform 0.3s ease", _hover={"transform": "rotate(90deg)"}),
-                rx.text("ChromaLabs", font_weight="800", font_size="1.5rem", letter_spacing="0.02em", color="white"),
+                rx.text("Chroma Labs", font_weight="800", font_size="1.5rem", letter_spacing="0.02em", color="white"),
                 spacing="4",
                 align_items="center",
             ),
