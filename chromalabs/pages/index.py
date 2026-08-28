@@ -18,22 +18,33 @@ def index() -> rx.Component:
             }
         ),
         
-        # Navigation/Header Placeholder
+        # High-End Navigation Pane
         rx.hstack(
-            rx.image(src="/logo.svg", width="40px", height="40px"),
-            rx.text("CHROMALABS", font_weight="800", letter_spacing="0.1em", color="white", size="3"),
+            rx.hstack(
+                rx.image(src="/logo.svg", width="32px", height="32px"),
+                rx.text("Chroma Labs", font_weight="700", letter_spacing="0.05em", color="white", size="4"),
+                spacing="3",
+                align_items="center",
+            ),
             rx.spacer(),
-            rx.link(rx.text("TECHNOLOGY", color="slate.9", _hover={"color": "white"}, size="2", font_weight="600", letter_spacing="0.05em"), href="/technology"),
-            rx.link(rx.text("MISSION", color="slate.9", _hover={"color": "white"}, size="2", font_weight="600", letter_spacing="0.05em"), href="/mission"),
+            rx.hstack(
+                rx.link(rx.text("Technology", color="slate.9", _hover={"color": "white"}, size="2", font_weight="500", letter_spacing="0.05em"), href="/technology"),
+                rx.link(rx.text("Mission", color="slate.9", _hover={"color": "white"}, size="2", font_weight="500", letter_spacing="0.05em"), href="/mission"),
+                spacing="6",
+            ),
             width="100%",
-            padding_x="8",
-            padding_y="6",
+            max_width="1200px",
+            padding_x="6",
+            padding_y="5",
             align_items="center",
             position="fixed",
             top="0",
-            backdrop_filter="blur(10px)",
+            backdrop_filter="blur(16px)",
             border_bottom="1px solid rgba(255,255,255,0.05)",
+            background="rgba(3, 3, 3, 0.6)",
             z_index="50",
+            left="50%",
+            transform="translateX(-50%)",
         ),
 
         # Hero Section
