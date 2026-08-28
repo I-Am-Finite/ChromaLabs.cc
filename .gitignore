@@ -50,6 +50,5 @@ assets/external/
 # Internal Dev Configs
 /.agents/
 /.gemini/
-/.github/
 /AGENTS.md
 /CLAUDE.md
