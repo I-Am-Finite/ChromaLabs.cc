@@ -2,13 +2,66 @@ import reflex as rx
 
 def mission() -> rx.Component:
     return rx.box(
+        # Background Grid & Gradient
+        rx.box(
+            position="absolute",
+            top="0",
+            left="0",
+            width="100vw",
+            height="100vh",
+            z_index="-1",
+            bg="radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.10), transparent 70%), #030303",
+            style={
+                "background_image": "radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.10), transparent 70%), linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+                "background_size": "100% 100%, 40px 40px, 40px 40px",
+                "background_position": "0 0, center center, center center",
+            }
+        ),
+
+        # Navigation/Header Placeholder
+        rx.hstack(
+            rx.image(src="/logo.svg", width="40px", height="40px"),
+            rx.link(rx.text("CHROMALABS", font_weight="800", letter_spacing="0.1em", color="white", size="3"), href="/"),
+            rx.spacer(),
+            rx.link(rx.text("TECHNOLOGY", color="slate.9", _hover={"color": "white"}, size="2", font_weight="600", letter_spacing="0.05em"), href="/technology"),
+            rx.link(rx.text("MISSION", color="white", size="2", font_weight="600", letter_spacing="0.05em"), href="/mission"),
+            width="100%",
+            padding_x="8",
+            padding_y="6",
+            align_items="center",
+            position="fixed",
+            top="0",
+            backdrop_filter="blur(10px)",
+            border_bottom="1px solid rgba(255,255,255,0.05)",
+            z_index="50",
+        ),
+        
+        # Content Section
         rx.vstack(
-            rx.heading("MISSION", size="8", color="white"),
-            rx.text("NSF I-Corps Backed Research. Strategic Government Defense.", color="gray.400"),
-            rx.link(rx.button("RETURN", variant="outline", color_scheme="gray", radius="none"), href="/"),
-            align="center",
-            justify="center",
+            rx.heading("MISSION & TEAM", size="8", color="white", letter_spacing="-0.02em", margin_bottom="2"),
+            rx.text(
+                "NSF I-Corps Backed Research. Strategic Government Defense.", 
+                color="slate.11", 
+                size="4",
+                margin_bottom="8",
+                max_width="600px",
+                text_align="center",
+            ),
+            
+            rx.box(
+                rx.text("TEAM ROSTER PENDING", color="#D4AF37", font_weight="bold", letter_spacing="0.1em"),
+                padding="8",
+                border="1px dashed rgba(212, 175, 55, 0.3)",
+                background="rgba(212, 175, 55, 0.02)",
+            ),
+
+            align_items="center",
+            justify_content="center",
             min_height="100vh",
-            bg="black",
-        )
+            padding_top="20",
+        ),
+        bg="transparent",
+        position="relative",
+        overflow="hidden",
+        min_height="100vh",
     )

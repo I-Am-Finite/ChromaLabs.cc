@@ -1,59 +1,106 @@
 import reflex as rx
 
-def domain_card(title: str, description: str) -> rx.Component:
+def domain_card(title: str, description: str, icon: str = "box") -> rx.Component:
     return rx.box(
         rx.vstack(
-            rx.heading(title, size="5", color="white"),
-            rx.text(description, color="slate.11", size="3"),
-            spacing="2",
+            rx.icon(icon, color="#D4AF37", size=24, margin_bottom="2"),
+            rx.heading(title, size="4", color="white", letter_spacing="0.05em"),
+            rx.text(description, color="slate.11", size="2", line_height="1.6"),
+            spacing="3",
+            align_items="flex-start",
         ),
         padding="6",
-        border="1px solid",
-        border_color="slate.4",
+        background="rgba(255, 255, 255, 0.02)",
+        border="1px solid rgba(255, 255, 255, 0.05)",
+        backdrop_filter="blur(10px)",
         border_radius="none",
-        bg="slate.2",
         width="100%",
-        _hover={"border_color": "#D4AF37", "transition": "border-color 0.3s ease"}
+        transition="all 0.2s ease-in-out",
+        _hover={
+            "border_color": "rgba(212, 175, 55, 0.4)",
+            "background": "rgba(255, 255, 255, 0.04)",
+            "transform": "translateY(-2px)"
+        }
     )
 
 def technology() -> rx.Component:
     return rx.box(
+        # Background Grid & Gradient
+        rx.box(
+            position="absolute",
+            top="0",
+            left="0",
+            width="100vw",
+            height="100vh",
+            z_index="-1",
+            bg="radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.10), transparent 70%), #030303",
+            style={
+                "background_image": "radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.10), transparent 70%), linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)",
+                "background_size": "100% 100%, 40px 40px, 40px 40px",
+                "background_position": "0 0, center center, center center",
+            }
+        ),
+
+        # Navigation/Header Placeholder
+        rx.hstack(
+            rx.image(src="/logo.svg", width="40px", height="40px"),
+            rx.link(rx.text("CHROMALABS", font_weight="800", letter_spacing="0.1em", color="white", size="3"), href="/"),
+            rx.spacer(),
+            rx.link(rx.text("TECHNOLOGY", color="white", size="2", font_weight="600", letter_spacing="0.05em"), href="/technology"),
+            rx.link(rx.text("MISSION", color="slate.9", _hover={"color": "white"}, size="2", font_weight="600", letter_spacing="0.05em"), href="/mission"),
+            width="100%",
+            padding_x="8",
+            padding_y="6",
+            align_items="center",
+            position="fixed",
+            top="0",
+            backdrop_filter="blur(10px)",
+            border_bottom="1px solid rgba(255,255,255,0.05)",
+            z_index="50",
+        ),
+        
+        # Content Section
         rx.vstack(
-            rx.heading("RESEARCH & ARCHITECTURE", size="8", color="white", letter_spacing="-0.02em"),
+            rx.heading("ARCHITECTURE & RESEARCH", size="8", color="white", letter_spacing="-0.02em", margin_bottom="2"),
             rx.text(
-                "ChromaLabs focuses on three primary vectors to eliminate compute bottlenecks.", 
+                "Eliminating compute bottlenecks through fundamental physical shifts.", 
                 color="slate.11", 
                 size="4",
-                margin_bottom="6"
+                margin_bottom="8",
+                max_width="600px",
+                text_align="center",
             ),
             
             rx.grid(
                 domain_card(
-                    "Geometric Compute", 
-                    "Translating complex spatial logic into physical hardware constraints, bypassing traditional von Neumann bottlenecks."
+                    "GEOMETRIC COMPUTE", 
+                    "Translating complex spatial logic into physical hardware constraints, bypassing traditional von Neumann bottlenecks entirely.",
+                    icon="cpu"
                 ),
                 domain_card(
-                    "Photonic Compute", 
-                    "Interfacing optical physics with silicon logic to shatter power and bandwidth limits at the absolute edge."
+                    "PHOTONIC INTEGRATION", 
+                    "Interfacing optical physics with silicon logic to shatter power and bandwidth limits at the absolute edge.",
+                    icon="zap"
                 ),
                 domain_card(
-                    "High Performance Computing (HPC)", 
-                    "Advanced data structure optimization and execution models tailored for defense scale and massive data environments."
+                    "HPC EXECUTION", 
+                    "Advanced data structure optimization and execution models tailored for defense scale and massive unstructured data environments.",
+                    icon="database"
                 ),
                 columns="3",
                 spacing="6",
                 width="100%",
-                max_width="1000px"
+                max_width="1100px",
+                padding_x="4",
             ),
 
-            rx.link(
-                rx.button("RETURN", variant="outline", color_scheme="gray", radius="none", margin_top="8"), 
-                href="/"
-            ),
-            align="center",
-            justify="center",
+            align_items="center",
+            justify_content="center",
             min_height="100vh",
-            bg="black",
-            padding="10"
-        )
+            padding_top="20",
+        ),
+        bg="transparent",
+        position="relative",
+        overflow="hidden",
+        min_height="100vh",
     )
