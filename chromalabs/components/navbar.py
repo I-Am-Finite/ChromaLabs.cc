@@ -3,44 +3,50 @@ import reflex as rx
 def menu_item(text: str, url: str) -> rx.Component:
     return rx.menu.item(
         rx.link(
-            rx.text(text, color="slate.11", _hover={"color": "white"}, size="2"),
+            rx.text(text, color="slate.11", font_size="0.9rem", transition="color 0.2s ease", _hover={"color": "white"}),
             href=url,
             width="100%",
-            display="block"
+            display="block",
+            _hover={"text_decoration": "none"}
         ),
         bg="transparent",
-        _hover={"bg": "rgba(255,255,255,0.05)"},
-        padding_y="2",
-        padding_x="3"
+        _hover={"bg": "rgba(255, 255, 255, 0.05)"},
+        padding_y="12px",
+        padding_x="16px",
+        cursor="pointer",
+        transition="background 0.2s ease",
     )
 
 def navbar_dropdown(title: str, items: list[tuple[str, str]]) -> rx.Component:
     return rx.menu.root(
         rx.menu.trigger(
             rx.button(
-                rx.text(title, color="slate.9", _hover={"color": "white"}, size="2", font_weight="500", letter_spacing="0.05em"),
+                rx.text(title, color="slate.9", font_size="0.8rem", font_weight="600", letter_spacing="0.1em", transition="color 0.2s ease", _hover={"color": "white"}),
                 bg="transparent",
                 _hover={"bg": "transparent"},
                 cursor="pointer",
-                padding="0"
+                padding="0",
+                height="auto",
             )
         ),
         rx.menu.content(
             *[menu_item(label, url) for label, url in items],
-            bg="rgba(10, 10, 10, 0.95)",
-            border="1px solid rgba(255,255,255,0.1)",
-            backdrop_filter="blur(16px)",
-            padding="2",
-            border_radius="4px",
-            min_width="160px"
+            bg="rgba(5, 5, 5, 0.95)",
+            border="1px solid rgba(255, 255, 255, 0.08)",
+            backdrop_filter="blur(24px)",
+            padding="4px",
+            border_radius="8px",
+            box_shadow="0 10px 40px rgba(0,0,0,0.5)",
+            min_width="200px",
+            margin_top="16px",
         )
     )
 
 def navbar() -> rx.Component:
     return rx.hstack(
         rx.hstack(
-            rx.image(src="/logo.svg", width="32px", height="32px"),
-            rx.link(rx.text("Chroma Labs", font_weight="700", letter_spacing="0.05em", color="white", size="4"), href="/"),
+            rx.image(src="/logo.svg", width="32px", height="32px", transition="transform 0.3s ease", _hover={"transform": "rotate(90deg)"}),
+            rx.link(rx.text("Chroma Labs", font_weight="800", letter_spacing="0.02em", color="white", size="4"), href="/", _hover={"text_decoration": "none"}),
             spacing="3",
             align_items="center",
         ),
@@ -62,22 +68,32 @@ def navbar() -> rx.Component:
             navbar_dropdown("COMPANY", [
                 ("Mission", "/company/mission"),
                 ("Careers", "/company/careers"),
-                ("Contact", "/contact"),
             ]),
-            navbar_dropdown("DEVELOPER", [
-                ("API & SDK", "/developer"),
-                ("Documentation", "/developer"),
-            ]),
-            spacing="6",
+            spacing="8",
+            align_items="center",
+            display=["none", "none", "none", "flex"],
+        ),
+        rx.spacer(),
+        rx.hstack(
+            rx.link(
+                rx.button(
+                    "Developer Portal", 
+                    bg="rgba(0, 240, 255, 0.1)", color="#00F0FF", border="1px solid rgba(0, 240, 255, 0.3)", 
+                    font_size="0.85rem", font_weight="600", padding="16px 24px", border_radius="4px", 
+                    cursor="pointer", transition="all 0.2s ease", box_shadow="0 0 15px rgba(0, 240, 255, 0)",
+                    _hover={"bg": "rgba(0, 240, 255, 0.2)", "box_shadow": "0 0 20px rgba(0, 240, 255, 0.2)", "transform": "translateY(-1px)"}
+                ),
+                href="/contact", _hover={"text_decoration": "none"}
+            ),
         ),
         width="100%",
         padding_x="8",
-        padding_y="8",
+        padding_y="6",
         align_items="center",
         position="fixed",
         top="0",
-        border_bottom="1px solid rgba(255,255,255,0.05)",
-        background="rgba(0, 0, 0, 0.7)",
-        backdrop_filter="blur(20px)",
+        border_bottom="1px solid rgba(255, 255, 255, 0.05)",
+        background="rgba(0, 0, 0, 0.6)",
+        backdrop_filter="blur(24px)",
         z_index="50",
     )
