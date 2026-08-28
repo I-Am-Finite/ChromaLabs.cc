@@ -24,7 +24,9 @@
 .rt-ToastRoot, 
 .rt-ToastViewport,
 #connection-error, 
-#reflex-connection-error {
+#reflex-connection-error,
+#reflex-logo,
+a[href*="reflex.dev"] {
   display: none !important;
   opacity: 0 !important;
   visibility: hidden !important;

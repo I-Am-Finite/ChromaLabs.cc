@@ -18,3 +18,8 @@ Any agent, subagent, or process editing `chromalabs.cc` must audit text for thes
 - Ban on Stateful Backends: You are STRICTLY FORBIDDEN from using x.State, Python database models, or any feature requiring a live Python backend/WebSocket connection.
 - Static Workarounds: Use third-party static API providers (e.g., Formspree, Web3Forms) for data capture.
 - Visual Fidelity: This constraint must NOT compromise visual fidelity. You must emulate dynamic behaviors via pure CSS animations, hover states, and client-side transitions.
+
+
+# API & INTEGRATION MANDATE
+- Absolute Ban on Freemium APIs: You are strictly forbidden from using rate-limited, freemium, or commercial APIs (e.g., Formspree).
+- Acceptable Integrations: Only truly free, industry-standard, unmetered community protocols (or pure zero-dependency static fallbacks like \mailto:\) are permitted.
