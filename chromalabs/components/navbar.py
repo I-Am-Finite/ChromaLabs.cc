@@ -55,7 +55,7 @@ def navbar() -> rx.Component:
         # Formal Horizontal Lockup
         rx.link(
             rx.hstack(
-                rx.image(src="/logo.svg", width="44px", height="44px", transition="transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)", _hover={"transform": "rotate(180deg) scale(1.1)"}),
+                rx.image(src="/logo.svg", width="44px", height="44px"),
                 rx.vstack(
                     rx.text("CHROMA", font_weight="900", font_size="1.6rem", letter_spacing="0.1em", color="white", line_height="1"),
                     rx.text("DEFENSE AI LAB", font_family="JetBrains Mono, monospace", font_weight="700", font_size="0.6rem", letter_spacing="0.15em", color="#D4AF37", line_height="1"),
