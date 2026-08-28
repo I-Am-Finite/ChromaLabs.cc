@@ -8,14 +8,15 @@ if (!window.__chromaCanvasInitialized) {
     window.__chromaCanvasInitialized = true;
     
     function initCanvas() {
-        const canvas = document.getElementById("lambdaBackground");
+        let canvas = document.getElementById("lambdaBackground");
         if (!canvas) {
             requestAnimationFrame(initCanvas);
             return;
         }
-        const ctx = canvas.getContext("2d");
+        let ctx = canvas.getContext("2d");
 
         function resize() {
+            if (!canvas) return;
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
@@ -68,19 +69,21 @@ if (!window.__chromaCanvasInitialized) {
         }
 
         function animate() {
-            // Re-fetch canvas in case React unmounted and remounted it
+            // Re-fetch canvas in case React unmounted and remounted it during SPA navigation
             const currentCanvas = document.getElementById("lambdaBackground");
             if (!currentCanvas) {
                 requestAnimationFrame(animate);
                 return;
             }
             
-            // Re-bind ctx if canvas changed
+            // Re-bind ctx if canvas DOM element was replaced by router
             if (currentCanvas !== canvas) {
-                // To keep it simple, we just assume the canvas stays alive since it is in base_layout
+                canvas = currentCanvas;
+                ctx = canvas.getContext("2d");
+                resize();
             }
 
-            ctx.clearRect(0, 0, currentCanvas.width, currentCanvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             
             drawGrid();
             
