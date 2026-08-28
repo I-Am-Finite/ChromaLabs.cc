@@ -4,10 +4,10 @@
     <loc>http://localhost:3000/</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/products/hardware</loc>
+    <loc>http://localhost:3000/capabilities</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/products/capabilities</loc>
+    <loc>http://localhost:3000/products/wearables</loc>
   </url>
   <url>
     <loc>http://localhost:3000/solutions/defense</loc>
