@@ -66,8 +66,8 @@ setTimeout(() => {
         
         drawGrid();
         
-        // Spawn from center occasionally
-        if (Math.random() < 0.05 && threads.length < 10) {
+        // Ensure continuous flow from the center
+        if (threads.length < 15) {
             spawnThread();
         }
         
@@ -109,7 +109,7 @@ setTimeout(() => {
                 t.lastDir = dirs.indexOf(selected);
                 
                 // Branching
-                if (Math.random() < 0.1) {
+                if (Math.random() < 0.03) {
                     spawnThread(t.x, t.y, true);
                 }
             }
