@@ -1,7 +1,7 @@
 import reflex as rx
 from chromalabs.components.layout import base_layout
 
-VOXEL_RAYMARCH_JS = """
+GRID_ANIMATION_JS = """
 setTimeout(() => {
     const canvas = document.getElementById("lambdaBackground");
     if (!canvas) return;
@@ -13,169 +13,143 @@ setTimeout(() => {
     }
     window.addEventListener("resize", resize);
     resize();
-
-    // CHROMA SVDAG Geometry
-    // Simulates "SpMV not by moving memory, but by bouncing light."
-    // Rays traverse a Sparse Voxel DAG, striking weights and deflecting.
     
-    const GRID_SIZE = 14;
-    const SPACING = 60;
-    let voxels = [];
+    const GRID_SIZE = 60;
+    const SPEED = 3;
+    let threads = [];
     
-    // Generate Sparse Voxel DAG (10% sparsity)
-    for (let x = 0; x < GRID_SIZE; x++) {
-        for (let y = 0; y < GRID_SIZE; y++) {
-            for (let z = 0; z < GRID_SIZE; z++) {
-                if (Math.random() < 0.08) {
-                    voxels.push({
-                        x: (x - GRID_SIZE/2) * SPACING,
-                        y: (y - GRID_SIZE/2) * SPACING,
-                        z: (z - GRID_SIZE/2) * SPACING,
-                        glow: 0
-                    });
-                }
+    function drawGrid() {
+        ctx.strokeStyle = "rgba(212, 175, 55, 0.07)";
+        ctx.lineWidth = 1;
+        
+        const offsetX = (canvas.width / 2) % GRID_SIZE;
+        const offsetY = (canvas.height / 2) % GRID_SIZE;
+        
+        for (let x = offsetX; x <= canvas.width; x += GRID_SIZE) {
+            ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+        }
+        for (let y = offsetY; y <= canvas.height; y += GRID_SIZE) {
+            ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+        }
+        
+        // Crosses at intersections
+        ctx.strokeStyle = "rgba(212, 175, 55, 0.3)";
+        for (let x = offsetX; x <= canvas.width; x += GRID_SIZE) {
+            for (let y = offsetY; y <= canvas.height; y += GRID_SIZE) {
+                ctx.beginPath();
+                ctx.moveTo(x - 4, y); ctx.lineTo(x + 4, y);
+                ctx.moveTo(x, y - 4); ctx.lineTo(x, y + 4);
+                ctx.stroke();
             }
         }
     }
     
-    let rays = [];
-    for (let i = 0; i < 20; i++) {
-        rays.push(createRay());
-    }
-
-    function createRay() {
-        let start = voxels[Math.floor(Math.random() * voxels.length)];
-        let end = voxels[Math.floor(Math.random() * voxels.length)];
-        return { start, end, progress: 0, speed: 0.01 + Math.random() * 0.03, history: [] };
-    }
-
-    function project(x, y, z, time) {
-        // Slowly rotate the entire SVDAG cluster
-        const angle = time * 0.00015;
-        const cosA = Math.cos(angle);
-        const sinA = Math.sin(angle);
+    function spawnThread(x, y, isBranch = false) {
+        if (threads.length > 60) return;
         
-        const rx = x * cosA - z * sinA;
-        const rz = x * sinA + z * cosA;
-        const ry = y;
+        let startX = x !== undefined ? x : Math.floor(canvas.width / 2 / GRID_SIZE) * GRID_SIZE + ((canvas.width / 2) % GRID_SIZE);
+        let startY = y !== undefined ? y : Math.floor(canvas.height / 2 / GRID_SIZE) * GRID_SIZE + ((canvas.height / 2) % GRID_SIZE);
         
-        // Isometric Projection
-        const isoX = (rx - rz) * 0.866;
-        const isoY = ry + (rx + rz) * 0.5;
-        return { x: isoX, y: isoY, depth: rx + ry + rz };
-    }
-
-    function drawCube(px, py, size, glow) {
-        const r = 212, g = 175, b = 55; // Gold
-        
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.1 + glow * 0.8})`;
-
-        // Top face
-        ctx.beginPath();
-        ctx.moveTo(px, py - size);
-        ctx.lineTo(px + size * 0.866, py - size * 0.5);
-        ctx.lineTo(px, py);
-        ctx.lineTo(px - size * 0.866, py - size * 0.5);
-        ctx.closePath();
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${0.05 + glow * 0.6})`;
-        ctx.fill();
-        ctx.stroke();
-
-        // Left face
-        ctx.beginPath();
-        ctx.moveTo(px, py);
-        ctx.lineTo(px - size * 0.866, py - size * 0.5);
-        ctx.lineTo(px - size * 0.866, py + size * 0.5);
-        ctx.lineTo(px, py + size);
-        ctx.closePath();
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${0.02 + glow * 0.3})`;
-        ctx.fill();
-        ctx.stroke();
-
-        // Right face
-        ctx.beginPath();
-        ctx.moveTo(px, py);
-        ctx.lineTo(px + size * 0.866, py - size * 0.5);
-        ctx.lineTo(px + size * 0.866, py + size * 0.5);
-        ctx.lineTo(px, py + size);
-        ctx.closePath();
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${0.01 + glow * 0.1})`;
-        ctx.fill();
-        ctx.stroke();
+        threads.push({
+            x: startX, y: startY,
+            path: [{x: startX, y: startY}],
+            maxLength: 15 + Math.random() * 25,
+            life: 0,
+            maxLife: 200 + Math.random() * 300,
+            moving: false
+        });
     }
 
     function animate() {
         ctx.fillStyle = "#0A0A0C";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        const time = Date.now();
+        drawGrid();
         
-        ctx.save();
-        ctx.translate(canvas.width / 2, canvas.height / 2);
+        // Spawn from center occasionally
+        if (Math.random() < 0.05 && threads.length < 15) {
+            spawnThread();
+        }
         
-        // Slowly float up and down
-        ctx.translate(0, Math.sin(time * 0.0005) * 30);
-
-        // Update Project and Sort
-        for (let i = 0; i < voxels.length; i++) {
-            let v = voxels[i];
-            if (v.glow > 0) v.glow *= 0.95; // Fade out
-            let p = project(v.x, v.y, v.z, time);
-            v.screenX = p.x;
-            v.screenY = p.y;
-            v.depth = p.depth;
-        }
-
-        // Painter's algorithm
-        voxels.sort((a, b) => a.depth - b.depth);
-
-        // Draw Voxels
-        for (let i = 0; i < voxels.length; i++) {
-            let v = voxels[i];
-            drawCube(v.screenX, v.screenY, 20 + (v.glow * 15), v.glow);
-        }
-
-        // Update and Draw Rays
-        ctx.lineWidth = 2;
-        for (let i = 0; i < rays.length; i++) {
-            let ray = rays[i];
-            ray.progress += ray.speed;
+        for (let i = threads.length - 1; i >= 0; i--) {
+            let t = threads[i];
             
-            if (ray.progress >= 1.0) {
-                ray.end.glow = 1.0;
-                ray.start = ray.end;
-                ray.end = voxels[Math.floor(Math.random() * voxels.length)];
-                ray.progress = 0;
+            if (t.moving) {
+                t.x += t.vx;
+                t.y += t.vy;
+                t.progress += SPEED;
+                
+                if (t.progress >= GRID_SIZE) {
+                    t.x = t.targetX;
+                    t.y = t.targetY;
+                    t.path.push({x: t.x, y: t.y});
+                    if (t.path.length > t.maxLength) t.path.shift();
+                    t.moving = false;
+                }
+            } else {
+                let dirs = [
+                    {vx: 0, vy: -SPEED}, {vx: SPEED, vy: 0},
+                    {vx: 0, vy: SPEED}, {vx: -SPEED, vy: 0}
+                ];
+                
+                let possibleDirs = dirs;
+                if (t.lastDir !== undefined) {
+                    possibleDirs = dirs.filter((d, idx) => idx !== (t.lastDir + 2) % 4);
+                }
+                
+                let choiceIdx = Math.floor(Math.random() * possibleDirs.length);
+                let selected = possibleDirs[choiceIdx];
+                
+                t.vx = selected.vx;
+                t.vy = selected.vy;
+                t.targetX = t.x + (t.vx > 0 ? GRID_SIZE : t.vx < 0 ? -GRID_SIZE : 0);
+                t.targetY = t.y + (t.vy > 0 ? GRID_SIZE : t.vy < 0 ? -GRID_SIZE : 0);
+                t.progress = 0;
+                t.moving = true;
+                t.lastDir = dirs.indexOf(selected);
+                
+                // Branching
+                if (Math.random() < 0.15) {
+                    spawnThread(t.x, t.y, true);
+                }
             }
             
-            const startP = {x: ray.start.screenX, y: ray.start.screenY};
-            const endP = {x: ray.end.screenX, y: ray.end.screenY};
+            t.life++;
+            if (t.life > t.maxLife) {
+                // Shrink tail to die
+                t.path.shift();
+                if (t.path.length === 0) {
+                    threads.splice(i, 1);
+                    continue;
+                }
+            }
             
-            const currX = startP.x + (endP.x - startP.x) * ray.progress;
-            const currY = startP.y + (endP.y - startP.y) * ray.progress;
-            
-            // Draw beam tail
-            ctx.beginPath();
-            ctx.moveTo(startP.x, startP.y);
-            ctx.lineTo(currX, currY);
-            
-            // Deflection color (High-vis orange to gold gradient)
-            let grad = ctx.createLinearGradient(startP.x, startP.y, currX, currY);
-            grad.addColorStop(0, "rgba(255, 69, 0, 0.0)");
-            grad.addColorStop(1, "rgba(255, 215, 0, 0.8)");
-            
-            ctx.strokeStyle = grad;
-            ctx.stroke();
-            
-            // Beam head
-            ctx.beginPath();
-            ctx.arc(currX, currY, 4, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
-            ctx.fill();
+            // Draw
+            if (t.path.length > 0) {
+                ctx.beginPath();
+                ctx.moveTo(t.path[0].x, t.path[0].y);
+                for (let j = 1; j < t.path.length; j++) {
+                    ctx.lineTo(t.path[j].x, t.path[j].y);
+                }
+                ctx.lineTo(t.x, t.y);
+                
+                // Fade out at end of life
+                const opacity = t.life > t.maxLife ? Math.max(0, t.path.length / t.maxLength) : 1.0;
+                
+                ctx.strokeStyle = `rgba(212, 175, 55, ${opacity * 0.9})`;
+                ctx.lineWidth = 2.5;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = `rgba(212, 175, 55, ${opacity})`;
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+                
+                // Bright head
+                ctx.beginPath();
+                ctx.arc(t.x, t.y, 3, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                ctx.fill();
+            }
         }
-
-        ctx.restore();
         
         requestAnimationFrame(animate);
     }
@@ -191,7 +165,7 @@ def index() -> rx.Component:
                 id="lambdaBackground", 
                 style={"position": "absolute", "top": "0", "left": "0", "width": "100vw", "height": "100vh", "z_index": "-2", "pointer_events": "none"}
             ),
-            rx.script(VOXEL_RAYMARCH_JS),
+            rx.script(GRID_ANIMATION_JS),
             
             rx.box(
                 position="absolute", top="20%", left="50%", transform="translateX(-50%)", width="50vw", height="50vw",
