@@ -26,6 +26,7 @@ def base_layout(content: rx.Component) -> rx.Component:
             padding_top="80px", # Offset for fixed navbar
         ),
         footer(),
+        rx.script(src="/fractal.js"),
         background="transparent",
         color="white",
         font_family="Inter, sans-serif"

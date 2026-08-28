@@ -17,9 +17,10 @@ def navbar() -> rx.Component:
         rx.spacer(),
         rx.hstack(
             navbar_link("Hardware", "/products/hardware"),
+            navbar_link("Capabilities", "/products/capabilities"),
             navbar_link("Solutions", "/solutions/defense"),
             navbar_link("Company", "/company/mission"),
-            navbar_link("News", "/news"),
+            navbar_link("Developer", "/developer"),
             spacing="6",
         ),
         width="100%",
