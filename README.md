@@ -1,4 +1,4 @@
-﻿# | Chroma Labs, Inc.™ 
+﻿# Chroma Labs, Inc.™ 
 ## The High-Dimension AI, HPC, and Defense Lab.
 
 ### Thermodynamic Supremacy & Volumetric Intelligence
