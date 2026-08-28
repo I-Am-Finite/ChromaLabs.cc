@@ -1,118 +1,113 @@
 import reflex as rx
 from chromalabs.components.layout import base_layout
 
-SVG_BACKGROUND = """<svg width="100%" height="100%" style="position: absolute; top: 0; left: 0; z-index: -2;" xmlns="http://www.w3.org/2000/svg">
-<defs><pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-<path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(212, 175, 55, 0.05)" stroke-width="1"/></pattern>
-<filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-<feGaussianBlur stdDeviation="3" result="blur" />
-<feComposite in="SourceGraphic" in2="blur" operator="over" />
-</filter></defs>
-<rect width="100%" height="100%" fill="url(#grid)" />
-<path d="M 0 180 L 420 180 L 420 480 L 1020 480 L 1020 240 L 2400 240" fill="none" stroke="rgba(212, 175, 55, 0.15)" stroke-width="1" />
-<path d="M 0 180 L 420 180 L 420 480 L 1020 480 L 1020 240 L 2400 240" fill="none" stroke="#D4AF37" stroke-width="2" filter="url(#glow)" stroke-dasharray="150 4000" stroke-dashoffset="4000">
-<animate attributeName="stroke-dashoffset" values="4000; -200" dur="11.8s" begin="0.5s" repeatCount="indefinite" />
-</path>
-<path d="M 900 1200 L 900 600 L 1440 600 L 1440 0" fill="none" stroke="rgba(212, 175, 55, 0.15)" stroke-width="1" />
-<path d="M 900 1200 L 900 600 L 1440 600 L 1440 0" fill="none" stroke="#D4AF37" stroke-width="2" filter="url(#glow)" stroke-dasharray="150 4000" stroke-dashoffset="4000">
-<animate attributeName="stroke-dashoffset" values="4000; -200" dur="7.4s" begin="1.2s" repeatCount="indefinite" />
-</path>
-<path d="M 600 0 L 600 300 L 180 300 L 180 1200" fill="none" stroke="rgba(212, 175, 55, 0.15)" stroke-width="1" />
-<path d="M 600 0 L 600 300 L 180 300 L 180 1200" fill="none" stroke="#D4AF37" stroke-width="2" filter="url(#glow)" stroke-dasharray="150 4000" stroke-dashoffset="4000">
-<animate attributeName="stroke-dashoffset" values="4000; -200" dur="7.7s" begin="3.2s" repeatCount="indefinite" />
-</path>
-<path d="M 2400 720 L 1800 720 L 1800 1020 L 1200 1020 L 1200 1200" fill="none" stroke="rgba(212, 175, 55, 0.15)" stroke-width="1" />
-<path d="M 2400 720 L 1800 720 L 1800 1020 L 1200 1020 L 1200 1200" fill="none" stroke="#D4AF37" stroke-width="2" filter="url(#glow)" stroke-dasharray="150 4000" stroke-dashoffset="4000">
-<animate attributeName="stroke-dashoffset" values="4000; -200" dur="8.4s" begin="0.1s" repeatCount="indefinite" />
-</path>
-<path d="M 1320 480 L 1320 840 L 2040 840 L 2040 1200" fill="none" stroke="rgba(212, 175, 55, 0.15)" stroke-width="1" />
-<path d="M 1320 480 L 1320 840 L 2040 840 L 2040 1200" fill="none" stroke="#D4AF37" stroke-width="2" filter="url(#glow)" stroke-dasharray="150 4000" stroke-dashoffset="4000">
-<animate attributeName="stroke-dashoffset" values="4000; -200" dur="8.8s" begin="1.9s" repeatCount="indefinite" />
-</path>
-<path d="M 1500 1200 L 1500 720 L 840 720 L 840 0" fill="none" stroke="rgba(212, 175, 55, 0.15)" stroke-width="1" />
-<path d="M 1500 1200 L 1500 720 L 840 720 L 840 0" fill="none" stroke="#D4AF37" stroke-width="2" filter="url(#glow)" stroke-dasharray="150 4000" stroke-dashoffset="4000">
-<animate attributeName="stroke-dashoffset" values="4000; -200" dur="7.0s" begin="4.1s" repeatCount="indefinite" />
-</path>
-<path d="M 0 840 L 480 840 L 480 1020 L 720 1020 L 720 1200" fill="none" stroke="rgba(212, 175, 55, 0.15)" stroke-width="1" />
-<path d="M 0 840 L 480 840 L 480 1020 L 720 1020 L 720 1200" fill="none" stroke="#D4AF37" stroke-width="2" filter="url(#glow)" stroke-dasharray="150 4000" stroke-dashoffset="4000">
-<animate attributeName="stroke-dashoffset" values="4000; -200" dur="6.0s" begin="1.1s" repeatCount="indefinite" />
-</path>
-<path d="M 2400 360 L 1920 360 L 1920 180 L 1500 180 L 1500 0" fill="none" stroke="rgba(212, 175, 55, 0.15)" stroke-width="1" />
-<path d="M 2400 360 L 1920 360 L 1920 180 L 1500 180 L 1500 0" fill="none" stroke="#D4AF37" stroke-width="2" filter="url(#glow)" stroke-dasharray="150 4000" stroke-dashoffset="4000">
-<animate attributeName="stroke-dashoffset" values="4000; -200" dur="7.1s" begin="0.0s" repeatCount="indefinite" />
-</path>
-</svg>"""
+TROMP_FRACTAL_JS = """
+setTimeout(() => {
+    const canvas = document.getElementById("lambdaBackground");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
 
-LAMBDA_SVG = """<svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(-10deg);">
-    <style>
-        .tree-left { animation: slideLeft 4s infinite cubic-bezier(0.77, 0, 0.175, 1); }
-        .tree-right { animation: slideRight 4s infinite cubic-bezier(0.77, 0, 0.175, 1); }
-        .collapse-line { animation: fadeOut 4s infinite; }
-        .flash { animation: flashPulse 4s infinite; }
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    let progress = 0.0;
+    const SPEED = 0.003;
+
+    function drawTrompNode(x, y, width, height, depth) {
+        if (depth === 0) return;
         
-        @keyframes slideLeft {
-            0%, 20% { transform: translateX(0); }
-            45%, 65% { transform: translateX(45px); }
-            100% { transform: translateX(0); }
-        }
-        @keyframes slideRight {
-            0%, 20% { transform: translateX(0); }
-            45%, 65% { transform: translateX(-45px); }
-            100% { transform: translateX(0); }
-        }
-        @keyframes fadeOut {
-            0%, 35% { stroke-opacity: 1; }
-            45%, 65% { stroke-opacity: 0; }
-            100% { stroke-opacity: 1; }
-        }
-        @keyframes flashPulse {
-            0%, 40% { stroke: #D4AF37; filter: drop-shadow(0 0 2px #D4AF37); }
-            45%, 55% { stroke: #FF0000; filter: drop-shadow(0 0 8px #FF0000); stroke-width: 4px; }
-            100% { stroke: #D4AF37; filter: drop-shadow(0 0 2px #D4AF37); }
-        }
-    </style>
-    
-    <g class="tree-left" stroke="#D4AF37" stroke-width="2" fill="none" stroke-linecap="square" stroke-linejoin="miter">
-        <path d="M 10 20 L 70 20 L 70 60 L 90 60" />
-        <path d="M 10 40 L 50 40 L 50 80 L 90 80" />
-        <path d="M 10 60 L 30 60 L 30 100 L 90 100" />
-        <path d="M 90 60 L 90 100" />
-        <path d="M 90 80 L 100 80" class="collapse-line" />
-    </g>
+        ctx.beginPath();
+        // Horizontal abstraction line
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + width, y);
+        
+        // Vertical variable lines
+        const leftDrop = x + width * 0.2;
+        const rightDrop = x + width * 0.8;
+        
+        ctx.moveTo(leftDrop, y);
+        ctx.lineTo(leftDrop, y + height);
+        
+        ctx.moveTo(rightDrop, y);
+        ctx.lineTo(rightDrop, y + height);
+        
+        // Horizontal application line connecting
+        ctx.moveTo(leftDrop, y + height);
+        ctx.lineTo(leftDrop + width * 0.4, y + height);
+        ctx.stroke();
+        
+        // Recursive children (Beta-reduction scaling logic)
+        // Left child
+        drawTrompNode(leftDrop, y + height, width * 0.5, height * 0.8, depth - 1);
+        // Right child (shifted)
+        drawTrompNode(rightDrop, y + height * 0.6, width * 0.5, height * 0.8, depth - 1);
+    }
 
-    <g class="tree-right" stroke="#D4AF37" stroke-width="2" fill="none" stroke-linecap="square" stroke-linejoin="miter">
-        <path d="M 190 100 L 130 100 L 130 60 L 110 60" />
-        <path d="M 190 80 L 150 80 L 150 40 L 110 40" />
-        <path d="M 190 60 L 170 60 L 170 20 L 110 20" />
-        <path d="M 110 20 L 110 60" />
-        <path d="M 110 80 L 100 80" class="collapse-line" />
-    </g>
-    
-    <circle cx="100" cy="80" r="4" fill="none" class="flash" stroke-width="2"/>
-</svg>"""
-
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+        
+        ctx.save();
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        
+        // The mathematical self-similarity ratio is exactly 2.0 (since width child is 0.5)
+        // We interpolate scale logarithmically to make the fractal zoom seamless
+        const scale = Math.pow(2.0, progress);
+        ctx.scale(scale, scale);
+        
+        ctx.rotate(-0.12); // Tilt for dynamic aesthetic
+        
+        ctx.lineWidth = 1.5 / scale; // Keep stroke width constant
+        
+        // Draw the massive seed structure centered
+        drawTrompNode(-400, -200, 800, 250, 9);
+        
+        // Draw adjacent identical structures to fill the screen as it zooms out
+        drawTrompNode(-400 - 800, -200, 800, 250, 9);
+        drawTrompNode(-400 + 800, -200, 800, 250, 9);
+        
+        ctx.restore();
+        
+        progress += SPEED;
+        if (progress >= 1.0) {
+            progress = 0.0; // Snap perfectly back to 1.0 scale
+        }
+        
+        requestAnimationFrame(animate);
+    }
+    animate();
+}, 500); // Small delay to ensure canvas is mounted
+"""
 
 def lambda_node() -> rx.Component:
     return rx.box(
-        rx.text("INTERACTION NET COLLAPSE", font_size="9px", color="rgba(212, 175, 55, 0.8)", letter_spacing="2px", margin_bottom="10px", text_align="center"),
-        rx.html(LAMBDA_SVG),
-        padding="16px", background="rgba(10, 10, 12, 0.9)", border="1px solid rgba(212, 175, 55, 0.3)",
+        rx.text("L-TREE FUSION", font_size="9px", color="rgba(212, 175, 55, 0.8)", letter_spacing="2px", margin_bottom="10px", text_align="center"),
+        # Floating empty glass box to act as a UI element above the fractal
+        padding="16px", background="rgba(10, 10, 12, 0.7)", border="1px solid rgba(212, 175, 55, 0.3)",
         border_radius="4px", backdrop_filter="blur(12px)", box_shadow="0 0 40px rgba(0,0,0,0.8)",
-        transition="all 0.3s ease", _hover={"border_color": "#FF0000"}
+        transition="all 0.3s ease", _hover={"border_color": "#FF0000"}, width="140px", height="80px"
     )
 
 def index() -> rx.Component:
     return base_layout(
         rx.box(
-            # The fully snaking, grid-locked golden SVG traces
-            rx.html(SVG_BACKGROUND),
+            # Infinite Tromp Diagram Fractal Zoom Background
+            rx.el.canvas(
+                id="lambdaBackground", 
+                style={"position": "absolute", "top": "0", "left": "0", "width": "100vw", "height": "100vh", "z_index": "-2", "pointer_events": "none"}
+            ),
+            rx.script(TROMP_FRACTAL_JS),
             
-            # Attached Lambda Nodes at precise grid intersections
-            # Center offset: width is ~232px, height is ~174px
-            rx.box(lambda_node(), position="absolute", top="93px", left="304px", z_index="-1", class_name="animate-fade-up"),
-            rx.box(lambda_node(), position="absolute", top="393px", left="904px", z_index="-1", class_name="animate-fade-up delay-100"),
-            rx.box(lambda_node(), position="absolute", top="633px", left="1384px", z_index="-1", class_name="animate-fade-up delay-200"),
-            rx.box(lambda_node(), position="absolute", top="93px", left="1804px", z_index="-1", class_name="animate-fade-up delay-300"),
+            # Attached Lambda Nodes tracking the fractal depth illusion
+            rx.box(lambda_node(), position="absolute", top="15%", left="20%", z_index="-1", class_name="animate-fade-up"),
+            rx.box(lambda_node(), position="absolute", top="45%", left="60%", z_index="-1", class_name="animate-fade-up delay-100"),
+            rx.box(lambda_node(), position="absolute", top="70%", left="80%", z_index="-1", class_name="animate-fade-up delay-200"),
+            rx.box(lambda_node(), position="absolute", top="80%", left="10%", z_index="-1", class_name="animate-fade-up delay-300"),
             
             # Ambient Void Glows
             rx.box(
