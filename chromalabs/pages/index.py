@@ -47,8 +47,8 @@ setTimeout(() => {
     function spawnThread(x, y, isBranch = false) {
         if (threads.length > 50) return;
         
-        let startX = x !== undefined ? x : Math.floor(canvas.width / 2 / GRID_SIZE) * GRID_SIZE + ((canvas.width / 2) % GRID_SIZE);
-        let startY = y !== undefined ? y : Math.floor(canvas.height / 2 / GRID_SIZE) * GRID_SIZE + ((canvas.height / 2) % GRID_SIZE);
+        let startX = x !== undefined ? x : Math.floor(Math.random() * (canvas.width / GRID_SIZE)) * GRID_SIZE + ((canvas.width / 2) % GRID_SIZE);
+        let startY = y !== undefined ? y : Math.floor(Math.random() * (canvas.height / GRID_SIZE)) * GRID_SIZE + ((canvas.height / 2) % GRID_SIZE);
         
         threads.push({
             x: startX, y: startY,
