@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link href="/logo.svg" rel="icon" class="css-93jq9x"/><link rel="modulepreload" href="/assets/manifest-0ffb537f.js"/><link rel="modulepreload" href="/assets/entry.client-Dhfbak_A.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-QTnfLwEv.js"/><link rel="modulepreload" href="/assets/chunk-62JRHF6Z-Dq1aAwXd.js"/><link rel="modulepreload" href="/assets/react-dom-DJPhu9Mm.js"/><link rel="modulepreload" href="/assets/root-rXiVhw3U.js"/><link rel="modulepreload" href="/assets/reflex-env-BVGF6eGS.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-D66BJTCW.js"/><link rel="modulepreload" href="/assets/esm-PXMG7ba-.js"/><link rel="modulepreload" href="/assets/context-DBqEmjTd.js"/><link rel="modulepreload" href="/assets/createLucideIcon-CJFePS_t.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || 'dark';
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><style data-emotion="css 93jq9x">.css-93jq9x{type:image/svg+xml;}</style><link href="/style.css" rel="stylesheet"/><link href="/assets/__reflex_global_styles-CusywCHc.css" rel="stylesheet" type="text/css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><style data-emotion="css uierfp">.css-uierfp{font-family:Inter,sans-serif;--default-font-family:Inter,sans-serif;}</style><div data-is-root-theme="true" data-accent-color="blue" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="none" data-scaling="100%" class="radix-themes css-uierfp"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><script>
+              console.log(
+                "💿 Hey developer 👋. You can provide a way better UX than this " +
+                "when your app is loading JS modules and/or running `clientLoader` " +
+                "functions. Check out https://reactrouter.com/start/framework/route-module#hydratefallback " +
+                "for more information."
+              );
+            </script></div><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"v8_passThroughRequests":false,"v8_trailingSlashAwareDataRequests":false,"unstable_previewServerPrerendering":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":true};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-0ffb537f.js";
+import * as route0 from "/assets/root-rXiVhw3U.js";
+  
+  window.__reactRouterRouteModules = {"root":route0};
+
+import("/assets/entry.client-Dhfbak_A.js");</script><!--$--><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$--><script>window.__reactRouterContext.streamController.close();</script><!--/$--><!--/$--></body></html>
