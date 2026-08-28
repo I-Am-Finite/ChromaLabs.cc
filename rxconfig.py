@@ -2,6 +2,7 @@ import reflex as rx
 
 config = rx.Config(
     app_name="chromalabs",
+    env=rx.Env.PROD,
     plugins=[
         rx.plugins.SitemapPlugin(),
         rx.plugins.TailwindV4Plugin(),
