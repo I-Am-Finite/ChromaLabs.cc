@@ -50,7 +50,7 @@ app = rx.App(
         }
     },
     head_components=[
-        rx.el.link(rel="icon", href="/logo_glyph.svg", type_="image/svg+xml"),
+        rx.el.link(rel="icon", href="/logo_glyph.png", type_="image/png"),
         rx.el.link(rel="stylesheet", href="/style.css"),
     ],
 )
@@ -59,14 +59,14 @@ from chromalabs.pages.capabilities.ai import ai
 from chromalabs.pages.capabilities.hpc import hpc
 from chromalabs.pages.capabilities.government import government
 
-app.add_page(index, route="/", title="Higher Dimensional HPC | Chroma Labs", image="/logo_glyph.svg")
-app.add_page(capabilities, route="/capabilities", title="Capabilities | Chroma Labs", image="/logo_glyph.svg")
-app.add_page(ai, route="/capabilities/ai", title="Exascale AI | Chroma Labs", image="/logo_glyph.svg")
-app.add_page(hpc, route="/capabilities/hpc", title="HPC | Chroma Labs", image="/logo_glyph.svg")
-app.add_page(government, route="/capabilities/government", title="Defense & Gov | Chroma Labs", image="/logo_glyph.svg")
-app.add_page(research, route="/research", title="Research & Architecture | Chroma Labs", image="/logo_glyph.svg")
-app.add_page(mission, route="/company/mission", title="Mission | Chroma Labs", image="/logo_glyph.svg")
-app.add_page(careers, route="/company/careers", title="Careers | Chroma Labs", image="/logo_glyph.svg")
-app.add_page(contact, route="/contact", title="Contact | Chroma Labs", image="/logo_glyph.svg")
-app.add_page(developer, route="/developer", title="Developer | Chroma Labs", image="/logo_glyph.svg")
+app.add_page(index, route="/", title="Higher Dimensional HPC | Chroma Labs", image="/logo_glyph.png")
+app.add_page(capabilities, route="/capabilities", title="Capabilities | Chroma Labs", image="/logo_glyph.png")
+app.add_page(ai, route="/capabilities/ai", title="Exascale AI | Chroma Labs", image="/logo_glyph.png")
+app.add_page(hpc, route="/capabilities/hpc", title="HPC | Chroma Labs", image="/logo_glyph.png")
+app.add_page(government, route="/capabilities/government", title="Defense & Gov | Chroma Labs", image="/logo_glyph.png")
+app.add_page(research, route="/research", title="Research & Architecture | Chroma Labs", image="/logo_glyph.png")
+app.add_page(mission, route="/company/mission", title="Mission | Chroma Labs", image="/logo_glyph.png")
+app.add_page(careers, route="/company/careers", title="Careers | Chroma Labs", image="/logo_glyph.png")
+app.add_page(contact, route="/contact", title="Contact | Chroma Labs", image="/logo_glyph.png")
+app.add_page(developer, route="/developer", title="Developer | Chroma Labs", image="/logo_glyph.png")
 

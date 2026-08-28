@@ -52,9 +52,19 @@ def navbar_dropdown(title: str, items: list[tuple[str, str]]) -> rx.Component:
 
 def navbar() -> rx.Component:
     return rx.hstack(
-        # Unified SVG Brand Lockup
+        # Formal Horizontal Lockup
         rx.link(
-            rx.image(src="/logo.svg?v=2", height="60px", width="auto"),
+            rx.hstack(
+                rx.image(src="/logo_glyph.png", height="60px", width="auto"),
+                rx.vstack(
+                    rx.text("CHROMA", font_weight="900", font_size="1.8rem", letter_spacing="0.1em", color="white", line_height="1"),
+                    rx.text("DEFENSE AI LAB", font_family="JetBrains Mono, monospace", font_weight="700", font_size="0.65rem", letter_spacing="0.15em", color="#D4AF37", line_height="1"),
+                    spacing="1",
+                    align_items="flex-start",
+                ),
+                spacing="4",
+                align_items="center",
+            ),
             href="/", 
             _hover={"text_decoration": "none"}
         ),
