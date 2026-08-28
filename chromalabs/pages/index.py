@@ -1,7 +1,7 @@
 import reflex as rx
 from chromalabs.components.layout import base_layout
 
-TROMP_FRACTAL_JS = """
+VOXEL_RAYMARCH_JS = """
 setTimeout(() => {
     const canvas = document.getElementById("lambdaBackground");
     if (!canvas) return;
@@ -13,119 +13,168 @@ setTimeout(() => {
     }
     window.addEventListener("resize", resize);
     resize();
+
+    // CHROMA SVDAG Geometry
+    // Simulates "SpMV not by moving memory, but by bouncing light."
+    // Rays traverse a Sparse Voxel DAG, striking weights and deflecting.
     
-    // Mathematically Accurate John Tromp Diagram Geometry
-    // Uses procedural interpolation to simulate a massive Beta-Reduction and its inverse (Beta-Expansion)
-    // This allows the structure to eternally fill the screen without resetting to a tiny seed.
-    function drawTrompReduction(x, y, w, h, depth, cycle) {
-        if (depth === 0) return;
-        
-        // Geometry Constants
-        const leftX = x;
-        const rightX = x + w/2;
-        const bridgeY = y + h - 10;
-        const absY = y + 10;
-        
-        // 1. Overarching Application Bridge
-        const bridgeOpacity = 1.0 - cycle;
-        if (bridgeOpacity > 0.01) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(212, 175, 55, ${bridgeOpacity * 0.4})`;
-            ctx.moveTo(leftX, bridgeY);
-            ctx.lineTo(rightX, bridgeY);
-            
-            ctx.moveTo(leftX, bridgeY - 15);
-            ctx.lineTo(leftX, bridgeY);
-            ctx.moveTo(rightX, bridgeY - 15);
-            ctx.lineTo(rightX, bridgeY);
-            ctx.stroke();
-            
-            // Flashing Redex Core
-            ctx.beginPath();
-            ctx.arc(leftX, bridgeY, 3, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 55, 55, ${bridgeOpacity * 0.8})`;
-            ctx.fill();
-        }
-        
-        // 2. Left Abstraction (Dissolves upon reduction)
-        if (bridgeOpacity > 0.01) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(212, 175, 55, ${bridgeOpacity * 0.4})`;
-            ctx.moveTo(leftX, absY);
-            ctx.lineTo(rightX, absY);
-            ctx.stroke();
-        }
-        
-        // 3. The Body of the Left Abstraction (B)
-        const var1X = leftX + (w/2) * 0.2;
-        const var2X = leftX + (w/2) * 0.8;
-        const varY = absY; 
-        const varH = h * 0.5; 
-        
-        ctx.beginPath();
-        ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
-        // Var 1 Drop
-        ctx.moveTo(var1X, varY);
-        ctx.lineTo(var1X, varY + varH);
-        // Var 2 Drop
-        ctx.moveTo(var2X, varY);
-        ctx.lineTo(var2X, varY + varH);
-        
-        // Internal application connecting the two variables
-        ctx.moveTo(var1X, varY + varH);
-        ctx.lineTo(var2X, varY + varH);
-        ctx.stroke();
-        
-        // 4. The Right Argument (R) - PHYSICS INTERPOLATION
-        // It gracefully slides from the right side into the variable slots!
-        
-        // Easing function for smooth physics (EaseInOutCubic)
-        const easeCycle = cycle < 0.5 ? 4 * cycle * cycle * cycle : 1 - Math.pow(-2 * cycle + 2, 3) / 2;
-        
-        const curr1X = rightX + (var1X - rightX) * easeCycle;
-        const curr1Y = absY + (varY + varH - absY) * easeCycle;
-        
-        const curr2X = rightX + (var2X - rightX) * easeCycle;
-        const curr2Y = absY + (varY + varH - absY) * easeCycle;
-        
-        const scale = 1.0 - (0.5 * easeCycle);
-        const subW = (w/2) * scale;
-        const subH = (h * 0.8) * scale;
-        
-        // Draw the Right Subtree tracing the glide path
-        if (easeCycle < 0.01) {
-            drawTrompReduction(rightX, absY, w/2, h * 0.8, depth - 1, cycle);
-        } else {
-            ctx.save();
-            drawTrompReduction(curr1X, curr1Y, subW, subH, depth - 1, cycle);
-            drawTrompReduction(curr2X, curr2Y, subW, subH, depth - 1, cycle);
-            ctx.restore();
+    const GRID_SIZE = 14;
+    const SPACING = 60;
+    let voxels = [];
+    
+    // Generate Sparse Voxel DAG (10% sparsity)
+    for (let x = 0; x < GRID_SIZE; x++) {
+        for (let y = 0; y < GRID_SIZE; y++) {
+            for (let z = 0; z < GRID_SIZE; z++) {
+                if (Math.random() < 0.08) {
+                    voxels.push({
+                        x: (x - GRID_SIZE/2) * SPACING,
+                        y: (y - GRID_SIZE/2) * SPACING,
+                        z: (z - GRID_SIZE/2) * SPACING,
+                        glow: 0
+                    });
+                }
+            }
         }
     }
     
+    let rays = [];
+    for (let i = 0; i < 20; i++) {
+        rays.push(createRay());
+    }
+
+    function createRay() {
+        let start = voxels[Math.floor(Math.random() * voxels.length)];
+        let end = voxels[Math.floor(Math.random() * voxels.length)];
+        return { start, end, progress: 0, speed: 0.01 + Math.random() * 0.03, history: [] };
+    }
+
+    function project(x, y, z, time) {
+        // Slowly rotate the entire SVDAG cluster
+        const angle = time * 0.00015;
+        const cosA = Math.cos(angle);
+        const sinA = Math.sin(angle);
+        
+        const rx = x * cosA - z * sinA;
+        const rz = x * sinA + z * cosA;
+        const ry = y;
+        
+        // Isometric Projection
+        const isoX = (rx - rz) * 0.866;
+        const isoY = ry + (rx + rz) * 0.5;
+        return { x: isoX, y: isoY, depth: rx + ry + rz };
+    }
+
+    function drawCube(px, py, size, glow) {
+        const r = 212, g = 175, b = 55; // Gold
+        
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${0.1 + glow * 0.8})`;
+
+        // Top face
+        ctx.beginPath();
+        ctx.moveTo(px, py - size);
+        ctx.lineTo(px + size * 0.866, py - size * 0.5);
+        ctx.lineTo(px, py);
+        ctx.lineTo(px - size * 0.866, py - size * 0.5);
+        ctx.closePath();
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${0.05 + glow * 0.6})`;
+        ctx.fill();
+        ctx.stroke();
+
+        // Left face
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.lineTo(px - size * 0.866, py - size * 0.5);
+        ctx.lineTo(px - size * 0.866, py + size * 0.5);
+        ctx.lineTo(px, py + size);
+        ctx.closePath();
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${0.02 + glow * 0.3})`;
+        ctx.fill();
+        ctx.stroke();
+
+        // Right face
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.lineTo(px + size * 0.866, py - size * 0.5);
+        ctx.lineTo(px + size * 0.866, py + size * 0.5);
+        ctx.lineTo(px, py + size);
+        ctx.closePath();
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${0.01 + glow * 0.1})`;
+        ctx.fill();
+        ctx.stroke();
+    }
+
     function animate() {
         ctx.fillStyle = "#0A0A0C";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        const time = Date.now() / 2500;
-        // Oscillates between 0 and 1. 0 = Combined, 1 = Fully Split
-        // This guarantees it endlessly reverses back and forth smoothly.
-        let cycle = (Math.sin(time) + 1) / 2; 
+        const time = Date.now();
         
         ctx.save();
+        ctx.translate(canvas.width / 2, canvas.height / 2);
         
-        // Ensure it always fills the screen perfectly!
-        // At cycle=0 it is wider, at cycle=1 it is taller.
-        // We gently interpolate the zoom to keep the bounds perfectly fitted.
-        const zoom = 1.0 - (0.15 * cycle);
-        ctx.translate(canvas.width / 2, canvas.height / 3);
-        ctx.scale(zoom, zoom);
-        
-        ctx.lineWidth = 1.5 / zoom;
-        
-        // Draw the massive, screen-filling AST seed (Depth 7)
-        drawTrompReduction(-canvas.width * 0.8, 0, canvas.width * 1.6, 500, 7, cycle);
-        
+        // Slowly float up and down
+        ctx.translate(0, Math.sin(time * 0.0005) * 30);
+
+        // Update Project and Sort
+        for (let i = 0; i < voxels.length; i++) {
+            let v = voxels[i];
+            if (v.glow > 0) v.glow *= 0.95; // Fade out
+            let p = project(v.x, v.y, v.z, time);
+            v.screenX = p.x;
+            v.screenY = p.y;
+            v.depth = p.depth;
+        }
+
+        // Painter's algorithm
+        voxels.sort((a, b) => a.depth - b.depth);
+
+        // Draw Voxels
+        for (let i = 0; i < voxels.length; i++) {
+            let v = voxels[i];
+            drawCube(v.screenX, v.screenY, 20 + (v.glow * 15), v.glow);
+        }
+
+        // Update and Draw Rays
+        ctx.lineWidth = 2;
+        for (let i = 0; i < rays.length; i++) {
+            let ray = rays[i];
+            ray.progress += ray.speed;
+            
+            if (ray.progress >= 1.0) {
+                ray.end.glow = 1.0;
+                ray.start = ray.end;
+                ray.end = voxels[Math.floor(Math.random() * voxels.length)];
+                ray.progress = 0;
+            }
+            
+            const startP = {x: ray.start.screenX, y: ray.start.screenY};
+            const endP = {x: ray.end.screenX, y: ray.end.screenY};
+            
+            const currX = startP.x + (endP.x - startP.x) * ray.progress;
+            const currY = startP.y + (endP.y - startP.y) * ray.progress;
+            
+            // Draw beam tail
+            ctx.beginPath();
+            ctx.moveTo(startP.x, startP.y);
+            ctx.lineTo(currX, currY);
+            
+            // Deflection color (High-vis orange to gold gradient)
+            let grad = ctx.createLinearGradient(startP.x, startP.y, currX, currY);
+            grad.addColorStop(0, "rgba(255, 69, 0, 0.0)");
+            grad.addColorStop(1, "rgba(255, 215, 0, 0.8)");
+            
+            ctx.strokeStyle = grad;
+            ctx.stroke();
+            
+            // Beam head
+            ctx.beginPath();
+            ctx.arc(currX, currY, 4, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.9)";
+            ctx.fill();
+        }
+
         ctx.restore();
         
         requestAnimationFrame(animate);
@@ -142,7 +191,7 @@ def index() -> rx.Component:
                 id="lambdaBackground", 
                 style={"position": "absolute", "top": "0", "left": "0", "width": "100vw", "height": "100vh", "z_index": "-2", "pointer_events": "none"}
             ),
-            rx.script(TROMP_FRACTAL_JS),
+            rx.script(VOXEL_RAYMARCH_JS),
             
             rx.box(
                 position="absolute", top="20%", left="50%", transform="translateX(-50%)", width="50vw", height="50vw",
