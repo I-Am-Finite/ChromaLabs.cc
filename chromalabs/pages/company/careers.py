@@ -63,7 +63,7 @@ def careers() -> rx.Component:
                     job_card("Embedded Systems Lead", "ENGINEERING", "Austin, TX"),
                     job_card("Optical Physicist", "RESEARCH", "Austin, TX"),
                     job_card("Defense Integration Specialist", "DEPLOYMENT", "Washington D.C."),
-                    columns="2", spacing="6", width="100%", max_width="1000px",
+                    grid_template_columns=["1fr", "1fr", "repeat(2, 1fr)"], spacing="6", width="100%", max_width="1000px",
                     class_name="animate-fade-up delay-300",
                 ),
                 width="100%", padding_x="6", padding_top="16", padding_bottom="32", align_items="center",

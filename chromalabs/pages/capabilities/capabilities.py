@@ -50,7 +50,7 @@ def capabilities() -> rx.Component:
                         rx.text("On-board spatial inferencing models built for zero-latency tactical environments, eliminating cloud dependencies.", color="slate.10", font_size="1rem", line_height="1.6"),
                         padding="40px", background="rgba(255, 255, 255, 0.02)", border="1px solid rgba(255, 255, 255, 0.05)", border_radius="12px", transition="all 0.3s ease", _hover={"background": "rgba(255, 255, 255, 0.04)", "transform": "translateY(-4px)", "border_color": "rgba(0, 240, 255, 0.3)", "box_shadow": "0 10px 40px rgba(0, 240, 255, 0.05)"}
                     ),
-                    columns="3", spacing="8", width="100%", max_width="1200px",
+                    grid_template_columns=["1fr", "1fr", "repeat(2, 1fr)", "repeat(3, 1fr)"], spacing="8", width="100%", max_width="1200px",
                     class_name="animate-fade-up delay-300",
                 ),
                 width="100%", padding_x="6", padding_top="16", padding_bottom="32", align_items="center",
