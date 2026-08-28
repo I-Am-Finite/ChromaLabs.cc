@@ -18,6 +18,7 @@ def base_layout(content: rx.Component) -> rx.Component:
                 z_index="10",
                 display="flex",
                 flex_direction="column",
+                padding_top="100px",
             ),
             footer(),
             min_height="100vh",

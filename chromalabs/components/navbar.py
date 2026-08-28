@@ -58,32 +58,29 @@ def navbar() -> rx.Component:
             spacing="4",
             align_items="center",
         ),
-        rx.spacer(),
-        rx.hstack(
-            navbar_dropdown("CAPABILITIES", [
-                ("Optical Routing", "/capabilities"),
-                ("Geometric Inferencing", "/capabilities"),
-            ]),
-            navbar_dropdown("RESEARCH", [
-                ("Beyond Binary", "/research"),
-                ("Volumetric Logic", "/research"),
-            ]),
-            navbar_dropdown("COMPANY", [
-                ("Mission", "/company/mission"),
-                ("Careers", "/company/careers"),
-            ]),
-            navbar_dropdown("DEVELOPER PORTAL", [
-                ("API Documentation", "/developer"),
-                ("SDK Access", "/developer"),
-            ]),
-            spacing="9",
-            align_items="center",
-            display=["none", "none", "none", "flex"],
-        ),
+        navbar_dropdown("CAPABILITIES", [
+            ("Optical Routing", "/capabilities"),
+            ("Geometric Inferencing", "/capabilities"),
+        ]),
+        navbar_dropdown("RESEARCH", [
+            ("Beyond Binary", "/research"),
+            ("Volumetric Logic", "/research"),
+        ]),
+        navbar_dropdown("COMPANY", [
+            ("Mission", "/company/mission"),
+            ("Careers", "/company/careers"),
+            ("Staff Directory", "/company/mission"), # Placeholder for now
+            ("Contact Us", "/contact"),
+        ]),
+        navbar_dropdown("DEVELOPER PORTAL", [
+            ("API Documentation", "/developer"),
+            ("SDK Access", "/developer"),
+        ]),
         width="100%",
         padding_x="12",
         height="100px",
         align_items="center",
+        justify_content="space-evenly",
         position="fixed",
         top="0",
         border_bottom="1px solid rgba(255, 255, 255, 0.05)",

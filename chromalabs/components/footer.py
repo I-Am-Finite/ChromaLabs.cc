@@ -12,7 +12,7 @@ def footer() -> rx.Component:
                 letter_spacing="0.2em",
             ),
             width="100%",
-            padding_y="8",
+            padding_y="35px",
         ),
         background="transparent",
         width="100%",
