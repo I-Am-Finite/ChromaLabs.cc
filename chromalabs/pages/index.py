@@ -24,65 +24,48 @@ def index() -> rx.Component:
                 # Badge
                 rx.box(
                     rx.text("NSF I-CORPS BACKED", font_size="0.75rem", weight="bold", color="#00F0FF", letter_spacing="0.15em"),
-                    padding="6px 16px",
-                    border="1px solid rgba(0, 240, 255, 0.2)",
-                    border_radius="4px",
-                    background="rgba(0, 240, 255, 0.05)",
-                    margin_bottom="12",
-                    box_shadow="0 0 20px rgba(0, 240, 255, 0.1)",
+                    padding="6px 16px", border="1px solid rgba(0, 240, 255, 0.2)", border_radius="4px",
+                    background="rgba(0, 240, 255, 0.05)", margin_bottom="12", box_shadow="0 0 20px rgba(0, 240, 255, 0.1)",
+                    class_name="animate-fade-up",
                 ),
                 
                 # Hero Typography
                 rx.text(
                     "Higher Dimensional", 
-                    font_size=["3rem", "4rem", "5rem", "6rem"],
-                    weight="bold", 
-                    letter_spacing="-0.04em",
-                    line_height="0.9",
-                    text_align="center",
-                    background_image="linear-gradient(180deg, #FFFFFF 0%, #A0A0A0 100%)",
-                    background_clip="text",
-                    style={"-webkit-text-fill-color": "transparent"},
+                    font_size=["3rem", "4rem", "5rem", "6rem"], weight="bold", letter_spacing="-0.04em", line_height="0.9",
+                    text_align="center", background_image="linear-gradient(180deg, #FFFFFF 0%, #A0A0A0 100%)",
+                    background_clip="text", style={"-webkit-text-fill-color": "transparent"},
+                    class_name="animate-fade-up delay-100",
                 ),
                 rx.text(
                     "Compute Architecture.", 
-                    font_size=["3rem", "4rem", "5rem", "6rem"],
-                    weight="bold", 
-                    letter_spacing="-0.04em",
-                    line_height="0.9",
-                    text_align="center",
-                    margin_bottom="8",
-                    background_image="linear-gradient(180deg, #FFFFFF 0%, #707070 100%)",
-                    background_clip="text",
-                    style={"-webkit-text-fill-color": "transparent"},
+                    font_size=["3rem", "4rem", "5rem", "6rem"], weight="bold", letter_spacing="-0.04em", line_height="0.9",
+                    text_align="center", margin_bottom="8", background_image="linear-gradient(180deg, #FFFFFF 0%, #707070 100%)",
+                    background_clip="text", style={"-webkit-text-fill-color": "transparent"},
+                    class_name="animate-fade-up delay-100",
                 ),
                 
                 # Subtitle
                 rx.text(
                     "A next-generation HPC and Defense Research Lab. "
                     "We map volumetric logic structures directly to physical hardware.",
-                    font_size="1.25rem", 
-                    color="slate.11", 
-                    weight="regular",
-                    max_width="650px",
-                    text_align="center",
-                    margin_bottom="12",
-                    line_height="1.6",
+                    font_size="1.25rem", color="slate.11", weight="regular", max_width="650px",
+                    text_align="center", margin_bottom="12", line_height="1.6",
+                    class_name="animate-fade-up delay-200",
                 ),
                 
                 # CTA Buttons
                 rx.hstack(
                     rx.link(
                         rx.button("Explore Capabilities", bg="white", color="black", border_radius="4px", font_size="1rem", font_weight="600", padding="24px 32px", cursor="pointer", transition="all 0.2s", _hover={"bg": "#e0e0e0", "transform": "translateY(-1px)"}),
-                        href="/capabilities",
-                        _hover={"text_decoration": "none"}
+                        href="/capabilities", _hover={"text_decoration": "none"}
                     ),
                     rx.link(
                         rx.button("Defense Solutions", bg="rgba(255,255,255,0.03)", border="1px solid rgba(255,255,255,0.1)", color="white", border_radius="4px", font_size="1rem", font_weight="600", padding="24px 32px", backdrop_filter="blur(10px)", cursor="pointer", transition="all 0.2s", _hover={"bg": "rgba(255,255,255,0.08)", "transform": "translateY(-1px)"}),
-                        href="/solutions/defense",
-                        _hover={"text_decoration": "none"}
+                        href="/solutions/defense", _hover={"text_decoration": "none"}
                     ),
                     spacing="6",
+                    class_name="animate-fade-up delay-300",
                 ),
                 
                 width="100%",

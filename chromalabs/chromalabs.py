@@ -13,6 +13,7 @@ from chromalabs.pages.developer.developer import developer
 app = rx.App(
     stylesheets=[
         "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap",
+        "/style.css",
     ],
     style={
         "font_family": "Inter, sans-serif",

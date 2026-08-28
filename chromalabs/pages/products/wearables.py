@@ -31,7 +31,7 @@ def wearables() -> rx.Component:
                         padding="32px", background="rgba(255, 255, 255, 0.02)", border="1px solid rgba(255, 255, 255, 0.05)", border_radius="8px", transition="all 0.2s ease", _hover={"background": "rgba(255, 255, 255, 0.04)", "transform": "translateY(-2px)"}
                     ),
                     rx.box(
-                        rx.icon(tag="shield-zap", color="#00F0FF", size=24, margin_bottom="4"),
+                        rx.icon(tag="shield", color="#00F0FF", size=24, margin_bottom="4"),
                         rx.text("Kinetic Processing", font_size="1.25rem", weight="bold", color="white", margin_bottom="2"),
                         rx.text("Ultra-low SWaP footprint enabling continuous operation in austere environments.", color="slate.11", font_size="0.95rem", line_height="1.5"),
                         padding="32px", background="rgba(255, 255, 255, 0.02)", border="1px solid rgba(255, 255, 255, 0.05)", border_radius="8px", transition="all 0.2s ease", _hover={"background": "rgba(255, 255, 255, 0.04)", "transform": "translateY(-2px)"}
