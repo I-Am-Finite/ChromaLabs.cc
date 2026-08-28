@@ -20,6 +20,7 @@ app = rx.App(
     },
     head_components=[
         rx.el.link(rel="icon", href="/logo.svg", type_="image/svg+xml"),
+        rx.el.link(rel="stylesheet", href="/style.css"),
     ],
 )
 
