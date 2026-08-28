@@ -5,7 +5,7 @@ def footer() -> rx.Component:
         rx.divider(border_color="rgba(255,255,255,0.05)"),
         rx.center(
             rx.text(
-                "© 2026 ChromaLabs Incorporated™",
+                "© 2026 Chroma Labs, Inc.™",
                 color="slate.8",
                 font_family="JetBrains Mono, monospace",
                 font_size="0.75rem",

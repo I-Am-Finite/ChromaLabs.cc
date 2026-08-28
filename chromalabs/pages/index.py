@@ -231,9 +231,9 @@ def index() -> rx.Component:
             sx={"& a": {"pointer_events": "auto"}},
             
             width="100%",
-            height="100%",
             position="relative",
             overflow="hidden",
+            flex_grow="1",
             bg="#0A0A0C", # The actual base background color
         )
     )
