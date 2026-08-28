@@ -22,11 +22,19 @@ def navbar_dropdown(title: str, items: list[tuple[str, str]]) -> rx.Component:
     return rx.hover_card.root(
         rx.hover_card.trigger(
             rx.button(
-                rx.text(title, color="slate.9", font_size="1.0rem", font_weight="600", letter_spacing="0.1em", transition="color 0.2s ease", _hover={"color": "white"}),
+                rx.text(title, color="slate.11", font_size="0.9rem", font_weight="500", letter_spacing="0.05em", transition="color 0.2s ease"),
                 bg="transparent",
-                _hover={"bg": "transparent"},
+                border="1px solid transparent",
+                padding="8px 16px",
+                border_radius="6px",
                 cursor="pointer",
-                padding="0",
+                transition="all 0.2s ease",
+                _hover={
+                    "bg": "rgba(255, 255, 255, 0.05)", 
+                    "border": "1px solid rgba(255, 255, 255, 0.1)",
+                    "box_shadow": "0 0 15px rgba(255, 255, 255, 0.05)",
+                    "color": "white"
+                },
                 height="auto",
             )
         ),
@@ -78,12 +86,12 @@ def navbar() -> rx.Component:
             rx.link(
                 rx.button(
                     "Developer Portal", 
-                    bg="rgba(0, 240, 255, 0.1)", color="#00F0FF", border="1px solid rgba(0, 240, 255, 0.3)", 
-                    font_size="1.0rem", font_weight="600", padding="20px 32px", border_radius="4px", 
-                    cursor="pointer", transition="all 0.2s ease", box_shadow="0 0 15px rgba(0, 240, 255, 0)",
-                    _hover={"bg": "rgba(0, 240, 255, 0.2)", "box_shadow": "0 0 20px rgba(0, 240, 255, 0.2)", "transform": "translateY(-1px)"}
+                    bg="white", color="black", border="none", 
+                    font_size="0.9rem", font_weight="600", padding="10px 20px", border_radius="6px", 
+                    cursor="pointer", transition="all 0.2s ease",
+                    _hover={"bg": "#e0e0e0"}
                 ),
-                href="/contact", _hover={"text_decoration": "none"}
+                href="/developer", _hover={"text_decoration": "none"}
             ),
         ),
         width="100%",

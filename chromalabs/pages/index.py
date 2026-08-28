@@ -37,15 +37,15 @@ def index() -> rx.Component:
                     telemetry_badge("SYS: SECURE | RUNTIME: 0.4ms"),
                     rx.text(
                         "Higher Dimensional", 
-                        font_size=["3rem", "4rem", "4.5rem", "5.5rem"], weight="bold", letter_spacing="-0.04em", line_height="1.0",
-                        color="white", class_name="animate-fade-up", margin_top="6",
+                        font_size=["3rem", "4rem", "4.5rem", "5.5rem"], weight="bold", letter_spacing="-0.04em", line_height="1.1",
+                        color="white", class_name="animate-fade-up", margin_top="6", padding_bottom="2"
                     ),
                     rx.text(
                         "Compute Architecture.", 
-                        font_size=["3rem", "4rem", "4.5rem", "5.5rem"], weight="bold", letter_spacing="-0.04em", line_height="1.0",
+                        font_size=["3rem", "4rem", "4.5rem", "5.5rem"], weight="bold", letter_spacing="-0.04em", line_height="1.1",
                         background_image="linear-gradient(180deg, #FFFFFF 0%, #606060 100%)",
                         background_clip="text", style={"-webkit-text-fill-color": "transparent"},
-                        class_name="animate-fade-up delay-100", margin_bottom="6",
+                        class_name="animate-fade-up delay-100", margin_bottom="6", padding_bottom="2"
                     ),
                     rx.text(
                         "We map volumetric logic structures directly to physical geometry. "
