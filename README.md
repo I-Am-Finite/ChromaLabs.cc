@@ -25,10 +25,10 @@ This landing architecture is statically compiled via the [Reflex](https://reflex
 #### Initialization
 To run the development server locally:
 \\\ash
-# 1. Install required packages
+#### 1. Install required packages
 uv pip install -r requirements.txt
 
-# 2. Spin up the Reflex dev server
+#### 2. Spin up the Reflex dev server
 uv run reflex run
 \\\
 
