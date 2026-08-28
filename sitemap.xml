@@ -13,7 +13,16 @@
     <loc>http://localhost:3000/solutions/defense</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/solutions/hyperscale</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/company/mission</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/company/careers</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/contact</loc>
   </url>
   <url>
     <loc>http://localhost:3000/developer</loc>
