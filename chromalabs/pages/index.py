@@ -13,194 +13,158 @@ setTimeout(() => {
     }
     window.addEventListener("resize", resize);
     resize();
-
-    // --- Lambda Calculus AST & Evaluator ---
-    function Var(idx) { return { t: 0, idx: idx }; }
-    function Abs(body) { return { t: 1, body: body }; }
-    function App(left, right) { return { t: 2, left: left, right: right }; }
-
-    function shift(term, inc, depth) {
-        if (term.t === 0) {
-            return term.idx >= depth ? Var(term.idx + inc) : Var(term.idx);
-        } else if (term.t === 1) {
-            return Abs(shift(term.body, inc, depth + 1));
-        } else {
-            return App(shift(term.left, inc, depth), shift(term.right, inc, depth));
-        }
-    }
-
-    function substitute(term, arg, depth) {
-        if (term.t === 0) {
-            if (term.idx === depth) return shift(arg, depth, 0);
-            if (term.idx > depth) return Var(term.idx - 1);
-            return Var(term.idx);
-        } else if (term.t === 1) {
-            return Abs(substitute(term.body, arg, depth + 1));
-        } else {
-            return App(substitute(term.left, arg, depth), substitute(term.right, arg, depth));
-        }
-    }
-
-    function reduce(term) {
-        if (term.t === 2) {
-            if (term.left.t === 1) {
-                return { changed: true, term: substitute(term.left.body, term.right, 0) };
-            }
-            let l_res = reduce(term.left);
-            if (l_res.changed) return { changed: true, term: App(l_res.term, term.right) };
-            let r_res = reduce(term.right);
-            if (r_res.changed) return { changed: true, term: App(term.left, r_res.term) };
-        } else if (term.t === 1) {
-            let b_res = reduce(term.body);
-            if (b_res.changed) return { changed: true, term: Abs(b_res.term) };
-        }
-        return { changed: false, term: term };
-    }
-
-    function countNodes(term) {
-        if (term.t === 0) return 1;
-        if (term.t === 1) return 1 + countNodes(term.body);
-        return 1 + countNodes(term.left) + countNodes(term.right);
-    }
-
-    // --- Tromp Diagram Layout Engine ---
-    let current_x = 0;
-    let max_y = 0;
-    function layout(term, depth) {
-        term.y = depth * 40;
-        if (term.y > max_y) max_y = term.y;
-        
-        if (term.t === 0) {
-            term.x = current_x;
-            current_x += 40;
-            term.min_x = term.x;
-            term.max_x = term.x;
-        } else if (term.t === 1) {
-            layout(term.body, depth + 1);
-            term.min_x = term.body.min_x - 15;
-            term.max_x = term.body.max_x + 15;
-            term.x = (term.min_x + term.max_x) / 2;
-        } else if (term.t === 2) {
-            layout(term.left, depth + 1);
-            layout(term.right, depth + 1);
-            term.min_x = term.left.min_x;
-            term.max_x = term.right.max_x;
-            term.x = (term.left.x + term.right.x) / 2;
-        }
-    }
-
-    function drawTerm(term, binders) {
-        ctx.strokeStyle = "rgba(212, 175, 55, 0.6)";
-        ctx.lineWidth = 2;
-        
-        if (term.t === 0) {
-            let binder = binders[binders.length - 1 - term.idx];
-            if (binder) {
-                ctx.beginPath();
-                ctx.moveTo(term.x, term.y);
-                ctx.lineTo(term.x, binder.y);
-                ctx.stroke();
-                
-                ctx.beginPath();
-                ctx.arc(term.x, term.y, 3, 0, 2*Math.PI);
-                ctx.fillStyle = "rgba(212, 175, 55, 0.8)";
-                ctx.fill();
-            }
-        } else if (term.t === 1) {
-            ctx.beginPath();
-            ctx.moveTo(term.min_x, term.y);
-            ctx.lineTo(term.max_x, term.y);
-            ctx.stroke();
-            
-            ctx.beginPath();
-            ctx.moveTo(term.x, term.y);
-            ctx.lineTo(term.x, term.body.y);
-            ctx.stroke();
-            
-            let new_binders = [...binders, term];
-            drawTerm(term.body, new_binders);
-        } else if (term.t === 2) {
-            // Application bridge
-            ctx.beginPath();
-            ctx.moveTo(term.left.x, term.y);
-            ctx.lineTo(term.right.x, term.y);
-            ctx.strokeStyle = "rgba(255, 100, 55, 0.5)"; // Slight red tint for bridges
-            ctx.stroke();
-            
-            ctx.beginPath();
-            ctx.strokeStyle = "rgba(212, 175, 55, 0.6)";
-            ctx.moveTo(term.left.x, term.y);
-            ctx.lineTo(term.left.x, term.left.y);
-            ctx.moveTo(term.right.x, term.y);
-            ctx.lineTo(term.right.x, term.right.y);
-            ctx.stroke();
-            
-            drawTerm(term.left, binders);
-            drawTerm(term.right, binders);
-        }
-    }
-
-    // Initialize with the 'Grow' combinator: (λx. x x x)(λx. x x x)
-    // This expands continuously upon beta-reduction.
-    function getSeed() {
-        let M = Abs(App(App(Var(0), Var(0)), Var(0)));
-        return App(M, M);
-    }
     
-    let current_term = getSeed();
-    
-    // Evaluation Loop
-    setInterval(() => {
-        let nodes = countNodes(current_term);
-        if (nodes > 400) {
-            current_term = getSeed(); // Reset when it gets too large
-        } else {
-            let res = reduce(current_term);
-            if (res.changed) {
-                current_term = res.term;
-            } else {
-                current_term = getSeed();
-            }
-        }
-    }, 1000); // 1 evaluation per second
-
-    // Rendering Loop
-    let displayScale = 1.0;
+    // Draw a massive, screen-filling recursive Tromp AST
+    function drawDeepAST(x, y, w, h, depth, opacity) {
+        if (depth === 0) return;
+        ctx.save();
+        ctx.globalAlpha = opacity;
+        
+        ctx.beginPath();
+        // Abstraction (horizontal)
+        ctx.moveTo(x - w/2, y);
+        ctx.lineTo(x + w/2, y);
+        
+        // Variable drops
+        ctx.moveTo(x - w/4, y);
+        ctx.lineTo(x - w/4, y + h); // left var
+        
+        ctx.moveTo(x + w/4, y);
+        ctx.lineTo(x + w/4, y + h); // right var
+        
+        // Internal application bridge
+        ctx.moveTo(x - w/4, y + h);
+        ctx.lineTo(x + w/4, y + h);
+        
+        ctx.stroke();
+        
+        // Recursively draw subtrees to fill the screen with geometric density
+        drawDeepAST(x - w/4, y + h, w/2, h * 0.85, depth - 1, opacity);
+        drawDeepAST(x + w/4, y + h, w/2, h * 0.85, depth - 1, opacity);
+        
+        ctx.restore();
+    }
     
     function animate() {
         ctx.fillStyle = "#0A0A0C";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
-        current_x = 0;
-        max_y = 0;
-        layout(current_term, 0);
-        
-        const term_width = current_term.max_x - current_term.min_x;
-        const term_height = max_y;
-        
-        // Calculate target scale to fit the tree on screen, with padding
-        const padding = 100;
-        const targetScaleX = (canvas.width - padding) / Math.max(term_width, 1);
-        const targetScaleY = (canvas.height - padding) / Math.max(term_height, 1);
-        const targetScale = Math.min(targetScaleX, targetScaleY, 2.0); // Cap max zoom
-        
-        // Smoothly interpolate the camera scale for the zoom out effect
-        displayScale += (targetScale - displayScale) * 0.05;
+        // Oscillate progress between 0.0 (Unreduced) and 1.0 (Reduced) using sine wave
+        // This perfectly satisfies the "reduce and then perform the inverse to re-do it" requirement.
+        const time = Date.now() / 3000; // 3 seconds per cycle
+        const cycle = (Math.sin(time) + 1) / 2; // Smooth 0.0 to 1.0
         
         ctx.save();
         ctx.translate(canvas.width / 2, canvas.height / 2);
         
-        // Tilt
-        ctx.rotate(-0.08);
+        // Base geometry. Massively scaled so it fills the screen perfectly.
+        const W = canvas.width * 0.4;
+        const H = 200;
         
-        ctx.scale(displayScale, displayScale);
+        // Global variables for the two structures
+        const leftX = -W/2;
+        const rightX = W/2;
+        const yTop = -H/2;
         
-        // Center the drawing
-        const cx = (current_term.min_x + current_term.max_x) / 2;
-        const cy = max_y / 2;
-        ctx.translate(-cx, -cy);
+        // Camera Zoom to accommodate the expansion dynamically
+        // At cycle 0.0, scale is 1.0. At cycle 1.0 (fully split), scale pulls back to 0.7
+        // to keep the massive duplicated right-ASTs on screen.
+        const zoom = 1.0 - (0.3 * cycle);
+        ctx.scale(zoom, zoom);
         
-        drawTerm(current_term, []);
+        // Keep lines crisp
+        ctx.lineWidth = 1.5 / zoom;
+        
+        // ----------------------------------------------------
+        // VISUAL REDUCTION MORPH LOGIC
+        // ----------------------------------------------------
+        
+        // 1. The Overarching Application Bridge
+        // Fades out as it reduces
+        const bridgeOpacity = 1.0 - cycle;
+        if (bridgeOpacity > 0.01) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(212, 175, 55, ${bridgeOpacity * 0.4})`;
+            ctx.moveTo(leftX, yTop - 40);
+            ctx.lineTo(rightX, yTop - 40);
+            
+            // Connecting vertical lines to roots
+            ctx.moveTo(leftX, yTop - 40);
+            ctx.lineTo(leftX, yTop);
+            ctx.moveTo(rightX, yTop - 40);
+            ctx.lineTo(rightX, yTop);
+            ctx.stroke();
+            
+            // Flashing Redex Core
+            ctx.beginPath();
+            ctx.arc(0, yTop - 40, 4, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 55, 55, ${bridgeOpacity * 0.8})`;
+            ctx.fill();
+        }
+        
+        // 2. The Left Abstraction Line (Dissolves)
+        if (bridgeOpacity > 0.01) {
+            ctx.save();
+            ctx.globalAlpha = bridgeOpacity;
+            ctx.beginPath();
+            ctx.moveTo(leftX - W/2, yTop);
+            ctx.lineTo(leftX + W/2, yTop);
+            ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+            ctx.stroke();
+            ctx.restore();
+        }
+        
+        // Left Structure Variables (They remain static, waiting for the duplicated right structures)
+        ctx.strokeStyle = "rgba(212, 175, 55, 0.4)";
+        ctx.beginPath();
+        // Left var drop
+        ctx.moveTo(leftX - W/4, yTop);
+        ctx.lineTo(leftX - W/4, yTop + H);
+        // Right var drop
+        ctx.moveTo(leftX + W/4, yTop);
+        ctx.lineTo(leftX + W/4, yTop + H);
+        // Internal application of left structure
+        ctx.moveTo(leftX - W/4, yTop + H);
+        ctx.lineTo(leftX + W/4, yTop + H);
+        ctx.stroke();
+        
+        // 3. Duplication and Interpolation of the massive Right AST
+        // Target positions (the open variable slots on the left)
+        const target1X = leftX - W/4;
+        const target1Y = yTop + H;
+        
+        const target2X = leftX + W/4;
+        const target2Y = yTop + H;
+        
+        // Current sliding positions
+        const curr1X = rightX + (target1X - rightX) * cycle;
+        const curr1Y = yTop + (target1Y - yTop) * cycle;
+        
+        const curr2X = rightX + (target2X - rightX) * cycle;
+        const curr2Y = yTop + (target2Y - yTop) * cycle;
+        
+        // As it slides into the left side, it scales down by half so it fits perfectly 
+        // into the fractal geometry.
+        const currentScale = 1.0 - (0.5 * cycle);
+        
+        // Depth 7 generates an incredibly complex, dense grid of intersecting lines
+        const AST_DEPTH = 7;
+        
+        // We draw the left half of the duplication
+        ctx.save();
+        ctx.translate(curr1X, curr1Y);
+        ctx.scale(currentScale, currentScale);
+        drawDeepAST(0, 0, W, H, AST_DEPTH, 1.0);
+        ctx.restore();
+        
+        // We draw the right half of the duplication
+        // As cycle approaches 0, curr1 and curr2 converge perfectly on rightX, 
+        // creating the illusion of a single right structure!
+        ctx.save();
+        ctx.translate(curr2X, curr2Y);
+        ctx.scale(currentScale, currentScale);
+        drawDeepAST(0, 0, W, H, AST_DEPTH, 1.0);
+        ctx.restore();
         
         ctx.restore();
         
@@ -214,7 +178,7 @@ setTimeout(() => {
 def index() -> rx.Component:
     return base_layout(
         rx.box(
-            # Full Screen Active Beta-Reduction Engine
+            # Full Screen Active Beta-Reduction Morph
             rx.el.canvas(
                 id="lambdaBackground", 
                 style={"position": "absolute", "top": "0", "left": "0", "width": "100vw", "height": "100vh", "z_index": "-2", "pointer_events": "none"}
