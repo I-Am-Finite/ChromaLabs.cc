@@ -1,8 +1,8 @@
 import reflex as rx
 
 from chromalabs.pages.index import index
-from chromalabs.pages.products.hardware import hardware
-from chromalabs.pages.products.capabilities import capabilities
+from chromalabs.pages.capabilities.capabilities import capabilities
+from chromalabs.pages.products.wearables import wearables
 from chromalabs.pages.solutions.defense import defense
 from chromalabs.pages.solutions.hyperscale import hyperscale
 from chromalabs.pages.company.mission import mission
@@ -22,9 +22,9 @@ app = rx.App(
     ],
 )
 
-app.add_page(index, route="/", title="Higher Dimensional HPC and Defense Research Lab | Chroma Labs", image="/logo.svg")
-app.add_page(hardware, route="/products/hardware", title="Photonic Hardware | Chroma Labs", image="/logo.svg")
-app.add_page(capabilities, route="/products/capabilities", title="Capabilities | Chroma Labs", image="/logo.svg")
+app.add_page(index, route="/", title="Higher Dimensional Compute | Chroma Labs", image="/logo.svg")
+app.add_page(capabilities, route="/capabilities", title="Capabilities | Chroma Labs", image="/logo.svg")
+app.add_page(wearables, route="/products/wearables", title="Wearables & Tech Armor | Chroma Labs", image="/logo.svg")
 app.add_page(defense, route="/solutions/defense", title="Defense Solutions | Chroma Labs", image="/logo.svg")
 app.add_page(hyperscale, route="/solutions/hyperscale", title="Hyperscale AI | Chroma Labs", image="/logo.svg")
 app.add_page(mission, route="/company/mission", title="Mission | Chroma Labs", image="/logo.svg")

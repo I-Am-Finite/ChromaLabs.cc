@@ -6,51 +6,52 @@ def index() -> rx.Component:
         rx.box(
             rx.vstack(
                 rx.box(
-                    rx.text("NSF I-CORPS BACKED", size="1", weight="bold", color="#D4AF37", letter_spacing="0.2em"),
-                    padding_x="3",
-                    padding_y="1",
-                    border="1px solid rgba(212, 175, 55, 0.3)",
+                    rx.text("NSF I-CORPS BACKED", size="1", weight="bold", color="slate.11", letter_spacing="0.1em"),
+                    padding_x="4",
+                    padding_y="2",
+                    border="1px solid rgba(255, 255, 255, 0.1)",
                     border_radius="full",
-                    background="rgba(212, 175, 55, 0.05)",
+                    background="rgba(255, 255, 255, 0.03)",
+                    margin_bottom="8",
+                ),
+                rx.heading(
+                    "Higher Dimensional", 
+                    size="9", 
+                    weight="medium", 
+                    color="white", 
+                    letter_spacing="-0.04em",
+                    line_height="1.0",
+                    text_align="center",
+                    margin_bottom="2",
+                ),
+                rx.heading(
+                    "Compute Architecture.", 
+                    size="9", 
+                    weight="medium", 
+                    color="white", 
+                    letter_spacing="-0.04em",
+                    line_height="1.0",
+                    text_align="center",
                     margin_bottom="6",
                 ),
-                rx.heading(
-                    "HIGHER DIMENSIONAL COMPUTE", 
-                    size="9", 
-                    weight="bold", 
-                    color="white", 
-                    letter_spacing="-0.03em",
-                    line_height="1.1",
-                    text_align="center",
-                ),
-                rx.heading(
-                    "ARCHITECTURE.", 
-                    size="9", 
-                    weight="bold", 
-                    color="white", 
-                    letter_spacing="-0.03em",
-                    line_height="1.1",
-                    text_align="center",
-                    margin_bottom="4",
-                ),
                 rx.text(
-                    "A Higher Dimensional HPC and Defense Research Lab. "
-                    "We map volumetric logic structures and lambda equations directly to consumer photonic hardware.",
+                    "A next-generation HPC and Defense Research Lab. "
+                    "We map volumetric logic structures directly to physical hardware.",
                     size="5", 
                     color="slate.11", 
-                    weight="medium",
-                    max_width="700px",
+                    weight="regular",
+                    max_width="600px",
                     text_align="center",
-                    margin_bottom="8",
-                    line_height="1.6",
+                    margin_bottom="10",
+                    line_height="1.5",
                 ),
                 rx.hstack(
                     rx.link(
-                        rx.button("PRODUCTS & CAPABILITIES", bg="white", color="black", radius="none", size="3", font_weight="bold", _hover={"bg": "slate.3"}),
-                        href="/products/capabilities"
+                        rx.button("Explore Capabilities", bg="white", color="black", radius="full", size="3", font_weight="500", padding_x="6", _hover={"bg": "slate.3"}),
+                        href="/capabilities"
                     ),
                     rx.link(
-                        rx.button("DEFENSE SOLUTIONS", bg="transparent", border="1px solid rgba(255,255,255,0.2)", color="white", radius="none", size="3", font_weight="bold", _hover={"bg": "rgba(255,255,255,0.05)"}),
+                        rx.button("Defense Solutions", bg="rgba(255,255,255,0.05)", border="1px solid rgba(255,255,255,0.1)", color="white", radius="full", size="3", font_weight="500", padding_x="6", _hover={"bg": "rgba(255,255,255,0.1)"}),
                         href="/solutions/defense"
                     ),
                     spacing="4",
@@ -60,45 +61,38 @@ def index() -> rx.Component:
                 align_items="center",
                 justify_content="center",
                 padding_x="4",
-                padding_bottom="12",
+                padding_bottom="16",
             ),
             
-            # High Density Technical Spec Block
+            # Clean Features Grid
             rx.box(
-                rx.flex(
+                rx.grid(
                     rx.vstack(
-                        rx.text("CORE ARCHITECTURE", color="#00F0FF", size="1", font_family="JetBrains Mono, monospace", letter_spacing="0.1em"),
-                        rx.text("Photonic tensors mapped to consumer hardware.", color="white", size="4", weight="bold"),
-                        rx.text("Eliminating traditional memory walls by directly routing data through spatial pipelines.", color="slate.11", size="2", max_width="400px"),
-                        align_items="flex-start"
+                        rx.heading("Spatial Pipelines", size="4", weight="medium", color="white"),
+                        rx.text("Eliminating traditional memory walls by directly routing data through physical geometry.", color="slate.11", size="2"),
+                        align_items="flex-start",
                     ),
                     rx.vstack(
-                        rx.text("SWaP EFFICIENCY", color="#00F0FF", size="1", font_family="JetBrains Mono, monospace", letter_spacing="0.1em"),
-                        rx.text("[ REDACTED ]", color="white", size="4", weight="bold"),
-                        rx.text("Designed for kinetic wearables and tactical edge.", color="slate.11", size="2"),
-                        align_items="flex-start"
+                        rx.heading("Kinetic Edge", size="4", weight="medium", color="white"),
+                        rx.text("Designed specifically for ultra-low SWaP wearables and autonomous tactical deployments.", color="slate.11", size="2"),
+                        align_items="flex-start",
                     ),
                     rx.vstack(
-                        rx.text("DATA THROUGHOUT", color="#00F0FF", size="1", font_family="JetBrains Mono, monospace", letter_spacing="0.1em"),
-                        rx.text("HIGH-BANDWIDTH", color="white", size="4", weight="bold"),
-                        rx.text("Direct optical node-to-node links.", color="slate.11", size="2"),
-                        align_items="flex-start"
+                        rx.heading("Optical Links", size="4", weight="medium", color="white"),
+                        rx.text("Unprecedented bandwidth scaling via direct node-to-node light propagation.", color="slate.11", size="2"),
+                        align_items="flex-start",
                     ),
-                    direction="row",
-                    justify="between",
-                    padding="8",
-                    background="rgba(10, 15, 25, 0.4)",
-                    border="1px solid rgba(255,255,255,0.1)",
-                    border_left="4px solid #D4AF37",
+                    columns="3",
+                    spacing="8",
                     width="100%",
                     max_width="1000px",
-                    flex_wrap="wrap"
+                    padding_y="12",
+                    border_top="1px solid rgba(255,255,255,0.05)"
                 ),
                 width="100%",
                 display="flex",
                 justify_content="center",
-                padding_x="4",
-                margin_bottom="12"
+                padding_x="6",
             )
         )
     )
