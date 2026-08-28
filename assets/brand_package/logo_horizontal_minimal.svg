@@ -1,0 +1,10 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80" fill="none">
+  <g transform="translate(10, 10) scale(0.85)">
+    <polygon points="35,0 70,70 35,70" fill="#D4AF37" />
+    <polygon points="35,0 35,70 0,70" fill="#AA8529" />
+    <polygon points="35,25 55,60 15,60" fill="#000000" />
+    <polygon points="35,40 50,70 20,70" fill="#F4D03F" />
+    <polygon points="35,40 35,70 20,70" fill="#C59B27" />
+  </g>
+  <text x="85" y="52" font-family="Inter, sans-serif" font-weight="900" font-size="34" fill="#FFFFFF" letter-spacing="4">CHROMA</text>
+</svg>
