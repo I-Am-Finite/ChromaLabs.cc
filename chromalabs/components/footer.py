@@ -1,4 +1,4 @@
-import reflex as rx
+﻿import reflex as rx
 
 def footer() -> rx.Component:
     return rx.box(
@@ -14,9 +14,9 @@ def footer() -> rx.Component:
             width="100%",
             padding_y="35px",
         ),
-        background="transparent",
+        background="rgba(0, 0, 0, 0.6)",
+        backdrop_filter="blur(24px)",
         width="100%",
         position="relative",
         z_index="10",
     )
-

@@ -1,3 +1,4 @@
+
 import reflex as rx
 
 def menu_item(text: str, url: str) -> rx.Component:
@@ -52,11 +53,15 @@ def navbar_dropdown(title: str, items: list[tuple[str, str]]) -> rx.Component:
 
 def navbar() -> rx.Component:
     return rx.hstack(
-        rx.hstack(
-            rx.image(src="/logo.svg", width="48px", height="48px", transition="transform 0.3s ease", _hover={"transform": "rotate(90deg)"}),
-            rx.link(rx.text("ChromaLabs", font_weight="800", font_size="1.5rem", letter_spacing="0.02em", color="white"), href="/", _hover={"text_decoration": "none"}),
-            spacing="4",
-            align_items="center",
+        rx.link(
+            rx.hstack(
+                rx.icon(tag="hexagon", size=32, color="#D4AF37", transition="transform 0.3s ease", _hover={"transform": "rotate(90deg)"}),
+                rx.text("ChromaLabs", font_weight="800", font_size="1.5rem", letter_spacing="0.02em", color="white"),
+                spacing="4",
+                align_items="center",
+            ),
+            href="/", 
+            _hover={"text_decoration": "none"}
         ),
         navbar_dropdown("CAPABILITIES", [
             ("AI", "/capabilities/ai"),
@@ -89,3 +94,4 @@ def navbar() -> rx.Component:
         backdrop_filter="blur(24px)",
         z_index="50",
     )
+
