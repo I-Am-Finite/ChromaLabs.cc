@@ -16,7 +16,10 @@
     <loc>http://localhost:3000/capabilities/government</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/research</loc>
+    <loc>http://localhost:3000/research/log</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/research/papers</loc>
   </url>
   <url>
     <loc>http://localhost:3000/company/mission</loc>
