@@ -64,13 +64,20 @@ def directory() -> rx.Component:
                         linkedin="https://www.linkedin.com/in/cowardbryan/"
                     ),
                     staff_card(
+                        "Connor Dudek", 
+                        "Chief Marketing Officer (CMO)", 
+                        "Leveraging extensive high-velocity brand architecture from the global esports sector to position Chroma Labs' deep-tech narrative across the post-digital ecosystem.",
+                        linkedin="https://www.linkedin.com/in/connordudek/"
+                    ),
+                    staff_card(
                         "Megan F. Teague", 
                         "Secretary of the Board", 
                         "Overseeing corporate governance, strategic administration, and board compliance as the lab transitions into hyperscale execution.",
                     ),
-                    columns="3",
+                    columns="2",
                     spacing="6",
                     width="100%",
+                    max_width="1000px",
                     class_name="animate-fade-up delay-300"
                 ),
                 width="100%",
