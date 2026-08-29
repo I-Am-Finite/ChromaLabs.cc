@@ -6,6 +6,7 @@ from chromalabs.pages.research.log import log
 from chromalabs.pages.research.papers import papers
 from chromalabs.pages.company.mission import mission
 from chromalabs.pages.company.careers import careers
+from chromalabs.pages.company.directory import directory
 from chromalabs.pages.company.contact import contact
 from chromalabs.pages.developer.developer import developer
 
@@ -69,6 +70,7 @@ app.add_page(log, route="/research/log", title="Research Log | Chroma Labs", ima
 app.add_page(papers, route="/research/papers", title="Published Papers | Chroma Labs", image="/logo_glyph.png")
 app.add_page(mission, route="/company/mission", title="Mission | Chroma Labs", image="/logo_glyph.png")
 app.add_page(careers, route="/company/careers", title="Careers | Chroma Labs", image="/logo_glyph.png")
+app.add_page(directory, route="/company/directory", title="Staff Directory | Chroma Labs", image="/logo_glyph.png")
 app.add_page(contact, route="/contact", title="Contact | Chroma Labs", image="/logo_glyph.png")
 app.add_page(developer, route="/developer", title="Developer | Chroma Labs", image="/logo_glyph.png")
 

@@ -71,7 +71,7 @@ def navbar() -> rx.Component:
         navbar_dropdown("COMPANY", [
             ("Mission", "/company/mission"),
             ("Careers", "/company/careers"),
-            ("Staff Directory", "/company/mission"), # Placeholder for now
+            ("Staff Directory", "/company/directory"), # Placeholder for now
             ("Contact Us", "/contact"),
         ]),
         navbar_dropdown("DEVELOPER PORTAL", [
