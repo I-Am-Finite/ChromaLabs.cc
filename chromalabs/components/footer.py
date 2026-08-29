@@ -6,11 +6,11 @@ def footer() -> rx.Component:
         rx.flex(
             rx.vstack(
                 rx.text(
-                    "c 2026 Chroma Labs, Inc.T",
+                    "© 2026 Chroma Labs, Inc.™",
                     color="slate.8",
                     font_family="JetBrains Mono, monospace",
                     font_size="0.75rem",
-                    letter_spacing="0.2em",
+                    letter_spacing="0.1em",
                     text_align=["center", "center", "left"]
                 ),
                 align_items=["center", "center", "flex-start"],
@@ -29,7 +29,7 @@ def footer() -> rx.Component:
             padding_y="35px",
             flex_direction=["column", "column", "row"],
             align_items="center",
-            gap=["6", "6", "0"]
+            spacing="4"
         ),
         background="rgba(0, 0, 0, 0.6)",
         backdrop_filter="blur(24px)",
