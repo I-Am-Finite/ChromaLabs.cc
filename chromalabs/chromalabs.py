@@ -2,7 +2,8 @@
 
 from chromalabs.pages.index import index
 from chromalabs.pages.capabilities.capabilities import capabilities
-from chromalabs.pages.research.research import research
+from chromalabs.pages.research.log import log
+from chromalabs.pages.research.papers import papers
 from chromalabs.pages.company.mission import mission
 from chromalabs.pages.company.careers import careers
 from chromalabs.pages.company.contact import contact
@@ -64,7 +65,8 @@ app.add_page(capabilities, route="/capabilities", title="Capabilities | Chroma L
 app.add_page(ai, route="/capabilities/ai", title="Exascale AI | Chroma Labs", image="/logo_glyph.png")
 app.add_page(hpc, route="/capabilities/hpc", title="HPC | Chroma Labs", image="/logo_glyph.png")
 app.add_page(government, route="/capabilities/government", title="Defense & Gov | Chroma Labs", image="/logo_glyph.png")
-app.add_page(research, route="/research", title="Research & Architecture | Chroma Labs", image="/logo_glyph.png")
+app.add_page(log, route="/research/log", title="Research Log | Chroma Labs", image="/logo_glyph.png")
+app.add_page(papers, route="/research/papers", title="Published Papers | Chroma Labs", image="/logo_glyph.png")
 app.add_page(mission, route="/company/mission", title="Mission | Chroma Labs", image="/logo_glyph.png")
 app.add_page(careers, route="/company/careers", title="Careers | Chroma Labs", image="/logo_glyph.png")
 app.add_page(contact, route="/contact", title="Contact | Chroma Labs", image="/logo_glyph.png")

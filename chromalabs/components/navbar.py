@@ -65,8 +65,8 @@ def navbar() -> rx.Component:
             ("Government", "/capabilities/government"),
         ]),
         navbar_dropdown("RESEARCH", [
-            ("Research Log", "/research"),
-            ("Published Papers", "/research"),
+            ("Research Log", "/research/log"),
+            ("Published Papers", "/research/papers"),
         ]),
         navbar_dropdown("COMPANY", [
             ("Mission", "/company/mission"),
