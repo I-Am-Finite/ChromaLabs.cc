@@ -6,8 +6,7 @@ def menu_item(text: str, url: str) -> rx.Component:
             rx.text(text, color="slate.11", font_size="1.1rem", transition="color 0.2s ease", _hover={"color": "white"}),
             href=url,
             width="100%",
-            display="block",
-            _hover={"text_decoration": "none"}
+            display="block", color="inherit", _hover={"text_decoration": "none"}
         ),
         bg="transparent",
         _hover={"bg": "rgba(255, 255, 255, 0.05)"},
@@ -66,8 +65,8 @@ def navbar() -> rx.Component:
             ("Government", "/capabilities/government"),
         ]),
         navbar_dropdown("RESEARCH", [
-            ("Beyond Binary", "/research"),
-            ("Volumetric Logic", "/research"),
+            ("Research Log", "/research"),
+            ("Published Papers", "/research"),
         ]),
         navbar_dropdown("COMPANY", [
             ("Mission", "/company/mission"),
