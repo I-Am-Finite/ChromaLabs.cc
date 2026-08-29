@@ -27,9 +27,7 @@ def log() -> rx.Component:
                     border="1px dashed rgba(255,255,255,0.1)",
                     border_radius="8px",
                     padding="48px 24px",
-                    width="100%",
-                    max_width="1200px"
-                ),
+                    width="100%", max_width="1200px", class_name="animate-fade-up delay-200"),
                 width="100%",
                 max_width="1200px",
                 align_items="center", justify_content="center", min_height="calc(100vh - 200px)",
