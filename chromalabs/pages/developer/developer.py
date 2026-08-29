@@ -17,7 +17,7 @@ def developer() -> rx.Component:
                     class_name="animate-fade-up delay-100", margin_bottom="8", text_align="center"
                 ),
                 rx.text(
-                    "Direct access to our volumetric compilation toolchain is highly restricted. Due to stringent export controls and the classified nature of the physical substrate geometry, beta API endpoints are strictly provisioned on a per-agency basis.",
+                    "Direct access to our volumetric compilation toolchain is highly restricted. Beta API endpoints and physical hardware integration are provisioned strictly on a per-institution and agency basis.",
                     font_size="1.25rem", color="slate.11", max_width="800px", text_align="center", margin_bottom="12", line_height="1.7",
                     class_name="animate-fade-up delay-200"
                 ),

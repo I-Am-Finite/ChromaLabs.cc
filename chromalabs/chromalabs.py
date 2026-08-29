@@ -71,6 +71,7 @@ app.add_page(papers, route="/research/papers", title="Published Papers | Chroma 
 app.add_page(mission, route="/company/mission", title="Mission | Chroma Labs", image="/logo_glyph.png")
 app.add_page(careers, route="/company/careers", title="Careers | Chroma Labs", image="/logo_glyph.png")
 app.add_page(directory, route="/company/directory", title="Staff Directory | Chroma Labs", image="/logo_glyph.png")
-app.add_page(contact, route="/contact", title="Contact | Chroma Labs", image="/logo_glyph.png")
+from chromalabs.pages.company.contact import ContactState
+app.add_page(contact, route="/contact", title="Contact | Chroma Labs", image="/logo_glyph.png", on_load=ContactState.load_topic)
 app.add_page(developer, route="/developer", title="Developer | Chroma Labs", image="/logo_glyph.png")
 
