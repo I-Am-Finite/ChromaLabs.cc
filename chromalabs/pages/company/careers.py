@@ -1,32 +1,6 @@
 ﻿import reflex as rx
 from chromalabs.components.layout import base_layout
 
-def job_card(title: str, dept: str, loc: str) -> rx.Component:
-    return rx.box(
-        rx.vstack(
-            rx.text(dept, color="#DFBC61", size="1", weight="bold", letter_spacing="0.1em"),
-            rx.heading(title, size="5", color="white", margin_bottom="2"),
-            rx.hstack(
-                rx.icon(tag="map-pin", size=14, color="slate.11"),
-                rx.text(loc, color="slate.11", size="2"),
-                align_items="center",
-            ),
-            align_items="flex-start",
-        ),
-        padding="32px",
-        border="1px solid rgba(255,255,255,0.05)",
-        background="rgba(10,10,10,0.6)",
-        border_radius="8px",
-        transition="all 0.3s ease",
-        _hover={
-            "background": "rgba(20,20,20,0.8)", 
-            "border_color": "rgba(223, 188, 97, 0.3)",
-            "transform": "translateY(-2px)",
-        },
-        cursor="pointer",
-        width="100%",
-    )
-
 def careers() -> rx.Component:
     return base_layout(
         rx.box(
@@ -47,13 +21,17 @@ def careers() -> rx.Component:
                     font_size="1.25rem", color="slate.11", max_width="700px", text_align="center", margin_bottom="12", line_height="1.6",
                     class_name="animate-fade-up delay-200"
                 ),
-                rx.grid(
-                    job_card("Volumetric Hardware Architect", "ENGINEERING", "Houston, TX (HQ)"),
-                    job_card("Photonic Substrate Engineer", "ENGINEERING", "Houston, TX (HQ)"),
-                    job_card("Cryogenic Systems Specialist", "RESEARCH", "Houston, TX (HQ)"),
-                    job_card("Tactical Deployment Lead", "GOV/DEFENSE", "Washington D.C. / Remote"),
-                    columns="2",
-                    spacing="6",
+                rx.center(
+                    rx.vstack(
+                        rx.icon(tag="briefcase", color="slate.9", size=48, margin_bottom="4"),
+                        rx.text("No Active Openings", color="white", font_size="1.5rem", font_weight="600"),
+                        rx.text("We post engineering and research positions on an as-needed basis depending on hardware deployment schedules. Please keep an eye out for future openings.", color="slate.11", text_align="center", max_width="500px", margin_top="2"),
+                        align_items="center",
+                    ),
+                    bg="rgba(10,10,10,0.5)",
+                    border="1px dashed rgba(255,255,255,0.1)",
+                    border_radius="8px",
+                    padding="48px 24px",
                     width="100%",
                     max_width="1000px",
                     class_name="animate-fade-up delay-300"

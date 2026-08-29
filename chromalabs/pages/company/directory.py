@@ -1,20 +1,29 @@
 ﻿import reflex as rx
 from chromalabs.components.layout import base_layout
 
-def staff_card(name: str, role: str, spec: str) -> rx.Component:
+def staff_card(name: str, role: str, spec: str, github: str = "", linkedin: str = "") -> rx.Component:
+    links = []
+    if github:
+        links.append(rx.link(rx.text("GITHUB", font_size="0.75rem", font_family="JetBrains Mono, monospace", font_weight="bold", color="slate.10", _hover={"color": "#DFBC61"}), href=github, is_external=True))
+    if linkedin:
+        links.append(rx.link(rx.text("LINKEDIN", font_size="0.75rem", font_family="JetBrains Mono, monospace", font_weight="bold", color="slate.10", _hover={"color": "#DFBC61"}), href=linkedin, is_external=True))
+        
     return rx.box(
         rx.vstack(
             rx.box(width="40px", height="4px", bg="#DFBC61", margin_bottom="2"),
             rx.text(name, color="white", font_size="1.25rem", font_weight="700", line_height="1.2"),
             rx.text(role, color="slate.11", font_size="0.9rem", font_family="JetBrains Mono, monospace", margin_top="1"),
-            rx.text(spec, color="slate.9", font_size="0.8rem", margin_top="4", line_height="1.5"),
+            rx.text(spec, color="slate.9", font_size="0.8rem", margin_top="4", line_height="1.5", flex_grow="1"),
+            rx.hstack(*links, margin_top="4", spacing="4") if links else rx.box(),
             align_items="flex-start",
+            height="100%",
         ),
         bg="rgba(15,15,15,0.6)",
         border="1px solid rgba(255,255,255,0.05)",
         border_radius="4px",
         padding="32px 24px",
         width="100%",
+        height="100%",
         transition="all 0.2s ease",
         _hover={"bg": "rgba(25,25,25,0.8)", "border": "1px solid rgba(255,255,255,0.1)", "transform": "translateY(-2px)"},
     )
@@ -40,16 +49,24 @@ def directory() -> rx.Component:
                     class_name="animate-fade-up delay-200"
                 ),
                 rx.grid(
-                    staff_card("Alexander Finch", "Lead Architect", "Focuses on bypassing the Von Neumann bottleneck through isomorphic structures."),
+                    staff_card(
+                        "Michael Reser", 
+                        "CEO & Founder", 
+                        "Architecting the transition from planar digital models to volumetric, post-digital physical structures.",
+                        github="https://github.com/I-Am-Finite",
+                        linkedin="https://www.linkedin.com/in/michaelreser/"
+                    ),
                     staff_card("Dr. Elena Rostova", "Head of Hardware Physics", "Pioneering cryogenic photonic data-routing and volumetric heat dissipation."),
                     staff_card("Marcus Vance", "Lead Systems Engineer", "Developing the low-level firmware bridging geometric chips with legacy operating systems."),
                     columns="3",
                     spacing="6",
                     width="100%",
+                    class_name="animate-fade-up delay-300"
                 ),
                 width="100%",
                 max_width="1200px",
                 align_items="center", justify_content="center", min_height="calc(100vh - 200px)",
+                padding_y=["12", "24"],
                 padding_x=["4", "8", "12"],
             ),
             width="100%",
