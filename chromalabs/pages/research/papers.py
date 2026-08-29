@@ -30,8 +30,7 @@ def papers() -> rx.Component:
                     width="100%",
                     max_width="1200px"
                 ),
-                align_items="center",
-                padding_top="24",
+                align_items="center", justify_content="center", min_height="calc(100vh - 200px)",
                 padding_x=["4", "8", "12"],
             ),
             width="100%",
