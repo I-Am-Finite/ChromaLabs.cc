@@ -28,6 +28,9 @@
     <loc>http://localhost:3000/company/careers</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/company/directory</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/contact</loc>
   </url>
   <url>
