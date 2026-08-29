@@ -33,7 +33,7 @@ def directory() -> rx.Component:
         rx.box(
             rx.vstack(
                 rx.text(
-                    "STAFF DIRECTORY",
+                    "EXECUTIVE BOARD",
                     font_size="0.8rem", weight="bold", color="#DFBC61", letter_spacing="0.15em",
                     class_name="animate-fade-up", text_align="center"
                 ),
@@ -44,20 +44,30 @@ def directory() -> rx.Component:
                     class_name="animate-fade-up delay-100", margin_bottom="4", text_align="center"
                 ),
                 rx.text(
-                    "The engineers and physicists building the next dimensional layer of compute.",
+                    "The founders and executive board pioneering the next dimensional layer of compute.",
                     font_size="1.25rem", color="slate.11", max_width="700px", text_align="center", margin_bottom="12", line_height="1.6",
                     class_name="animate-fade-up delay-200"
                 ),
                 rx.grid(
                     staff_card(
                         "Michael Reser", 
-                        "CEO & Founder", 
-                        "Architecting the transition from planar digital models to volumetric, post-digital physical structures.",
+                        "Founder, CEO, CTO, & President", 
+                        "Pioneered the core technology and research driving Chroma Labs. Architecting the transition from planar digital models to volumetric, post-digital physical structures.",
                         github="https://github.com/I-Am-Finite",
                         linkedin="https://www.linkedin.com/in/michaelreser/"
                     ),
-                    staff_card("Dr. Elena Rostova", "Head of Hardware Physics", "Pioneering cryogenic photonic data-routing and volumetric heat dissipation."),
-                    staff_card("Marcus Vance", "Lead Systems Engineer", "Developing the low-level firmware bridging geometric chips with legacy operating systems."),
+                    staff_card(
+                        "Bryan C. Coward", 
+                        "Co-Founder, VP, & CFO", 
+                        "Directing financial architecture and executive operations. Scaling the structural and capital foundations required to support post-digital hardware deployment.",
+                        github="https://github.com/bmasterc",
+                        linkedin="https://www.linkedin.com/in/cowardbryan/"
+                    ),
+                    staff_card(
+                        "Megan F. Teague", 
+                        "Secretary of the Board", 
+                        "Overseeing corporate governance, strategic administration, and board compliance as the lab transitions into hyperscale execution.",
+                    ),
                     columns="3",
                     spacing="6",
                     width="100%",
