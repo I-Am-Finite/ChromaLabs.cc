@@ -74,7 +74,7 @@ def directory() -> rx.Component:
                         "Secretary of the Board", 
                         "Overseeing corporate governance, strategic administration, and board compliance as the lab transitions into hyperscale execution.",
                     ),
-                    columns="2",
+                    grid_template_columns=["1fr", "1fr", "repeat(2, 1fr)"],
                     spacing="6",
                     width="100%",
                     max_width="1000px",

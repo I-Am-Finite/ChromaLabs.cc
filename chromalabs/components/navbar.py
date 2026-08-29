@@ -50,15 +50,7 @@ def navbar_dropdown(title: str, items: list[tuple[str, str]]) -> rx.Component:
     )
 
 def navbar() -> rx.Component:
-    return rx.hstack(
-        # Perfect Unified SVG Lockup
-        rx.link(
-            rx.image(src="/logo.svg?v=8", height="55px", width="auto"),
-            href="/", margin_left="16px", _hover={"text_decoration": "none"}
-        ),
-        
-        rx.spacer(),
-
+    desktop_nav = rx.hstack(
         navbar_dropdown("CAPABILITIES", [
             ("AI", "/capabilities/ai"),
             ("HPC", "/capabilities/hpc"),
@@ -71,7 +63,7 @@ def navbar() -> rx.Component:
         navbar_dropdown("COMPANY", [
             ("Mission", "/company/mission"),
             ("Careers", "/company/careers"),
-            ("Staff Directory", "/company/directory"), # Placeholder for now
+            ("Staff Directory", "/company/directory"),
             ("Contact Us", "/contact"),
         ]),
         rx.link(
@@ -93,8 +85,40 @@ def navbar() -> rx.Component:
             ),
             href="/developer", _hover={"text_decoration": "none"}
         ),
+        display=["none", "none", "flex", "flex"],
+        align_items="center",
+        spacing="4"
+    )
+
+    mobile_nav = rx.box(
+        rx.menu.root(
+            rx.menu.trigger(
+                rx.icon(tag="menu", color="white", size=32, cursor="pointer")
+            ),
+            rx.menu.content(
+                rx.menu.item("Capabilities", on_click=rx.redirect("/capabilities/government")),
+                rx.menu.item("Research", on_click=rx.redirect("/research/log")),
+                rx.menu.item("Company", on_click=rx.redirect("/company/mission")),
+                rx.menu.separator(),
+                rx.menu.item("Developer Portal", on_click=rx.redirect("/developer")),
+                bg="rgba(10, 10, 10, 0.95)",
+                color="white",
+                border="1px solid rgba(255, 255, 255, 0.08)",
+            )
+        ),
+        display=["block", "block", "none", "none"]
+    )
+
+    return rx.hstack(
+        rx.link(
+            rx.image(src="/logo.svg?v=8", height="55px", width="auto"),
+            href="/", margin_left=["4px", "16px"], _hover={"text_decoration": "none"}
+        ),
+        rx.spacer(),
+        desktop_nav,
+        mobile_nav,
         width="100%",
-        padding_x="16",
+        padding_x=["4", "8", "16"],
         height="100px",
         align_items="center",
         position="fixed",

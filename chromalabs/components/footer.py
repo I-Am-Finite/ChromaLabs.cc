@@ -3,30 +3,33 @@
 def footer() -> rx.Component:
     return rx.box(
         rx.divider(border_color="rgba(255,255,255,0.05)"),
-        rx.hstack(
+        rx.flex(
             rx.vstack(
                 rx.text(
-                    "© 2026 Chroma Labs, Inc.™",
+                    "c 2026 Chroma Labs, Inc.T",
                     color="slate.8",
                     font_family="JetBrains Mono, monospace",
                     font_size="0.75rem",
                     letter_spacing="0.2em",
+                    text_align=["center", "center", "left"]
                 ),
-                align_items="flex-start",
+                align_items=["center", "center", "flex-start"],
             ),
-            rx.spacer(),
+            rx.spacer(display=["none", "none", "block"]),
             rx.vstack(
-                rx.text("17350 STATE HWY 249, STE 220 #37670", color="slate.8", font_size="0.75rem", font_family="JetBrains Mono, monospace"),
-                rx.text("HOUSTON, TX 77064", color="slate.8", font_size="0.75rem", font_family="JetBrains Mono, monospace"),
-                align_items="flex-end",
+                rx.text("17350 STATE HWY 249, STE 220 #37670", color="slate.8", font_size="0.75rem", font_family="JetBrains Mono, monospace", text_align=["center", "center", "right"]),
+                rx.text("HOUSTON, TX 77064", color="slate.8", font_size="0.75rem", font_family="JetBrains Mono, monospace", text_align=["center", "center", "right"]),
+                align_items=["center", "center", "flex-end"],
                 spacing="1"
             ),
             width="100%",
             max_width="1200px",
             margin="0 auto",
-            padding_x="12",
+            padding_x=["4", "8", "12"],
             padding_y="35px",
+            flex_direction=["column", "column", "row"],
             align_items="center",
+            gap=["6", "6", "0"]
         ),
         background="rgba(0, 0, 0, 0.6)",
         backdrop_filter="blur(24px)",
