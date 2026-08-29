@@ -23,7 +23,7 @@ def mission() -> rx.Component:
                     class_name="animate-fade-up delay-200", margin_bottom="8", text_align="center"
                 ),
                 rx.text(
-                    "The foundational architecture of modern computing is an artificial ceiling. For decades, the industry has forced physics to conform to compute, trapping intelligence within flat memory planes and binary abstractions. At Chroma Labs, we are fundamentally rewriting the laws of compute using photonic geometry. By eliminating the software layer entirely and mapping logic directly into the physical substrate, we bypass the thermal and latency limits of legacy silicon. We are leading the world into the first true post-digital age.",
+                    "The foundational architecture of modern computing is an artificial ceiling. The industry remains trapped within flat constraints, fighting the physical limits of sequential processing. At Chroma Labs, we are fundamentally rewriting the laws of compute using photonic geometry. By breaking the planar illusion, we unlock an entirely new dimension of computational scale. We are leading the world into the first true post-digital age.",
                     font_size="1.25rem", color="slate.11", max_width="800px", text_align="center", margin_bottom="16", line_height="1.8",
                     class_name="animate-fade-up delay-300"
                 ),
