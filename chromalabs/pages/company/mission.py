@@ -11,7 +11,7 @@ def mission() -> rx.Component:
                     class_name="animate-fade-up", text_align="center"
                 ),
                 rx.text(
-                    "Eradicating Human Abstraction.", 
+                    "Eradicating Human Abstraction:", 
                     font_size=["3rem", "4rem", "5rem"], weight="bold", letter_spacing="-0.04em", line_height="1.0",
                     color="white", font_family="'EB Garamond', 'Playfair Display', serif",
                     class_name="animate-fade-up delay-100", margin_bottom="2", text_align="center"
