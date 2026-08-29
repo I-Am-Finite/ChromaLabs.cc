@@ -8,7 +8,7 @@ def index() -> rx.Component:
             rx.vstack(
                                 rx.image(src="/logo_glyph.svg?v=1", height="100px", width="auto", margin_bottom="30px", style={"filter": "drop-shadow(0px 10px 15px rgba(0,0,0,0.8))"}),
                 rx.text(
-                    "Higher Dimensional HPC & Defense Research Lab", 
+                    "Post-Digital HPC & Defense Research Lab", 
                     font_size=["2.5rem", "3.5rem", "4.5rem", "5.5rem"], weight="bold", letter_spacing="-0.02em", line_height="1.1",
                     color="white", text_align="center", class_name="animate-fade-up", margin_top="12",
                     font_family="'EB Garamond', 'Playfair Display', serif",
