@@ -1,4 +1,4 @@
-
+﻿
 import reflex as rx
 from chromalabs.components.layout import base_layout
 
@@ -46,11 +46,10 @@ def hpc() -> rx.Component:
                 align_items="center",
                 justify_content="center",
                 width="100%",
-                padding_top="120px",
-                padding_bottom="120px",
+                min_height="calc(100vh - 200px)", padding_y=["12", "24"],
                 padding_x=["6", "8", "12"]
             ),
-            width="100%", position="relative", flex_grow="1"
+            width="100%", position="relative", flex_grow="1", display="flex", justify_content="center"
         )
     )
 
