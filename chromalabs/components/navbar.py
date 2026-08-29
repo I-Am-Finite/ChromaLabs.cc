@@ -74,10 +74,25 @@ def navbar() -> rx.Component:
             ("Staff Directory", "/company/directory"), # Placeholder for now
             ("Contact Us", "/contact"),
         ]),
-        navbar_dropdown("DEVELOPER PORTAL", [
-            ("API Documentation", "/developer"),
-            ("SDK Access", "/developer"),
-        ]),
+        rx.link(
+            rx.button(
+                rx.text("DEVELOPER PORTAL", color="slate.11", font_size="0.9rem", font_weight="500", letter_spacing="0.05em", transition="color 0.2s ease"),
+                bg="transparent",
+                border="1px solid transparent",
+                padding="8px 16px",
+                border_radius="6px",
+                cursor="pointer",
+                transition="all 0.2s ease",
+                _hover={
+                    "bg": "rgba(255, 255, 255, 0.05)", 
+                    "border": "1px solid rgba(255, 255, 255, 0.1)",
+                    "box_shadow": "0 0 15px rgba(255, 255, 255, 0.05)",
+                    "color": "white"
+                },
+                height="auto",
+            ),
+            href="/developer", _hover={"text_decoration": "none"}
+        ),
         width="100%",
         padding_x="16",
         height="100px",

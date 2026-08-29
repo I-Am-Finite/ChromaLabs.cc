@@ -14,38 +14,28 @@ def developer() -> rx.Component:
                     "SDK & API Access.", 
                     font_size=["3rem", "4rem", "5rem"], weight="bold", letter_spacing="-0.04em", line_height="1.0",
                     color="white", font_family="'EB Garamond', 'Playfair Display', serif",
-                    class_name="animate-fade-up delay-100", margin_bottom="4", text_align="center"
+                    class_name="animate-fade-up delay-100", margin_bottom="8", text_align="center"
                 ),
                 rx.text(
-                    "Volumetric compilation tools and endpoint access for enterprise and defense integration.",
-                    font_size="1.25rem", color="slate.11", max_width="700px", text_align="center", margin_bottom="12", line_height="1.6",
+                    "Direct access to our volumetric compilation toolchain is highly restricted. Due to stringent export controls and the classified nature of the physical substrate geometry, beta API endpoints are strictly provisioned on a per-agency basis.",
+                    font_size="1.25rem", color="slate.11", max_width="800px", text_align="center", margin_bottom="12", line_height="1.7",
                     class_name="animate-fade-up delay-200"
                 ),
-                
-                rx.center(
-                    rx.box(
-                        rx.el.form(
-                            rx.vstack(
-                                rx.text("BETA SDK WAITLIST", font_size="1.1rem", font_weight="bold", color="white", letter_spacing="0.1em", margin_bottom="2"),
-                                rx.text("Due to strict export controls and proprietary hardware constraints, beta access is highly restricted.", color="slate.11", font_size="0.9rem", margin_bottom="6", line_height="1.5"),
-                                rx.input(name="email", type="email", placeholder="Enter your institutional or defense email", width="100%", size="3", bg="rgba(0,0,0,0.5)", border_color="rgba(255,255,255,0.1)", color="white", required=True),
-                                rx.button("Request Clearance", type="submit", bg="#DFBC61", color="black", size="3", width="100%", margin_top="4", cursor="pointer", transition="all 0.2s", _hover={"bg": "#e6c455"}),
-                                spacing="2",
-                                width="100%",
-                            ),
-                            action="mailto:access@chromalabs.cc",
-                            method="GET",
-                            enctype="text/plain",
-                        ),
-                        width="100%", max_width="500px", padding="32px",
-                        border="1px solid rgba(255,255,255,0.05)", background="rgba(10,10,10,0.5)", border_radius="8px",
+                rx.link(
+                    rx.button(
+                        "REQUEST CLEARANCE", 
+                        bg="#DFBC61", color="black", border_radius="4px", font_size="0.9rem", font_weight="bold", 
+                        padding="24px 48px", cursor="pointer", transition="all 0.2s", 
+                        _hover={"bg": "#e6c455", "transform": "translateY(-2px)"}
                     ),
-                    width="100%",
+                    href="/contact?topic=SDK%20and%20API%20Access", 
+                    _hover={"text_decoration": "none"},
                     class_name="animate-fade-up delay-300"
                 ),
                 width="100%",
                 max_width="1200px",
                 align_items="center", justify_content="center", min_height="calc(100vh - 200px)",
+                padding_y=["12", "24"],
                 padding_x=["4", "8", "12"],
             ),
             width="100%",
