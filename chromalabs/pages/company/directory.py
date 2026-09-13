@@ -78,6 +78,35 @@ def directory() -> rx.Component:
                     spacing="6",
                     width="100%",
                     max_width="1000px",
+                    class_name="animate-fade-up delay-300",
+                    margin_bottom="24"
+                ),
+                rx.text(
+                    "ADVISORY BOARD",
+                    font_size="0.8rem", weight="bold", color="#DFBC61", letter_spacing="0.15em",
+                    class_name="animate-fade-up delay-300", text_align="center"
+                ),
+                rx.text(
+                    "Strategic Guidance.", 
+                    font_size=["2rem", "2.5rem", "3rem"], weight="bold", letter_spacing="-0.04em", line_height="1.0",
+                    color="white", font_family="'EB Garamond', 'Playfair Display', serif",
+                    class_name="animate-fade-up delay-300", margin_bottom="8", text_align="center"
+                ),
+                rx.grid(
+                    staff_card(
+                        "Dr. David Lary", 
+                        "Advisory Board Member", 
+                        "Professor at UT Dallas. Providing critical academic and research guidance bridging advanced physics, structural computation, and global scale datasets."
+                    ),
+                    staff_card(
+                        "Houston Keen", 
+                        "Advisory Board Member", 
+                        "Founder of Keen Communications LLC. Former Capitol Hill operative providing strategic guidance on public sector engagement, defense positioning, and federal policy."
+                    ),
+                    grid_template_columns=["1fr", "1fr", "repeat(2, 1fr)"],
+                    spacing="6",
+                    width="100%",
+                    max_width="1000px",
                     class_name="animate-fade-up delay-300"
                 ),
                 width="100%",

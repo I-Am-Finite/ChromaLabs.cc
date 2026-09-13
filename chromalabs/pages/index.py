@@ -23,7 +23,7 @@ def index() -> rx.Component:
                         rx.button("Explore Capabilities", bg="#DFBC61", border="none", color="black", border_radius="4px", font_size="1rem", font_weight="600", padding="24px 36px", cursor="pointer", transition="all 0.2s ease", _hover={"bg": "#e6c455"}),
                         href="/capabilities/government", _hover={"text_decoration": "none"}
                     ),
-                    spacing="6", class_name="animate-fade-up delay-200", flex_wrap="wrap", justify_content="center", margin_top="16"
+                    spacing="6", class_name="animate-fade-up delay-200", pointer_events="auto", flex_wrap="wrap", justify_content="center", margin_top="16"
                 ),
                 align_items="center",
                 justify_content="center",
