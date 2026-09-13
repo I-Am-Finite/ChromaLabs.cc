@@ -52,21 +52,21 @@ def directory() -> rx.Component:
                     staff_card(
                         "Michael Reser", 
                         "Founder, CEO, CTO, & President", 
-                        "Pioneered the core technology and research driving Chroma Labs. Architecting the transition from planar digital models to volumetric, post-digital physical structures.",
+                        "Founder, Chief Executive Officer, and Chief Technology Officer. As the principal architect of Chroma Labs' foundational physics, Reser pioneered the underlying research transitioning planar compute into volumetric geometric structures. His work operates at the bleeding edge of substrate engineering and artificial intelligence, driving the deployment of the world's first post-digital supercomputing architecture.",
                         github="https://github.com/I-Am-Finite",
                         linkedin="https://www.linkedin.com/in/michaelreser/"
                     ),
                     staff_card(
                         "Bryan C. Coward", 
                         "Co-Founder, VP, & CFO", 
-                        "Directing financial architecture and executive operations. Scaling the structural and capital foundations required to support post-digital hardware deployment.",
+                        "Co-Founder, Vice President, and Chief Financial Officer. Coward directs the global financial architecture and executive operations necessary to scale Chroma's physical infrastructure. By aligning hyper-scale capital deployment with aggressive hardware rollout schedules, he ensures the rapid commercialization of post-digital substrates into the enterprise and defense sectors.",
                         github="https://github.com/bmasterc",
                         linkedin="https://www.linkedin.com/in/cowardbryan/"
                     ),
                     staff_card(
                         "Connor Dudek", 
                         "Chief Marketing Officer (CMO)", 
-                        "Leveraging extensive high-velocity brand architecture from the global esports sector to position Chroma Labs' deep-tech narrative across the post-digital ecosystem.",
+                        "Chief Marketing Officer. Drawing on an extensive background directing high-velocity brand architecture within the global esports and gaming sectors, Dudek engineers Chroma's public narrative. He translates profound, deep-tech paradigms into a cohesive, aggressive market posture, bridging the gap between classified R&D and global integration.",
                         linkedin="https://www.linkedin.com/in/connordudek/"
                     ),
                     staff_card(
