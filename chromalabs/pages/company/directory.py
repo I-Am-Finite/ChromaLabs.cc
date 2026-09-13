@@ -72,7 +72,7 @@ def directory() -> rx.Component:
                     staff_card(
                         "Megan F. Teague", 
                         "Secretary of the Board", 
-                        "Overseeing corporate governance, strategic administration, and board compliance as the lab transitions into hyperscale execution.",
+                        "Teague orchestrates the complex corporate governance, intellectual property compliance, and strategic administration required for Chroma Labs' hyperscale operations. As the lab transitions from deep-tech R&D to global commercialization, she ensures that both enterprise contracts and mass-market consumer deployments are executed with absolute structural integrity.",
                     ),
                     grid_template_columns=["1fr", "1fr", "repeat(2, 1fr)"],
                     spacing="6",
