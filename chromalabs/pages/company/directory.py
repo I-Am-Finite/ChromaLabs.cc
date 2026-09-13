@@ -59,14 +59,14 @@ def directory() -> rx.Component:
                     staff_card(
                         "Bryan C. Coward", 
                         "Co-Founder, VP, & CFO", 
-                        "Co-Founder, Vice President, and Chief Financial Officer. Coward directs the global financial architecture and executive operations necessary to scale Chroma's physical infrastructure. By aligning hyper-scale capital deployment with aggressive hardware rollout schedules, he ensures the rapid commercialization of post-digital substrates into the enterprise and defense sectors.",
+                        "Co-Founder, Vice President, and Chief Financial Officer. Coward directs the global financial architecture and executive operations necessary to scale Chroma's physical infrastructure. By aligning hyper-scale capital deployment with aggressive hardware rollout schedules, he ensures the rapid commercialization of post-digital substrates across hyperscale enterprise, advanced consumer hardware, and global technology sectors.",
                         github="https://github.com/bmasterc",
                         linkedin="https://www.linkedin.com/in/cowardbryan/"
                     ),
                     staff_card(
                         "Connor Dudek", 
                         "Chief Marketing Officer (CMO)", 
-                        "Chief Marketing Officer. Drawing on an extensive background directing high-velocity brand architecture within the global esports and gaming sectors, Dudek engineers Chroma's public narrative. He translates profound, deep-tech paradigms into a cohesive, aggressive market posture, bridging the gap between classified R&D and global integration.",
+                        "Chief Marketing Officer. Drawing on an extensive background directing high-velocity brand architecture within the global esports and gaming sectors, Dudek engineers Chroma's public narrative. He translates profound, deep-tech paradigms into a cohesive, aggressive market posture, bridging the gap between bleeding-edge R&D, advanced consumer wearables, and mass-market integration.",
                         linkedin="https://www.linkedin.com/in/connordudek/"
                     ),
                     staff_card(
