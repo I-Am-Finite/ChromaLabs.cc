@@ -96,13 +96,13 @@ def directory() -> rx.Component:
                     staff_card(
                         "Dr. David Lary", 
                         "Advisory Board Member", 
-                        "Professor at UT Dallas. Providing critical academic and research guidance bridging advanced physics, structural computation, and global scale datasets.",
+                        "Professor of Physics at UT Dallas and Director of the MINTS (Multi-Scale Integrated Intelligent Interactive Sensing) Lab. Dr. Lary brings decades of expertise in autonomous telemetry, machine learning, and atmospheric physics to ground Chroma's theoretical substrates into real-world architectures.",
                         linkedin="https://www.linkedin.com/in/david-lary/"
                     ),
                     staff_card(
                         "Houston Keene", 
                         "Advisory Board Member", 
-                        "Founder of Keen Communications LLC. Former Capitol Hill operative providing strategic guidance on public sector engagement, defense positioning, and federal policy.",
+                        "Founder of Keen Communications LLC and former political reporter. Keene provides elite strategic guidance on public sector engagement, defense policy positioning, and translating highly classified technological paradigms into compelling legislative narratives.",
                         linkedin="https://www.linkedin.com/in/houston-keene/"
                     ),
                     grid_template_columns=["1fr", "1fr", "repeat(2, 1fr)"],
