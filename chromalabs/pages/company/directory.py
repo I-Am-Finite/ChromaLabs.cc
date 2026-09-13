@@ -97,13 +97,13 @@ def directory() -> rx.Component:
                         "Dr. David Lary", 
                         "Advisory Board Member", 
                         "Professor of Physics at UT Dallas and Director of the MINTS (Multi-Scale Integrated Intelligent Interactive Sensing) Lab. Dr. Lary brings decades of expertise in autonomous telemetry, machine learning, and atmospheric physics to ground Chroma's theoretical substrates into real-world architectures.",
-                        linkedin="https://www.linkedin.com/in/david-lary/"
+                        linkedin="https://www.linkedin.com/in/davidlary/"
                     ),
                     staff_card(
                         "Houston Keene", 
                         "Advisory Board Member", 
                         "Founder of Keen Communications LLC and former political reporter. Keene provides elite strategic guidance on public sector engagement, defense policy positioning, and translating highly classified technological paradigms into compelling legislative narratives.",
-                        linkedin="https://www.linkedin.com/in/houston-keene/"
+                        linkedin="https://www.linkedin.com/in/houston-k-15317799/"
                     ),
                     grid_template_columns=["1fr", "1fr", "repeat(2, 1fr)"],
                     spacing="6",
