@@ -128,3 +128,20 @@ button:focus, button:focus-visible, a:focus, a:focus-visible {
 .rt-Button:active {
   background-color: #DFBC61 !important;
 }
+
+.chroma-hero-crystal-canvas {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  display: block;
+  margin: 0 auto;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 25px rgba(0, 0, 0, 0.8));
+}
+
+@media (min-width: 768px) {
+  .chroma-hero-crystal-canvas {
+    max-width: 280px;
+  }
+}
