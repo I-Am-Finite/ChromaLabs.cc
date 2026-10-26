@@ -1,7 +1,7 @@
 @keyframes fadeUp {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(8px);
   }
   100% {
     opacity: 1;
@@ -10,15 +10,22 @@
 }
 
 .animate-fade-up {
-  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0;
+  animation: fadeUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+.delay-100 { animation-delay: 40ms; }
+.delay-200 { animation-delay: 80ms; }
+.delay-300 { animation-delay: 120ms; }
+.delay-400 { animation-delay: 160ms; }
+.delay-500 { animation-delay: 200ms; }
 
 /* Kill the Reflex WebSocket error for static deployments */
 .rt-ToastRoot, 
@@ -94,3 +101,30 @@ a[href*="reflex.dev"] {
   pointer-events: none;
 }
 
+/* Mobile tap highlight & button active styles - Chroma Gold */
+*, *::before, *::after {
+  -webkit-tap-highlight-color: rgba(223, 188, 97, 0.25) !important;
+}
+
+button, a, [role="button"], input, select, textarea {
+  -webkit-tap-highlight-color: rgba(223, 188, 97, 0.25) !important;
+}
+
+button:active, a:active, [role="button"]:active {
+  -webkit-tap-highlight-color: rgba(223, 188, 97, 0.35) !important;
+  outline-color: #DFBC61 !important;
+}
+
+button:focus, button:focus-visible, a:focus, a:focus-visible {
+  outline: 2px solid #DFBC61 !important;
+  outline-offset: 2px !important;
+}
+
+.rt-Button:focus-visible {
+  outline: 2px solid #DFBC61 !important;
+  box-shadow: 0 0 0 2px rgba(223, 188, 97, 0.4) !important;
+}
+
+.rt-Button:active {
+  background-color: #DFBC61 !important;
+}
