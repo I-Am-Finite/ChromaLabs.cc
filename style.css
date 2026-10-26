@@ -130,8 +130,8 @@ button:focus, button:focus-visible, a:focus, a:focus-visible {
 }
 
 .chroma-hero-crystal-canvas {
-  width: 100%;
-  max-width: 220px;
+  width: clamp(250px, 70vw, 300px);
+  max-width: 100%;
   height: auto;
   aspect-ratio: 3 / 2;
   display: block;
@@ -142,6 +142,7 @@ button:focus, button:focus-visible, a:focus, a:focus-visible {
 
 @media (min-width: 768px) {
   .chroma-hero-crystal-canvas {
+    width: 280px;
     max-width: 280px;
   }
 }
