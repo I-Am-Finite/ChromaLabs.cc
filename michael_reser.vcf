@@ -1,0 +1,15 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Reser;Michael;;;
+FN:Michael Reser
+ORG:Chroma Labs Inc.
+TITLE:Founder, CEO & CTO
+TEL;TYPE=CELL,VOICE,pref:+1-737-420-3207
+EMAIL;TYPE=WORK,INTERNET,pref:michael@chromalabs.cc
+EMAIL;TYPE=WORK,INTERNET:ceo@chromalabs.cc
+EMAIL;TYPE=HOME,INTERNET:resercmichael@gmail.com
+URL:https://chromalabs.cc
+URL;TYPE=LinkedIn:https://www.linkedin.com/in/michaelreser/
+ADR;TYPE=WORK:;;17350 State Hwy 249, Ste 220 #37670;Houston;TX;77064;USA
+NOTE:Executive Base: Austin, TX | Corporate HQ: Houston, TX | Chroma Labs Inc. - Illuminating the next generation of compute
+END:VCARD

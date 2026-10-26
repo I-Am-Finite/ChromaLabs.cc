@@ -35,3 +35,62 @@ a[href*="reflex.dev"] {
   visibility: hidden !important;
   pointer-events: none !important;
 }
+
+/* Chroma Metallic Rainbow Sheen (Thin-Film Optical Interference) */
+@keyframes chromaShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.chroma-text-shimmer {
+  background: linear-gradient(
+    135deg,
+    #FFFFFF 0%,
+    #FFF8E7 12%,
+    #DFBC61 28%,
+    #F5B971 40%,
+    #E879F9 52%,
+    #38BDF8 64%,
+    #F3E5AB 78%,
+    #DFBC61 88%,
+    #FFFFFF 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.9));
+}
+
+.animate-fade-up.chroma-text-shimmer {
+  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards, chromaShimmer 10s ease-in-out infinite;
+}
+
+.chroma-metallic-border {
+  position: relative;
+  background: #0A0A0C;
+  border-radius: 4px;
+}
+
+.chroma-metallic-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 5px;
+  padding: 1px;
+  background: linear-gradient(90deg, #DFBC61, #C026D3, #0284C7, #10B981, #DFBC61);
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: chromaShimmer 8s linear infinite;
+  pointer-events: none;
+}
+
